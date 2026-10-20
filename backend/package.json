@@ -6,9 +6,14 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "seed": "node src/config/seeder.js"
   },
-  "keywords": ["backend", "express", "api"],
+  "keywords": [
+    "backend",
+    "express",
+    "api"
+  ],
   "author": "Tu Nombre",
   "license": "ISC",
   "dependencies": {
@@ -16,12 +21,14 @@
     "cors": "^2.8.6",
     "dotenv": "^18.0.7",
     "express": "^5.3.0",
+    "express-validator": "^7.3.2",
     "fs-extra": "^11.4.1",
+    "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^7.7.0",
     "mongoose": "^9.11.2",
     "morgan": "^1.12.1",
-    "multer": "^2.4.6",
+    "multer": "^2.4.0",
     "nodemon": "^3.1.14"
   }
 }

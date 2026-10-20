@@ -31,7 +31,7 @@ const usuarioSchema = new mongoose.Schema(
     },
     rol: {
       type: String,
-      enum: ['admin', 'auxiliar'],
+      enum: ['admin', 'gerente', 'auxiliar'],
       default: 'auxiliar',
     },
     activo: {
@@ -56,13 +56,12 @@ const usuarioSchema = new mongoose.Schema(
 );
 
 // ─────────────────────────────────────────────
-// Middleware: hashear password antes de guardar
+// Middleware: hashear password antes de guardar (Compatible con Mongoose 9)
 // ─────────────────────────────────────────────
-usuarioSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+usuarioSchema.pre('save', async function () {
+  if (!this.isModified('password')) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  next();
 });
 
 // ─────────────────────────────────────────────
@@ -76,23 +75,20 @@ usuarioSchema.methods.matchPassword = async function (passwordIngresada) {
 // Método: generar token de recuperación
 // ─────────────────────────────────────────────
 usuarioSchema.methods.generarResetToken = function () {
-  // 1. Genera un token aleatorio (el que se envía al usuario)
   const resetToken = crypto.randomBytes(20).toString('hex');
 
-  // 2. Hashea el token y lo guarda en la BD (seguridad)
   this.resetPasswordToken = crypto
     .createHash('sha256')
     .update(resetToken)
     .digest('hex');
 
-  // 3. Expira en 15 minutos
   this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
 
-  return resetToken; // este es el que va por email
+  return resetToken;
 };
 
 // ─────────────────────────────────────────────
-// Método estático: hashear un token recibido (para comparar en BD)
+// Método estático: hashear un token recibido
 // ─────────────────────────────────────────────
 usuarioSchema.statics.hashToken = function (token) {
   return crypto.createHash('sha256').update(token).digest('hex');
