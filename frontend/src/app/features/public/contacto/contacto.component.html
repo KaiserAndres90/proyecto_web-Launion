@@ -44,6 +44,17 @@
             <p class="eyebrow">Estamos aquí para ayudarte</p>
             <h2 id="contact-title">Preinscríbete</h2>
             <p>Déjanos tus datos y el curso que te interesa. Nuestro equipo podrá orientarte sobre requisitos, horarios y precios.</p>
+            <section class="contact-hours rounded-4 p-3 mt-4" aria-label="Horario de atención">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="contact-hours__icon" aria-hidden="true"><i class="bi bi-clock"></i></span>
+                <h3 class="h6 fw-bold mb-0">Horario de atención</h3>
+              </div>
+              <p class="small mb-0"><strong>Lunes a sábado</strong><br>7:00 a. m. – 6:00 p. m. · Jornada continua</p>
+            </section>
+            <img
+              src="/certificacion.jpg"
+              alt="Entrega de certificado"
+              class="img-fluid rounded-4 shadow-sm mt-4">
             <div class="contact__accent" aria-hidden="true"></div>
           </div>
         </div>
@@ -153,6 +164,9 @@
                   <option value="A2 - Motos">Curso A2 - Motos</option>
                   <option value="B1 - Automóviles">Curso B1 - Automóviles</option>
                   <option value="Curso de Refuerzo">Curso de Refuerzo</option>
+                  <option value="C1 - Carros y Microbuses">Curso C1 - Carros y Microbuses (máximo 10 personas)</option>
+                  <option value="C2 - Servicio Público">Curso C2 - Servicio Público</option>
+                  <option value="C3 - Transporte de Carga Pesada">Curso C3 - Transporte de Carga Pesada</option>
                 </select>
                 @if (submitted && course.invalid) {
                   <div class="invalid-feedback">Selecciona el curso que te interesa.</div>

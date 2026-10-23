@@ -1,39 +1,336 @@
-<main>
-  <section class="hero animate__animated animate__fadeInUp" aria-labelledby="hero-title">
-    <div class="container">
-      <div class="row align-items-center justify-content-center g-5">
+<main class="inicio-page">
+  <section class="inicio-hero py-5" aria-labelledby="hero-title">
+    <div class="inicio-hero__background" aria-hidden="true"></div>
+    <div class="floating-shape shape-lime" aria-hidden="true"></div>
+    <div class="floating-shape shape-yellow" aria-hidden="true"></div>
+    <div class="floating-shape shape-lime-secondary" aria-hidden="true"></div>
+
+    <div class="container position-relative">
+      <div class="row align-items-center g-5">
         <div class="col-12 col-lg-6">
-          <div class="hero__content mx-auto text-center">
-            <p class="eyebrow">CEA Conductores La Unión No. 1</p>
-            <h1 id="hero-title">Aprende a conducir con los mejores en <span>Pasto.</span></h1>
-            <p class="hero__description mx-auto">
+          <div class="inicio-hero__glass p-4 p-lg-5 rounded-4 shadow-sm">
+            <p class="eyebrow animate__animated animate__fadeInUp inicio-hero__entrance inicio-hero__entrance--eyebrow">
+              CEA Conductores La Unión No. 1
+            </p>
+            <h1
+              id="hero-title"
+              class="display-5 animate__animated animate__fadeInUp inicio-hero__entrance inicio-hero__entrance--title">
+              Aprende a conducir con los mejores en <span>Pasto.</span>
+            </h1>
+            <p class="inicio-hero__description animate__animated animate__fadeInUp inicio-hero__entrance inicio-hero__entrance--description">
               Fórmate con confianza y da el siguiente paso hacia tu licencia de conducción.
             </p>
-            <a class="btn btn-success btn-lg px-4" routerLink="/contacto">
+            <a
+              class="btn btn-success btn-lg px-4 animate__animated animate__fadeInUp inicio-hero__entrance inicio-hero__entrance--action"
+              routerLink="/contacto">
               Inscríbete Ya <i class="bi bi-arrow-up-right ms-1" aria-hidden="true"></i>
             </a>
-            <div class="hero__note justify-content-center justify-content-lg-start">
-              <span class="hero__note-mark" aria-hidden="true"></span>
+            <div class="inicio-hero__note animate__animated animate__fadeInUp inicio-hero__entrance inicio-hero__entrance--note">
+              <span class="inicio-hero__note-mark" aria-hidden="true"></span>
               Formación vial para avanzar con confianza y responsabilidad.
             </div>
           </div>
         </div>
 
-        <div class="col-10 col-sm-8 col-lg-5">
-          <div class="hero__visual mx-auto" role="img" aria-label="Ilustración de una carretera con los colores del CEA">
-            <div class="hero__sun" aria-hidden="true"></div>
-            <svg class="hero__road" viewBox="0 0 520 480" fill="none" aria-hidden="true">
-              <path d="M222 480C243 402 286 348 278 285C270 220 176 189 204 116C222 68 284 32 317 0" stroke="#F1E600" stroke-width="172" stroke-linecap="round"/>
-              <path d="M222 480C243 402 286 348 278 285C270 220 176 189 204 116C222 68 284 32 317 0" stroke="#333333" stroke-width="142" stroke-linecap="round"/>
-              <path d="M222 480C243 402 286 348 278 285C270 220 176 189 204 116C222 68 284 32 317 0" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="18 22" stroke-linecap="round"/>
-            </svg>
-            <div class="hero__visual-label">
-              <span class="hero__visual-icon" aria-hidden="true"><i class="bi bi-sign-turn-up-right"></i></span>
-              <span><strong>Empieza hoy</strong><br />a construir tu ruta</span>
+        <div class="col-12 col-lg-6">
+          <div class="inicio-hero__visual position-relative overflow-hidden rounded-4 shadow-lg mx-auto">
+            <img
+              src="/hero-image.jpg"
+              alt="Estudiante aprendiendo a conducir"
+              class="inicio-hero__image img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inicio-locations" aria-label="Sedes de CEA Conductores La Unión">
+    <div class="inicio-locations__banner">
+      <div class="inicio-locations__viewport">
+        <div class="inicio-locations__track" aria-hidden="true">
+          <div class="inicio-locations__group">
+            <span>CEA CONDUCTORES LA UNIÓN <span class="inicio-locations__separator">•</span> <i class="bi bi-geo-alt-fill"></i> SEDES: PASTO - IPIALES - LA UNIÓN <span class="inicio-locations__separator">•</span></span>
+            <span>CEA CONDUCTORES LA UNIÓN <span class="inicio-locations__separator">•</span> <i class="bi bi-geo-alt-fill"></i> SEDES: PASTO - IPIALES - LA UNIÓN <span class="inicio-locations__separator">•</span></span>
+          </div>
+          <div class="inicio-locations__group">
+            <span>CEA CONDUCTORES LA UNIÓN <span class="inicio-locations__separator">•</span> <i class="bi bi-geo-alt-fill"></i> SEDES: PASTO - IPIALES - LA UNIÓN <span class="inicio-locations__separator">•</span></span>
+            <span>CEA CONDUCTORES LA UNIÓN <span class="inicio-locations__separator">•</span> <i class="bi bi-geo-alt-fill"></i> SEDES: PASTO - IPIALES - LA UNIÓN <span class="inicio-locations__separator">•</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inicio-benefits benefits-section py-5" aria-labelledby="benefits-title">
+    <div class="container">
+      <div class="inicio-benefits__heading mx-auto mb-5 text-center">
+        <span class="benefits-badge d-inline-block rounded-pill px-3 py-2 mb-3">TU CAMINO EMPIEZA AQUÍ</span>
+        <h2 id="benefits-title" class="benefits-title">
+          ¿Por qué <span class="benefits-title__highlight">elegirnos?</span>
+        </h2>
+        <span class="benefits-divider d-block mx-auto my-3" aria-hidden="true"></span>
+        <p class="mb-0">
+          En CEA Conductores La Unión pensamos en brindarte siempre lo mejor para tu formación y seguridad vial.
+        </p>
+      </div>
+
+      <div class="row g-4 align-items-stretch">
+        <div class="col-12 col-md-8 col-lg-7">
+          <article class="inicio-benefit inicio-benefit--primary bento-card bento-card--main h-100 p-4 p-lg-5 animate__animated animate__fadeInUp">
+            <span class="benefit-card__number" aria-hidden="true">01</span>
+            <div class="d-flex flex-column h-100 position-relative">
+              <span class="bento-icon mb-4" aria-hidden="true">
+                <i class="bi bi-shield-check"></i>
+              </span>
+              <p class="inicio-benefit__eyebrow">Confianza en cada kilómetro</p>
+              <h3>Instructores Certificados</h3>
+              <p class="mb-4">
+                Aprende con profesionales calificados que te acompañan paso a paso para que conduzcas con seguridad y autonomía.
+              </p>
+              <span class="benefit-tag mt-auto align-self-start">
+                <i class="bi bi-patch-check-fill me-2" aria-hidden="true"></i>
+                Aprendizaje paso a paso
+              </span>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-5">
+          <div class="d-flex h-100 flex-column gap-4">
+            <article class="inicio-benefit inicio-benefit--compact bento-card flex-fill p-4 animate__animated animate__fadeInUp">
+              <div class="d-flex align-items-start gap-3">
+                <span class="bento-icon bento-icon--sm" aria-hidden="true">
+                  <i class="bi bi-car-front-fill"></i>
+                </span>
+                <div>
+                  <p class="benefit-card__number benefit-card__number--small" aria-hidden="true">02</p>
+                  <h3>Vehículos Modernos</h3>
+                  <p class="mb-0">
+                    Practica con vehículos en óptimas condiciones y equipados con doble mando para tu seguridad.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="inicio-benefit inicio-benefit--compact bento-card flex-fill p-4 animate__animated animate__fadeInUp">
+              <div class="d-flex align-items-start gap-3">
+                <span class="bento-icon bento-icon--sm" aria-hidden="true">
+                  <i class="bi bi-calendar-check"></i>
+                </span>
+                <div>
+                  <p class="benefit-card__number benefit-card__number--small" aria-hidden="true">03</p>
+                  <h3>Flexibilidad de Horarios</h3>
+                  <p class="mb-0">
+                    Organiza tu formación con horarios flexibles y avanza a tu propio ritmo.
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inicio-process py-5" aria-labelledby="process-title">
+    <div class="container">
+      <div class="inicio-section-heading mx-auto mb-5 text-center">
+        <p class="eyebrow">Un proceso sencillo</p>
+        <h2 id="process-title">Tu camino hacia la licencia en 4 pasos</h2>
+        <p class="mb-0">Te acompañamos en cada etapa de tu formación para que avances con confianza.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-12 col-sm-6 col-lg-3">
+          <article class="inicio-step h-100 animate__animated animate__fadeInUp">
+            <span class="inicio-step__number">01</span>
+            <span class="inicio-step__icon" aria-hidden="true"><i class="bi bi-clipboard-check"></i></span>
+            <h3>Inscripción</h3>
+            <p class="mb-0">Cuéntanos qué categoría te interesa y recibe orientación sobre los requisitos.</p>
+          </article>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <article class="inicio-step h-100 animate__animated animate__fadeInUp">
+            <span class="inicio-step__number">02</span>
+            <span class="inicio-step__icon" aria-hidden="true"><i class="bi bi-book-half"></i></span>
+            <h3>Teoría</h3>
+            <p class="mb-0">Aprende las normas de tránsito y los fundamentos de seguridad vial.</p>
+          </article>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <article class="inicio-step h-100 animate__animated animate__fadeInUp">
+            <span class="inicio-step__number">03</span>
+            <span class="inicio-step__icon" aria-hidden="true"><i class="bi bi-car-front"></i></span>
+            <h3>Práctica</h3>
+            <p class="mb-0">Desarrolla tus habilidades al volante con acompañamiento de instructores.</p>
+          </article>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <article class="inicio-step h-100 animate__animated animate__fadeInUp">
+            <span class="inicio-step__number">04</span>
+            <span class="inicio-step__icon" aria-hidden="true"><i class="bi bi-award"></i></span>
+            <h3>Certificación</h3>
+            <p class="mb-0">Al completar tu formación, recibe orientación sobre el cierre del proceso.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inicio-testimonials py-5" aria-labelledby="testimonials-title">
+    <div class="container">
+      <div class="inicio-section-heading mx-auto mb-5 text-center">
+        <p class="eyebrow">Experiencias que inspiran</p>
+        <h2 id="testimonials-title">Lo que dicen nuestros estudiantes</h2>
+        <p class="mb-0">Opiniones ilustrativas; reemplázalas por reseñas reales antes de publicar.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="inicio-testimonial card h-100 border-0 shadow-sm animate__animated animate__fadeInUp">
+            <div class="card-body d-flex flex-column p-4">
+              <div class="inicio-testimonial__rating mb-3" role="img" aria-label="5 de 5 estrellas">
+                <span aria-hidden="true">★★★★★</span>
+              </div>
+              <blockquote class="mb-4">
+                <p>“Me sentí acompañado desde el primer día. La práctica me ayudó a ganar seguridad en la vía.”</p>
+              </blockquote>
+              <div class="d-flex align-items-center gap-3 mt-auto">
+                <span class="inicio-testimonial__avatar" aria-hidden="true"><i class="bi bi-person-fill"></i></span>
+                <div>
+                  <p class="fw-bold mb-0">Estudiante A2</p>
+                  <p class="small text-secondary mb-0">Reseña de ejemplo</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="inicio-testimonial card h-100 border-0 shadow-sm animate__animated animate__fadeInUp">
+            <div class="card-body d-flex flex-column p-4">
+              <div class="inicio-testimonial__rating mb-3" role="img" aria-label="5 de 5 estrellas">
+                <span aria-hidden="true">★★★★★</span>
+              </div>
+              <blockquote class="mb-4">
+                <p>“Las clases fueron claras y prácticas. Ahora entiendo mejor las normas y conduzco con más confianza.”</p>
+              </blockquote>
+              <div class="d-flex align-items-center gap-3 mt-auto">
+                <span class="inicio-testimonial__avatar" aria-hidden="true"><i class="bi bi-person-fill"></i></span>
+                <div>
+                  <p class="fw-bold mb-0">Estudiante B1</p>
+                  <p class="small text-secondary mb-0">Reseña de ejemplo</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="inicio-testimonial card h-100 border-0 shadow-sm animate__animated animate__fadeInUp">
+            <div class="card-body d-flex flex-column p-4">
+              <div class="inicio-testimonial__rating mb-3" role="img" aria-label="5 de 5 estrellas">
+                <span aria-hidden="true">★★★★★</span>
+              </div>
+              <blockquote class="mb-4">
+                <p>“Encontré orientación en cada etapa y pude avanzar a mi ritmo. Recomiendo preguntar por sus cursos.”</p>
+              </blockquote>
+              <div class="d-flex align-items-center gap-3 mt-auto">
+                <span class="inicio-testimonial__avatar" aria-hidden="true"><i class="bi bi-person-fill"></i></span>
+                <div>
+                  <p class="fw-bold mb-0">Estudiante</p>
+                  <p class="small text-secondary mb-0">Reseña de ejemplo</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="inicio-faq py-5" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="inicio-section-heading mx-auto mb-5 text-center">
+        <p class="eyebrow">Resolvemos tus dudas</p>
+        <h2 id="faq-title">Preguntas frecuentes</h2>
+      </div>
+      <div class="accordion inicio-faq__accordion mx-auto" id="inicio-faq">
+        <div class="accordion-item">
+          <h3 class="accordion-header" id="faq-heading-1">
+            <button
+              class="accordion-button"
+              [class.collapsed]="activeFaqIndex !== 0"
+              type="button"
+              [attr.aria-expanded]="activeFaqIndex === 0"
+              aria-controls="faq-panel-1"
+              (click)="toggleFaq(0)">
+              ¿Qué requisitos necesito?
+            </button>
+          </h3>
+          <div
+            id="faq-panel-1"
+            class="accordion-collapse collapse"
+            [class.show]="activeFaqIndex === 0"
+            aria-labelledby="faq-heading-1">
+            <div class="accordion-body">
+              Para iniciar la consulta ten a mano tu cédula. Según el curso, también pueden solicitarte certificado médico y foto.
+              Contáctanos para confirmar los requisitos vigentes de tu categoría.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h3 class="accordion-header" id="faq-heading-2">
+            <button
+              class="accordion-button"
+              [class.collapsed]="activeFaqIndex !== 1"
+              type="button"
+              [attr.aria-expanded]="activeFaqIndex === 1"
+              aria-controls="faq-panel-2"
+              (click)="toggleFaq(1)">
+              ¿Cuánto dura el curso?
+            </button>
+          </h3>
+          <div
+            id="faq-panel-2"
+            class="accordion-collapse collapse"
+            [class.show]="activeFaqIndex === 1"
+            aria-labelledby="faq-heading-2">
+            <div class="accordion-body">
+              La duración depende de la categoría y la programación de clases. Escríbenos para conocer el calendario disponible.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h3 class="accordion-header" id="faq-heading-3">
+            <button
+              class="accordion-button"
+              [class.collapsed]="activeFaqIndex !== 2"
+              type="button"
+              [attr.aria-expanded]="activeFaqIndex === 2"
+              aria-controls="faq-panel-3"
+              (click)="toggleFaq(2)">
+              ¿Se puede pagar en cuotas?
+            </button>
+          </h3>
+          <div
+            id="faq-panel-3"
+            class="accordion-collapse collapse"
+            [class.show]="activeFaqIndex === 2"
+            aria-labelledby="faq-heading-3">
+            <div class="accordion-body">
+              Las opciones de pago pueden variar. Consulta directamente con el equipo para confirmar las formas de pago disponibles.
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="inicio-cta bg-dark py-5 text-center text-white" aria-labelledby="home-cta-title">
+    <div class="container position-relative">
+      <p class="eyebrow">Tu próximo paso empieza aquí</p>
+      <h2 id="home-cta-title">¿Listo para empezar?</h2>
+      <p class="mb-4">Estamos aquí para orientarte y ayudarte a comenzar tu formación.</p>
+      <a class="btn btn-success btn-lg px-5" routerLink="/contacto">
+        Quiero empezar <i class="bi bi-arrow-up-right ms-1" aria-hidden="true"></i>
+      </a>
     </div>
   </section>
 </main>

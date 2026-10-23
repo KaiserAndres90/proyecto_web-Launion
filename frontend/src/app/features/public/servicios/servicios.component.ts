@@ -5,5 +5,12 @@ import { RouterLink } from '@angular/router';
   selector: 'app-servicios',
   imports: [RouterLink],
   templateUrl: './servicios.component.html',
+  styleUrl: './servicios.component.css',
 })
-export class ServiciosComponent {}
+export class ServiciosComponent {
+  protected readonly failedImages = new Set<string>();
+
+  protected markImageUnavailable(courseCode: string): void {
+    this.failedImages.add(courseCode);
+  }
+}
