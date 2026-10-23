@@ -1,0 +1,72 @@
+<section class="container-fluid px-3 px-lg-4 py-4" aria-labelledby="courses-admin-title">
+  <div class="d-flex flex-column flex-sm-row align-items-sm-end justify-content-between gap-3 mb-4">
+    <div>
+      <p class="eyebrow">Administración</p>
+      <h1 id="courses-admin-title" class="h2 fw-bold mb-2">Administración de Cursos</h1>
+      <p class="text-secondary mb-0">Consulta precios y horarios de la oferta formativa.</p>
+    </div>
+    <button class="btn btn-success" type="button" (click)="openNewCourse()">
+      <i class="bi bi-plus-lg me-1" aria-hidden="true"></i> Nuevo Curso
+    </button>
+  </div>
+
+  @if (feedback) {
+    <div class="alert alert-success" role="status">{{ feedback }}</div>
+  }
+
+  @if (editorOpen) {
+    <form #courseForm="ngForm" class="card border-success-subtle shadow-sm mb-4" (ngSubmit)="saveCourse(courseForm)">
+      <div class="card-body">
+        <h2 class="h5 fw-bold mb-3">{{ editingCourseId === null ? 'Nuevo curso' : 'Editar curso' }}</h2>
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="course-name">Nombre del curso</label>
+            <input class="form-control" id="course-name" name="name" [(ngModel)]="draft.name" required />
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="course-price">Precio (COP)</label>
+            <input class="form-control" id="course-price" name="price" type="number" min="1" [(ngModel)]="draft.price" required />
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="course-schedule">Horarios disponibles (separados por coma)</label>
+            <input class="form-control" id="course-schedule" name="schedule" [(ngModel)]="draft.schedule" placeholder="Lun - Vie · 7:00 AM, Sábados · 8:00 AM" required />
+          </div>
+          <div class="col-12 d-flex flex-wrap gap-2">
+            <button class="btn btn-success" type="submit">Guardar curso</button>
+            <button class="btn btn-outline-secondary" type="button" (click)="closeEditor()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  }
+
+  <div class="row g-4">
+    @for (course of courses; track course.id) {
+      <div class="col-12 col-md-6 col-xl-4">
+        <article class="card admin-course-card h-100 shadow-sm">
+          <div class="card-body d-flex flex-column p-4">
+            <span class="admin-shortcut__icon mb-3"><i class="bi bi-journal-bookmark" aria-hidden="true"></i></span>
+            <h2 class="card-title h5 fw-bold">{{ course.name }}</h2>
+            <p class="h3 fw-bold text-success">{{ formatPrice(course.price) }}</p>
+            <h3 class="h6 fw-bold text-secondary">Horarios disponibles</h3>
+            <ul class="list-group list-group-flush mb-4">
+              @for (schedule of course.schedules; track schedule) {
+                <li class="list-group-item px-0"><i class="bi bi-clock me-2 text-success" aria-hidden="true"></i>{{ schedule }}</li>
+              }
+            </ul>
+            <div class="d-flex gap-2 mt-auto">
+              <button class="btn btn-outline-secondary flex-fill" type="button" (click)="editCourse(course)">Editar</button>
+              <button class="btn btn-outline-danger flex-fill" type="button" (click)="deleteCourse(course)">Eliminar</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    } @empty {
+      <div class="col-12">
+        <p class="rounded border border-dashed bg-white p-5 text-center text-secondary">No hay cursos registrados en esta vista.</p>
+      </div>
+    }
+  </div>
+
+  <p class="mt-4 small text-secondary">Los cambios se conservan solo en esta sesión de demostración; no se guardan en el backend.</p>
+</section>

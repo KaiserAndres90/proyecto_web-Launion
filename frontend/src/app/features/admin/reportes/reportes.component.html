@@ -1,0 +1,61 @@
+<section class="container-fluid px-3 px-lg-4 py-4" aria-labelledby="reports-title">
+  <div class="mb-4">
+    <p class="eyebrow">Administración</p>
+    <h1 id="reports-title" class="h2 fw-bold mb-2">Panel de Control y Estadísticas</h1>
+    <p class="text-secondary mb-0">Indicadores generales de actividad del CEA.</p>
+  </div>
+
+  <div class="row g-3 mb-4">
+    @for (metric of metrics; track metric.label) {
+      <div class="col-12 col-sm-6 col-xl-4">
+        <article class="card h-100 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
+              <div>
+                <p class="text-secondary fw-semibold mb-2">{{ metric.label }}</p>
+                <p class="display-6 fw-bold mb-0">{{ metric.value }}</p>
+              </div>
+              <span class="admin-shortcut__icon"><i class="bi {{ metric.icon }}" aria-hidden="true"></i></span>
+            </div>
+            <p class="small text-secondary border-top pt-3 mb-0">{{ metric.description }}</p>
+          </div>
+        </article>
+      </div>
+    }
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-xl-6">
+      <section class="card h-100 shadow-sm" aria-labelledby="income-chart-title">
+        <div class="card-body p-4">
+          <h2 id="income-chart-title" class="h5 fw-bold">Gráfico de Ingresos Mensuales</h2>
+          <p class="text-secondary small">Visualización de ingresos por mes.</p>
+          <div class="chart-placeholder">
+            <div>
+              <span class="admin-shortcut__icon mx-auto mb-3"><i class="bi bi-bar-chart-line" aria-hidden="true"></i></span>
+              <p class="fw-semibold mb-1">Gráfico de Ingresos Mensuales</p>
+              <p class="small text-secondary mb-0">Placeholder para integrar una librería de gráficos cuando esté disponible la fuente de datos.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="col-12 col-xl-6">
+      <section class="card h-100 shadow-sm" aria-labelledby="courses-chart-title">
+        <div class="card-body p-4">
+          <h2 id="courses-chart-title" class="h5 fw-bold">Distribución de Cursos</h2>
+          <p class="text-secondary small">Resumen de solicitudes por tipo de curso.</p>
+          <div class="chart-placeholder">
+            <div>
+              <span class="admin-shortcut__icon mx-auto mb-3"><i class="bi bi-pie-chart" aria-hidden="true"></i></span>
+              <p class="fw-semibold mb-1">Distribución de Cursos</p>
+              <p class="small text-secondary mb-0">Gráfico de ejemplo pendiente de integrar con una librería de charts y datos reales.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <p class="mt-4 small text-secondary">Métricas de demostración: sustituir por datos reales al conectar el backend.</p>
+</section>

@@ -1,0 +1,181 @@
+<main>
+  <section class="contact-page py-5 py-lg-6" aria-labelledby="contact-page-title">
+    <div class="container">
+      <div class="section-heading mx-auto mb-5 text-center animate__animated animate__fadeInUp">
+        <p class="eyebrow">CEA Conductores La Unión</p>
+        <h1 id="contact-page-title">Ubicación y preinscripción</h1>
+        <p>Visítanos en Pasto o déjanos tus datos para recibir orientación sobre nuestros cursos.</p>
+      </div>
+
+      <div class="row justify-content-center g-4 mb-5">
+        <div class="col-12 col-xl-10">
+          <section class="contact-location card shadow-sm" aria-labelledby="location-title">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <span class="detail-item__icon" aria-hidden="true"><i class="bi bi-geo-alt-fill"></i></span>
+                <div>
+                  <p class="eyebrow mb-1">Visítanos</p>
+                  <h2 id="location-title" class="h4 mb-1">Pasto, Nariño</h2>
+                  <p class="text-secondary mb-0">Consulta nuestra ubicación y cómo llegar.</p>
+                </div>
+              </div>
+              <div class="map-placeholder rounded-3" role="img" aria-label="Marcador de ubicación en Pasto, Nariño">
+                <span class="map-placeholder__pin" aria-hidden="true"><i class="bi bi-geo-alt-fill"></i></span>
+                <span>Pasto, Nariño</span>
+                <span class="map-placeholder__caption">Mapa de Google próximamente</span>
+              </div>
+              <div class="location-panel__actions mt-3">
+                <a class="btn btn-success" href="https://www.google.com/maps/search/?api=1&amp;query=Pasto%2C+Nari%C3%B1o" target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-map me-1" aria-hidden="true"></i> Abrir Google Maps
+                </a>
+                <a class="btn btn-outline-success" href="https://wa.me/?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20cursos%20del%20CEA%20Conductores%20La%20Uni%C3%B3n." target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-whatsapp me-1" aria-hidden="true"></i> Consultar por WhatsApp
+                </a>
+              </div>
+              <p class="location-panel__note mt-2 mb-0">El enlace de WhatsApp abre un mensaje preparado; falta el número oficial del CEA para dirigirlo directamente.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="row justify-content-center g-4">
+        <div class="col-12 col-lg-4">
+          <div class="contact__intro h-100">
+            <p class="eyebrow">Estamos aquí para ayudarte</p>
+            <h2 id="contact-title">Preinscríbete</h2>
+            <p>Déjanos tus datos y el curso que te interesa. Nuestro equipo podrá orientarte sobre requisitos, horarios y precios.</p>
+            <div class="contact__accent" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-7">
+          <form
+            #preRegistrationForm="ngForm"
+            class="contact-form card card-body shadow-sm"
+            aria-label="Formulario de preinscripción"
+            novalidate
+            (ngSubmit)="submitPreRegistration(preRegistrationForm)">
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="contact-name">Nombre completo</label>
+                <input
+                  #fullName="ngModel"
+                  class="form-control"
+                  [class.is-invalid]="submitted && fullName.invalid"
+                  id="contact-name"
+                  name="fullName"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="Tu nombre y apellidos"
+                  required
+                  minlength="3"
+                  [(ngModel)]="formData.fullName"
+                  [attr.aria-invalid]="submitted && fullName.invalid" />
+                @if (submitted && fullName.invalid) {
+                  <div class="invalid-feedback">Escribe tu nombre completo (mínimo 3 caracteres).</div>
+                }
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="contact-id">Cédula</label>
+                <input
+                  #identityNumber="ngModel"
+                  class="form-control"
+                  [class.is-invalid]="submitted && identityNumber.invalid"
+                  id="contact-id"
+                  name="identityNumber"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="Número de documento"
+                  required
+                  pattern="[0-9]{5,10}"
+                  [(ngModel)]="formData.identityNumber"
+                  [attr.aria-invalid]="submitted && identityNumber.invalid" />
+                @if (submitted && identityNumber.invalid) {
+                  <div class="invalid-feedback">Ingresa una cédula válida de 5 a 10 dígitos.</div>
+                }
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="contact-phone">Teléfono</label>
+                <input
+                  #phone="ngModel"
+                  class="form-control"
+                  [class.is-invalid]="submitted && phone.invalid"
+                  id="contact-phone"
+                  name="phone"
+                  type="tel"
+                  inputmode="tel"
+                  autocomplete="tel"
+                  placeholder="Número de contacto"
+                  required
+                  pattern="[0-9]{10}"
+                  [(ngModel)]="formData.phone"
+                  [attr.aria-invalid]="submitted && phone.invalid" />
+                @if (submitted && phone.invalid) {
+                  <div class="invalid-feedback">Ingresa un teléfono de 10 dígitos.</div>
+                }
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="contact-email">Correo electrónico</label>
+                <input
+                  #email="ngModel"
+                  class="form-control"
+                  [class.is-invalid]="submitted && email.invalid"
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="nombre@correo.com"
+                  required
+                  email
+                  [(ngModel)]="formData.email"
+                  [attr.aria-invalid]="submitted && email.invalid" />
+                @if (submitted && email.invalid) {
+                  <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
+                }
+              </div>
+
+              <div class="col-12">
+                <label class="form-label" for="contact-course">Curso de interés</label>
+                <select
+                  #course="ngModel"
+                  class="form-select"
+                  [class.is-invalid]="submitted && course.invalid"
+                  id="contact-course"
+                  name="course"
+                  required
+                  [(ngModel)]="formData.course"
+                  [attr.aria-invalid]="submitted && course.invalid">
+                  <option value="" disabled>Selecciona un curso</option>
+                  <option value="A2 - Motos">Curso A2 - Motos</option>
+                  <option value="B1 - Automóviles">Curso B1 - Automóviles</option>
+                  <option value="Curso de Refuerzo">Curso de Refuerzo</option>
+                </select>
+                @if (submitted && course.invalid) {
+                  <div class="invalid-feedback">Selecciona el curso que te interesa.</div>
+                }
+              </div>
+
+              <div class="col-12">
+                <button class="btn btn-success btn-lg" type="submit">
+                  Validar preinscripción <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
+                </button>
+              </div>
+              @if (submissionMessage) {
+                <div class="col-12">
+                  <p class="contact-form__status alert alert-success mb-0" role="status">{{ submissionMessage }}</p>
+                </div>
+              }
+              <div class="col-12">
+                <p class="contact-form__note mb-0">Esta vista valida tus datos en el navegador; todavía no los envía ni almacena.</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

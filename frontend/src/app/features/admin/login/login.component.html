@@ -1,0 +1,30 @@
+<main class="login-page">
+  <section class="login-card" aria-labelledby="login-title">
+    <a class="login-brand" routerLink="/" aria-label="CEA Conductores La Unión, página principal">
+      <span class="login-brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="24" fill="#A5C300"/>
+          <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#333333" stroke-width="10" stroke-linecap="round"/>
+          <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#F1E600" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/>
+        </svg>
+      </span>
+      <span>CEA Conductores <strong>La Unión</strong></span>
+    </a>
+
+    <p class="login-eyebrow">Área administrativa</p>
+    <h1 id="login-title">Bienvenido</h1>
+    <p class="login-description">Ingresa tus credenciales para continuar al panel del CEA.</p>
+
+    <form class="login-form">
+      <label for="admin-email">Correo electrónico</label>
+      <input id="admin-email" name="email" type="email" autocomplete="username" placeholder="admin@cea.com" required />
+
+      <label for="admin-password">Contraseña</label>
+      <input id="admin-password" name="password" type="password" autocomplete="current-password" placeholder="Ingresa tu contraseña" required />
+
+      <button class="login-submit" type="button">Ingresar</button>
+    </form>
+    <p class="login-notice">La autenticación aún no está conectada.</p>
+    <a class="login-back" routerLink="/">← Volver al sitio público</a>
+  </section>
+</main>

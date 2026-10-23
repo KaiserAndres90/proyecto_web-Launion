@@ -1,0 +1,39 @@
+<div class="admin-layout">
+  <aside class="admin-sidebar" aria-label="Menú administrativo">
+    <a class="admin-brand" routerLink="/" aria-label="CEA Conductores La Unión, inicio">
+      <span class="admin-brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="24" fill="#A5C300"/>
+          <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#333333" stroke-width="10" stroke-linecap="round"/>
+          <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#F1E600" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/>
+        </svg>
+      </span>
+      <span>CEA <strong>La Unión</strong></span>
+    </a>
+
+    <p class="admin-sidebar__label">Administración</p>
+    <nav class="admin-nav" aria-label="Secciones del panel">
+      <a class="admin-nav__link" routerLink="/admin/inicio" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
+        <span aria-hidden="true">▦</span> Inicio
+      </a>
+      <a class="admin-nav__link" routerLink="/admin/solicitudes" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
+        <span aria-hidden="true">☷</span> Solicitudes
+      </a>
+      <a class="admin-nav__link" routerLink="/admin/cursos" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
+        <span aria-hidden="true">▤</span> Cursos
+      </a>
+      <a class="admin-nav__link" routerLink="/admin/reportes" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
+        <span aria-hidden="true">▥</span> Reportes
+      </a>
+    </nav>
+    <a class="admin-sidebar__exit" routerLink="/admin/login">Cerrar sesión</a>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <span>Panel administrativo</span>
+      <a routerLink="/">Ver sitio público ↗</a>
+    </header>
+    <router-outlet />
+  </main>
+</div>

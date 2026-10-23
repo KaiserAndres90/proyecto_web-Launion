@@ -1,0 +1,81 @@
+<section class="container-fluid px-3 px-lg-4 py-4" aria-labelledby="requests-title">
+  <div class="d-flex flex-column flex-sm-row align-items-sm-end justify-content-between gap-3 mb-4">
+    <div>
+      <p class="eyebrow">Administración</p>
+      <h1 id="requests-title" class="h2 fw-bold mb-2">Bandeja de Solicitudes</h1>
+      <p class="text-secondary mb-0">Consulta las preinscripciones y actualiza su estado.</p>
+    </div>
+    <label class="visually-hidden" for="request-search">Buscar solicitudes</label>
+    <div class="input-group request-search">
+      <span class="input-group-text bg-white"><i class="bi bi-search" aria-hidden="true"></i></span>
+      <input
+        id="request-search"
+        class="form-control"
+        type="search"
+        name="searchRequests"
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar por nombre, cédula o curso" />
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="table-responsive rounded">
+      <table class="table table-hover align-middle mb-0 text-nowrap">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Cédula</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Curso de interés</th>
+            <th scope="col">Estado</th>
+            <th scope="col" class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (request of filteredRequests; track request.id) {
+            <tr>
+              <td>{{ request.date }}</td>
+              <td class="fw-semibold">{{ request.name }}</td>
+              <td>{{ request.identityNumber }}</td>
+              <td>{{ request.phone }}</td>
+              <td>{{ request.course }}</td>
+              <td><span class="badge rounded-pill" [class]="statusClasses(request.status)">{{ request.status }}</span></td>
+              <td>
+                <div class="d-flex justify-content-end gap-2">
+                  <button
+                    class="btn btn-sm btn-outline-secondary"
+                    type="button"
+                    [attr.aria-label]="'Ver detalle de ' + request.name"
+                    title="Ver detalle"
+                    (click)="showDetails(request)">
+                    <i class="bi bi-eye" aria-hidden="true"></i>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-success"
+                    type="button"
+                    [attr.aria-label]="'Cambiar estado de ' + request.name"
+                    title="Cambiar estado"
+                    (click)="changeStatus(request)">
+                    <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td class="py-5 text-center text-secondary" colspan="7">No se encontraron solicitudes.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  @if (selectedRequest; as request) {
+    <aside class="alert alert-success d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mt-3 mb-0" aria-live="polite">
+      <p class="mb-0"><strong>{{ request.name }}</strong> · {{ request.course }} · {{ request.phone }} · Estado: {{ request.status }}</p>
+      <button class="btn btn-sm btn-outline-success align-self-start align-self-sm-auto" type="button" (click)="selectedRequest = null">Cerrar detalle</button>
+    </aside>
+  }
+
+  <p class="mt-3 small text-secondary">Datos de ejemplo para la vista; aún no están conectados a la base de datos.</p>
+</section>
