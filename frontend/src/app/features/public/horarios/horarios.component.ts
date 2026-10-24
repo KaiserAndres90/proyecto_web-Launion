@@ -5,5 +5,6 @@ import { RouterLink } from '@angular/router';
   selector: 'app-horarios',
   imports: [RouterLink],
   templateUrl: './horarios.component.html',
+  styleUrl: './horarios.component.css',
 })
 export class HorariosComponent {}

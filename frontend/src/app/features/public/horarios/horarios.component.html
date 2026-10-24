@@ -1,46 +1,121 @@
 <main>
-  <section class="schedule-page py-5 py-lg-6" aria-labelledby="schedule-title">
+  <section class="schedule-page bg-transparent py-5 py-lg-6" aria-labelledby="schedule-title">
     <div class="container">
       <div class="section-heading mx-auto mb-5 text-center animate__animated animate__fadeInUp">
         <p class="eyebrow">Organiza tu visita</p>
-        <h1 id="schedule-title">Horarios de atención</h1>
-        <p>Estamos disponibles para orientarte sobre los cursos y ayudarte a comenzar tu formación.</p>
+        <h1 id="schedule-title">Horarios de Atención y Clases</h1>
+        <p>Consulta nuestros horarios y encuentra el momento ideal para tu formación.</p>
       </div>
 
-      <div class="row justify-content-center">
-        <div class="col-12 col-xl-10">
-          <div class="table-responsive rounded-3 border shadow-sm">
-            <table class="table table-striped table-hover align-middle mb-0">
-              <caption class="visually-hidden">Días y horarios de atención del CEA Conductores La Unión</caption>
-              <thead class="table-dark">
-                <tr>
-                  <th scope="col">Días</th>
-                  <th scope="col">Horario de atención</th>
-                  <th scope="col">Jornada</th>
-                  <th scope="col">Disponibilidad de cursos</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Lunes a Sábado</th>
-                  <td>7:00 AM - 6:00 PM</td>
-                  <td><span class="badge text-bg-success">Jornada Continua</span></td>
-                  <td>Consultar con el equipo</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div class="row g-4">
+        <div class="col-12 col-lg-4">
+          <article class="schedule-card card h-100 rounded-4 shadow-sm animate__animated animate__fadeInUp">
+            <div class="card-body d-flex flex-column p-4 p-xl-5">
+              <span class="schedule-card__icon mb-4" aria-hidden="true">
+                <i class="bi bi-clock"></i>
+              </span>
+              <h2 class="h4 card-title fw-bold">Atención Administrativa</h2>
+              <p class="text-secondary">Lunes a Viernes</p>
+              <ul class="schedule-card__hours list-unstyled d-grid gap-3 mb-0">
+                <li>
+                  <span class="d-block small text-secondary mb-1">Jornada mañana</span>
+                  <span class="badge bg-success">7:00 AM - 12:00 PM</span>
+                </li>
+                <li>
+                  <span class="d-block small text-secondary mb-1">Jornada tarde</span>
+                  <span class="badge bg-success">2:00 PM - 5:00 PM</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
 
-          <div class="availability-note mt-4">
-            <i class="bi bi-info-circle-fill text-success" aria-hidden="true"></i>
-            <p>La disponibilidad puede variar según el curso. Contáctanos para confirmar los horarios de formación.</p>
-          </div>
-          <div class="text-center">
-            <a class="btn btn-success btn-lg" routerLink="/contacto">
-              Consultar disponibilidad <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
-            </a>
+        <div class="col-12 col-lg-4">
+          <article class="schedule-card card h-100 rounded-4 shadow-sm animate__animated animate__fadeInUp">
+            <div class="card-body d-flex flex-column p-4 p-xl-5">
+              <span class="schedule-card__icon mb-4" aria-hidden="true">
+                <i class="bi bi-book"></i>
+              </span>
+              <h2 class="h4 card-title fw-bold">Clases Teóricas</h2>
+              <p class="text-secondary">Lunes a Viernes</p>
+              <ul class="schedule-card__hours list-unstyled d-grid gap-3 mb-0">
+                <li>
+                  <span class="d-block small text-secondary mb-1">Jornada mañana</span>
+                  <span class="badge bg-success">7:00 AM - 11:00 AM</span>
+                </li>
+                <li>
+                  <span class="d-block small text-secondary mb-1">Jornada tarde</span>
+                  <span class="badge bg-success">1:00 PM - 6:00 PM</span>
+                </li>
+                <li>
+                  <span class="d-block small text-secondary mb-1">Jornada noche</span>
+                  <span class="badge bg-success">6:00 PM - 9:00 PM</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-12 col-lg-4">
+          <article class="schedule-card card h-100 rounded-4 shadow-sm animate__animated animate__fadeInUp">
+            <div class="card-body d-flex flex-column p-4 p-xl-5">
+              <span class="schedule-card__icon mb-4" aria-hidden="true">
+                <i class="bi bi-car-front"></i>
+              </span>
+              <h2 class="h4 card-title fw-bold">Clases Prácticas</h2>
+              <p class="text-secondary">Lunes a Viernes</p>
+              <ul class="schedule-card__hours list-unstyled d-grid gap-3 mb-0">
+                <li>
+                  <span class="d-block small text-secondary mb-1">Jornada mañana</span>
+                  <span class="badge bg-success">7:00 AM - 11:00 AM</span>
+                </li>
+                <li>
+                  <span class="d-block small text-secondary mb-1">Jornada tarde</span>
+                  <span class="badge bg-success">1:00 PM - 5:00 PM</span>
+                </li>
+                <li>
+                  <span class="d-block small text-secondary mb-1">Jornada tarde-noche</span>
+                  <span class="badge bg-success">5:00 PM - 7:00 PM</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="accordion schedule-faq mx-auto my-5" id="scheduleNotes">
+        <div class="accordion-item rounded-4 shadow-sm">
+          <h2 class="accordion-header" id="scheduleNotesHeading">
+            <button
+              class="accordion-button collapsed rounded-4 fw-semibold"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#scheduleNotesContent"
+              aria-expanded="false"
+              aria-controls="scheduleNotesContent">
+              <i class="bi bi-info-circle-fill me-2 text-success" aria-hidden="true"></i>
+              Preguntas sobre horarios y notas importantes
+            </button>
+          </h2>
+          <div
+            id="scheduleNotesContent"
+            class="accordion-collapse collapse"
+            aria-labelledby="scheduleNotesHeading"
+            data-bs-parent="#scheduleNotes">
+            <div class="accordion-body text-secondary">
+              <ul class="mb-0">
+                <li class="mb-2">Los horarios pueden variar durante días festivos o por cambios en la programación.</li>
+                <li>Confirma la disponibilidad de clases y agenda tu horario antes de asistir.</li>
+              </ul>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div class="text-center">
+        <a class="btn btn-success btn-lg" routerLink="/contacto">
+          Consultar disponibilidad <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
+        </a>
       </div>
     </div>
   </section>

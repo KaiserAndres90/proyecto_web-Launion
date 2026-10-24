@@ -1,0 +1,80 @@
+:host {
+  display: block;
+}
+
+.schedule-page {
+  min-height: 70vh;
+}
+
+.schedule-card {
+  overflow: hidden;
+  border: 0;
+  border-top: 4px solid #a5c300;
+  background: #fff;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.schedule-card:hover,
+.schedule-card:focus-within {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 2rem rgb(37 40 32 / 14%) !important;
+}
+
+.schedule-card__icon {
+  display: grid;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 1rem;
+  background: rgb(165 195 0 / 14%);
+  color: #657900;
+  font-size: 1.8rem;
+  transition:
+    background-color 220ms ease,
+    color 220ms ease,
+    transform 220ms ease;
+  place-items: center;
+}
+
+.schedule-card:hover .schedule-card__icon,
+.schedule-card:focus-within .schedule-card__icon {
+  transform: rotate(-6deg);
+  background: #a5c300;
+  color: #252820;
+}
+
+.schedule-card__hours .badge {
+  padding: 0.55rem 0.75rem;
+  background-color: #a5c300 !important;
+  color: #252820;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.schedule-faq {
+  max-width: 900px;
+}
+
+.schedule-faq .accordion-item {
+  overflow: hidden;
+  border: 1px solid rgb(37 40 32 / 8%);
+}
+
+.schedule-faq .accordion-button:not(.collapsed) {
+  background: #f8faed;
+  color: #303a22;
+  box-shadow: none;
+}
+
+.schedule-faq .accordion-button:focus {
+  border-color: #a5c300;
+  box-shadow: 0 0 0 0.2rem rgb(165 195 0 / 22%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .schedule-card,
+  .schedule-card__icon {
+    transition: none;
+  }
+}

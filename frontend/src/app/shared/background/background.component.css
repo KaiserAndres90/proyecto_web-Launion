@@ -1,0 +1,26 @@
+.bg-3d-pattern {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background-color: #fbfcf8;
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 34px,
+      rgb(32 37 28 / 4%) 35px,
+      transparent 37px 72px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 56px,
+      rgb(165 195 0 / 3%) 57px,
+      transparent 59px 112px
+    ),
+    linear-gradient(180deg, #fff 0%, #f7f8f3 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
+}

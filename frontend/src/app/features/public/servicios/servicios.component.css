@@ -10,6 +10,11 @@
     box-shadow 220ms ease;
 }
 
+.course-card:focus-within {
+  transform: translateY(-8px);
+  box-shadow: 0 1.25rem 2.5rem rgb(37 40 32 / 18%) !important;
+}
+
 .card-img-top {
   display: block;
   width: 100%;
@@ -44,6 +49,91 @@
 .course-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 1.25rem 2.5rem rgb(37 40 32 / 18%) !important;
+}
+
+.course-card__hours {
+  min-height: 2.5rem;
+}
+
+.course-modal .modal-content {
+  overflow: hidden;
+}
+
+.course-modal__header {
+  background:
+    radial-gradient(circle at 92% 10%, rgb(197 227 75 / 25%), transparent 32%),
+    linear-gradient(120deg, #20251c, #3b4825);
+  color: #fff;
+}
+
+.course-modal__detail {
+  border: 1px solid #e5e8dc;
+  background: #f8faed;
+}
+
+.course-modal__price {
+  color: #657900;
+  font-size: 1.15rem;
+}
+
+.instructor-modal .modal-content {
+  overflow: hidden;
+}
+
+.instructor-modal__header {
+  padding: 1.25rem 1.5rem;
+}
+
+.instructor-modal__icon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  flex: 0 0 3rem;
+  border-radius: 50%;
+  background: #a5c300;
+  color: #252820;
+  font-size: 1.4rem;
+  place-items: center;
+}
+
+.instructor-modal__accordion {
+  --bs-accordion-btn-focus-box-shadow: 0 0 0 0.2rem rgb(165 195 0 / 25%);
+  --bs-accordion-active-bg: #f4f7e6;
+  --bs-accordion-active-color: #303a22;
+}
+
+.instructor-modal__accordion .accordion-body {
+  color: #555a50;
+  line-height: 1.7;
+}
+
+.instructor-modal__table {
+  min-width: 720px;
+  margin-bottom: 0;
+}
+
+.instructor-modal__table thead th {
+  background: #a5c300;
+  color: #252820;
+  white-space: nowrap;
+}
+
+.instructor-modal__list {
+  display: grid;
+  gap: 0.85rem;
+  padding-left: 1.25rem;
+  color: #555a50;
+  line-height: 1.65;
+}
+
+.instructor-modal__list li::marker {
+  color: #657900;
+}
+
+.instructor-modal__module {
+  border: 1px solid #e5e8dc;
+  background: #f8faed;
+  line-height: 1.65;
 }
 
 .course-card__price {

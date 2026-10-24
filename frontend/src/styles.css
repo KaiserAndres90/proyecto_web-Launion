@@ -607,7 +607,7 @@ app-contacto {
 }
 
 body {
-  background: #fff;
+  background: transparent;
   color: var(--color-ink);
 }
 

@@ -8,165 +8,56 @@
       </div>
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        <div class="col">
-          <article class="card course-card h-100 border-0 rounded-4 shadow animate__animated animate__fadeInUp">
-            <img src="/curso-a2.jpg" class="card-img-top" alt="Estudiante realizando el curso A2 de motocicletas">
-            <div class="card-body d-flex flex-column p-4">
-              <span class="course-card__tag align-self-start mb-3">Motocicletas</span>
-              <h2 class="card-title h4">Curso A2 (Motocicletas)</h2>
-              <p class="course-card__price mb-0">$850.000 <span>COP</span></p>
-              <p class="small text-secondary mb-4">Precio de referencia; confirma el valor vigente al inscribirte.</p>
-              <h3 class="h6 fw-bold">Requisitos</h3>
-              <ul class="course-requirements list-unstyled mb-4">
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Cédula</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Certificado médico</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Foto</li>
-              </ul>
-              <a class="btn btn-success mt-auto" routerLink="/contacto">
-                Inscribirme <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
-              </a>
-            </div>
-          </article>
-        </div>
-
-        <div class="col">
-          <article class="card course-card course-card--featured h-100 border-0 rounded-4 shadow animate__animated animate__fadeInUp">
-            <img src="/curso-b1.jpg" class="card-img-top" alt="Estudiante realizando el curso B1 de automóviles">
-            <span class="course-card__ribbon badge text-bg-success">Más popular</span>
-            <div class="card-body d-flex flex-column p-4">
-              <span class="course-card__tag align-self-start mb-3">Automóviles</span>
-              <h2 class="card-title h4">Curso B1 (Automóviles)</h2>
-              <p class="course-card__price mb-0">$1.250.000 <span>COP</span></p>
-              <p class="small text-secondary mb-4">Precio de referencia; confirma el valor vigente al inscribirte.</p>
-              <h3 class="h6 fw-bold">Requisitos</h3>
-              <ul class="course-requirements list-unstyled mb-4">
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Cédula</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Certificado médico</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Foto</li>
-              </ul>
-              <a class="btn btn-success mt-auto" routerLink="/contacto">
-                Inscribirme <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
-              </a>
-            </div>
-          </article>
-        </div>
-
-        <div class="col">
-          <article class="card course-card h-100 border-0 rounded-4 shadow animate__animated animate__fadeInUp">
-            <img src="/curso-teoria.jpg" class="card-img-top" alt="Estudiante en clase de teoría y refuerzo de conducción">
-            <div class="card-body d-flex flex-column p-4">
-              <span class="course-card__tag align-self-start mb-3">Práctica adicional</span>
-              <h2 class="card-title h4">Refuerzo de Prácticas</h2>
-              <p class="course-card__price mb-0">$180.000 <span>COP / clase</span></p>
-              <p class="small text-secondary mb-4">Precio de referencia; confirma el valor vigente al inscribirte.</p>
-              <h3 class="h6 fw-bold">Ideal para</h3>
-              <ul class="course-requirements list-unstyled mb-4">
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Personas con licencia vigente</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Quienes desean reforzar su práctica</li>
-              </ul>
-              <a class="btn btn-success mt-auto" routerLink="/contacto">
-                Inscribirme <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
-              </a>
-            </div>
-          </article>
-        </div>
-
-        <div class="col">
-          <article class="card course-card h-100 border-0 rounded-4 shadow animate__animated animate__fadeInUp">
+        <div class="col" *ngFor="let curso of cursos">
+          <article
+            class="card course-card h-100 border-0 rounded-4 shadow animate__animated animate__fadeInUp"
+            [class.course-card--featured]="curso.code === 'b1'">
             <div class="course-card__image-frame">
-              @if (failedImages.has('c1')) {
-                <div class="course-card__image-fallback" role="img" aria-label="Imagen no disponible: Curso C1 de carros y microbuses de hasta 10 personas">
-                  <i class="bi bi-truck" aria-hidden="true"></i>
-                </div>
-              } @else {
+              <div
+                *ngIf="failedImages.has(curso.code); else courseImage"
+                class="course-card__image-fallback"
+                role="img"
+                [attr.aria-label]="'Imagen no disponible: ' + curso.name">
+                <i class="bi bi-truck" aria-hidden="true"></i>
+              </div>
+              <ng-template #courseImage>
                 <img
-                  src="/curso-c1.jfif"
+                  [src]="curso.image"
                   class="card-img-top"
-                  alt="Carro o microbús de hasta 10 personas para el curso C1"
-                  (error)="markImageUnavailable('c1')">
-              }
+                  [alt]="curso.imageAlt"
+                  (error)="markImageUnavailable(curso.code)">
+              </ng-template>
             </div>
+            <span *ngIf="curso.code === 'b1'" class="course-card__ribbon badge text-bg-success">
+              Más popular
+            </span>
             <div class="card-body d-flex flex-column p-4">
-              <span class="course-card__tag align-self-start mb-3">Carros y microbuses</span>
-              <h2 class="card-title h4">Curso C1 (Carros y Microbuses)</h2>
-              <p class="small text-secondary">Vehículos con capacidad máxima de 10 personas.</p>
-              <p class="course-card__price mb-0">$1.800.000 <span>COP</span></p>
+              <span class="course-card__tag align-self-start mb-3">{{ curso.category }}</span>
+              <h2 class="card-title h4">{{ curso.name }}</h2>
+              <p class="small text-secondary">{{ curso.shortDescription }}</p>
+              <p class="small course-card__hours">
+                <ng-container *ngIf="curso.hoursTeoria !== null && curso.hoursPractica !== null; else hoursAsNeeded">
+                  <strong>Formación:</strong> {{ curso.hoursTeoria }} horas de teoría y
+                  {{ curso.hoursPractica }} horas de práctica.
+                </ng-container>
+                <ng-template #hoursAsNeeded><strong>Formación:</strong> Horas según necesidad del estudiante.</ng-template>
+              </p>
+              <p class="course-card__price mb-0">{{ curso.price }} <span>{{ curso.priceUnit }}</span></p>
               <p class="small text-secondary mb-4">Precio de referencia; confirma el valor vigente al inscribirte.</p>
               <h3 class="h6 fw-bold">Requisitos</h3>
               <ul class="course-requirements list-unstyled mb-4">
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Ser mayor de 18 años</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Licencia B1 vigente</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Certificado médico</li>
+                <li *ngFor="let requisito of curso.requirements">
+                  <i class="bi bi-check-circle-fill" aria-hidden="true"></i> {{ requisito }}
+                </li>
               </ul>
-              <a class="btn btn-success mt-auto" routerLink="/contacto">
-                Inscribirme <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
-              </a>
-            </div>
-          </article>
-        </div>
-
-        <div class="col">
-          <article class="card course-card h-100 border-0 rounded-4 shadow animate__animated animate__fadeInUp">
-            <div class="course-card__image-frame">
-              @if (failedImages.has('c2')) {
-                <div class="course-card__image-fallback" role="img" aria-label="Imagen no disponible: Curso C2 de servicio público">
-                  <i class="bi bi-truck" aria-hidden="true"></i>
-                </div>
-              } @else {
-                <img
-                  src="/curso-c2.jfif"
-                  class="card-img-top"
-                  alt="Vehículo para el curso C2 de servicio público"
-                  (error)="markImageUnavailable('c2')">
-              }
-            </div>
-            <div class="card-body d-flex flex-column p-4">
-              <span class="course-card__tag align-self-start mb-3">Servicio público</span>
-              <h2 class="card-title h4">Curso C2 (Servicio Público)</h2>
-              <p class="course-card__price mb-0">$2.100.000 <span>COP</span></p>
-              <p class="small text-secondary mb-4">Precio de referencia; confirma el valor vigente al inscribirte.</p>
-              <h3 class="h6 fw-bold">Requisitos</h3>
-              <ul class="course-requirements list-unstyled mb-4">
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Ser mayor de 18 años</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Licencia C1 vigente</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Certificado médico</li>
-              </ul>
-              <a class="btn btn-success mt-auto" routerLink="/contacto">
-                Inscribirme <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
-              </a>
-            </div>
-          </article>
-        </div>
-
-        <div class="col">
-          <article class="card course-card h-100 border-0 rounded-4 shadow animate__animated animate__fadeInUp">
-            <div class="course-card__image-frame">
-              @if (failedImages.has('c3')) {
-                <div class="course-card__image-fallback" role="img" aria-label="Imagen no disponible: Curso C3 de transporte de carga pesada">
-                  <i class="bi bi-truck" aria-hidden="true"></i>
-                </div>
-              } @else {
-                <img
-                  src="/curso-c3.jfif"
-                  class="card-img-top"
-                  alt="Vehículo para el curso C3 de transporte de carga pesada"
-                  (error)="markImageUnavailable('c3')">
-              }
-            </div>
-            <div class="card-body d-flex flex-column p-4">
-              <span class="course-card__tag align-self-start mb-3">Transporte de carga</span>
-              <h2 class="card-title h4">Curso C3 (Transporte de Carga Pesada)</h2>
-              <p class="course-card__price mb-0">$2.400.000 <span>COP</span></p>
-              <p class="small text-secondary mb-4">Precio de referencia; confirma el valor vigente al inscribirte.</p>
-              <h3 class="h6 fw-bold">Requisitos</h3>
-              <ul class="course-requirements list-unstyled mb-4">
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Ser mayor de 18 años</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Licencia C2 vigente</li>
-                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Certificado médico</li>
-              </ul>
-              <a class="btn btn-success mt-auto" routerLink="/contacto">
-                Inscribirme <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
-              </a>
+              <button
+                type="button"
+                class="btn btn-success mt-auto"
+                data-bs-toggle="modal"
+                data-bs-target="#courseModal"
+                (click)="abrirModal(curso)">
+                Más información <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
+              </button>
             </div>
           </article>
         </div>
@@ -191,9 +82,14 @@
               <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Formación orientada a la enseñanza vial</li>
               <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Información sobre certificación y requisitos</li>
             </ul>
-            <a class="btn btn-success btn-lg px-4" routerLink="/contacto">
+            <button
+              type="button"
+              class="btn btn-success btn-lg px-4"
+              data-bs-toggle="modal"
+              data-bs-target="#instructoresModal"
+              (click)="abrirModalInstructores()">
               Más información <i class="bi bi-arrow-up-right ms-1" aria-hidden="true"></i>
-            </a>
+            </button>
           </div>
           <div class="col-12 col-lg-5">
             <div class="instructor-banner__visual mx-auto" role="img" aria-label="Icono que representa la formación profesional de instructores">
@@ -222,4 +118,259 @@
       </div>
     </div>
   </section>
+
+  <div
+    #courseModal
+    id="courseModal"
+    class="modal fade course-modal"
+    tabindex="-1"
+    aria-labelledby="course-modal-title"
+    aria-hidden="true"
+    (hidden.bs.modal)="limpiarCursoSeleccionado()">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content border-0 rounded-4 shadow-lg">
+        <ng-container *ngIf="cursoSeleccionado as curso">
+          <div class="modal-header course-modal__header border-0 rounded-top-4 p-4">
+            <div>
+              <span class="badge rounded-pill text-bg-light mb-2">{{ curso.category }}</span>
+              <h2 class="modal-title fs-4 fw-bold" id="course-modal-title">{{ curso.name }}</h2>
+            </div>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar">
+            </button>
+          </div>
+          <div class="modal-body p-4 p-lg-5">
+            <p class="lead fs-6">{{ curso.descripcionLarga }}</p>
+            <div class="row g-3 mb-4">
+              <div class="col-12 col-md-6">
+                <div class="course-modal__detail h-100 rounded-3 p-3">
+                  <span class="d-block small text-secondary mb-1">Formación</span>
+                  <strong>
+                    <ng-container *ngIf="curso.hoursTeoria !== null && curso.hoursPractica !== null; else modalHoursAsNeeded">
+                      {{ curso.hoursTeoria }} h teoría · {{ curso.hoursPractica }} h práctica
+                    </ng-container>
+                    <ng-template #modalHoursAsNeeded>Horas según necesidad del estudiante</ng-template>
+                  </strong>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="course-modal__detail h-100 rounded-3 p-3">
+                  <span class="d-block small text-secondary mb-1">Precio de referencia</span>
+                  <strong class="course-modal__price">{{ curso.price }} {{ curso.priceUnit }}</strong>
+                </div>
+              </div>
+            </div>
+            <h3 class="h6 fw-bold mb-3">Requisitos</h3>
+            <ul class="course-requirements list-unstyled mb-0">
+              <li *ngFor="let requisito of curso.requirements">
+                <i class="bi bi-check-circle-fill" aria-hidden="true"></i> {{ requisito }}
+              </li>
+            </ul>
+            <p class="small text-secondary mt-4 mb-0">
+              Confirma los requisitos y el precio vigente al momento de inscribirte.
+            </p>
+          </div>
+          <div class="modal-footer border-0 px-4 pb-4 pt-0">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <a class="btn btn-success px-4" routerLink="/contacto" data-bs-dismiss="modal">Inscribirme</a>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div
+    id="instructoresModal"
+    class="modal fade instructor-modal"
+    tabindex="-1"
+    aria-labelledby="instructoresModalLabel"
+    aria-hidden="true"
+    (hidden.bs.modal)="cerrarModalInstructores()">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content rounded-4 shadow-lg border-0">
+        <div class="modal-header bg-dark text-white instructor-modal__header">
+          <div class="d-flex align-items-center gap-3">
+            <span class="instructor-modal__icon" aria-hidden="true">
+              <i class="bi bi-mortarboard-fill"></i>
+            </span>
+            <div>
+              <p class="small text-white-50 mb-1">Programa de formación</p>
+              <h2 class="modal-title fs-4 fw-bold mb-0" id="instructoresModalLabel">
+                Formación de Instructores
+              </h2>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+            (click)="cerrarModalInstructores()">
+          </button>
+        </div>
+        <div class="modal-body p-4 p-lg-5" *ngIf="mostrarModalInstructores">
+          <div class="accordion instructor-modal__accordion" id="instructorProgramAccordion">
+            <section class="accordion-item">
+              <h3 class="accordion-header" id="instructorIntroHeading">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#instructorIntro"
+                  aria-expanded="true"
+                  aria-controls="instructorIntro">
+                  1. Introducción
+                </button>
+              </h3>
+              <div
+                id="instructorIntro"
+                class="accordion-collapse collapse show"
+                aria-labelledby="instructorIntroHeading"
+                data-bs-parent="#instructorProgramAccordion">
+                <div class="accordion-body">
+                  <p class="mb-0">
+                    Prepárate para enseñar conducción y acompañar a nuevos conductores en el desarrollo de
+                    habilidades seguras en la vía. El programa combina formación pedagógica, técnica y legal,
+                    con contenidos y horas organizados según la categoría de conducción.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section class="accordion-item">
+              <h3 class="accordion-header" id="instructorDurationHeading">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#instructorDuration"
+                  aria-expanded="false"
+                  aria-controls="instructorDuration">
+                  2. Estructura y duración
+                </button>
+              </h3>
+              <div
+                id="instructorDuration"
+                class="accordion-collapse collapse"
+                aria-labelledby="instructorDurationHeading"
+                data-bs-parent="#instructorProgramAccordion">
+                <div class="accordion-body">
+                  <p>La intensidad horaria se organiza por categoría y componente de formación:</p>
+                  <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle instructor-modal__table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Categoría</th>
+                          <th scope="col">Tipo</th>
+                          <th scope="col">Teoría (h)</th>
+                          <th scope="col">Pedagógica (h)</th>
+                          <th scope="col">Manejo (h)</th>
+                          <th scope="col">Total (h)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let formacion of horasFormacionInstructor">
+                          <th scope="row">{{ formacion.cat }}</th>
+                          <td>{{ formacion.tipo }}</td>
+                          <td>{{ formacion.teoria }}</td>
+                          <td>{{ formacion.pedagogica }}</td>
+                          <td>{{ formacion.manejo }}</td>
+                          <td class="fw-bold">{{ formacion.total }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="accordion-item">
+              <h3 class="accordion-header" id="instructorRequirementsHeading">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#instructorRequirements"
+                  aria-expanded="false"
+                  aria-controls="instructorRequirements">
+                  3. Requisitos obligatorios
+                </button>
+              </h3>
+              <div
+                id="instructorRequirements"
+                class="accordion-collapse collapse"
+                aria-labelledby="instructorRequirementsHeading"
+                data-bs-parent="#instructorProgramAccordion">
+                <div class="accordion-body">
+                  <ul class="instructor-modal__list mb-0">
+                    <li><strong>Identificación:</strong> documento vigente para el proceso de inscripción.</li>
+                    <li><strong>Licencia de conducción:</strong> categoría correspondiente al programa, según validación del centro de formación.</li>
+                    <li><strong>Aptitud:</strong> cumplir las evaluaciones médicas y demás condiciones aplicables.</li>
+                    <li><strong>Formación:</strong> asistir y aprobar los componentes teóricos, pedagógicos y prácticos.</li>
+                    <li><strong>Verificación normativa:</strong> confirmar con el centro los requisitos y documentos vigentes antes de inscribirse.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section class="accordion-item">
+              <h3 class="accordion-header" id="instructorLearningHeading">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#instructorLearning"
+                  aria-expanded="false"
+                  aria-controls="instructorLearning">
+                  4. ¿Qué se aprende?
+                </button>
+              </h3>
+              <div
+                id="instructorLearning"
+                class="accordion-collapse collapse"
+                aria-labelledby="instructorLearningHeading"
+                data-bs-parent="#instructorProgramAccordion">
+                <div class="accordion-body">
+                  <div class="row g-3">
+                    <div class="col-12 col-md-4">
+                      <div class="instructor-modal__module h-100 p-3 rounded-3">
+                        <h4 class="h6 fw-bold">Módulo pedagógico</h4>
+                        <p class="small mb-0">Estrategias de enseñanza, comunicación y acompañamiento del aprendizaje.</p>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                      <div class="instructor-modal__module h-100 p-3 rounded-3">
+                        <h4 class="h6 fw-bold">Módulo técnico</h4>
+                        <p class="small mb-0">Técnicas de conducción, operación segura del vehículo y prevención de riesgos viales.</p>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                      <div class="instructor-modal__module h-100 p-3 rounded-3">
+                        <h4 class="h6 fw-bold">Módulo legal</h4>
+                        <p class="small mb-0">Normativa de tránsito, responsabilidades del conductor y seguridad vial.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="modal-footer border-0 px-4 px-lg-5 pb-4">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            data-bs-dismiss="modal"
+            (click)="cerrarModalInstructores()">
+            Cerrar
+          </button>
+          <a class="btn btn-success px-4" routerLink="/contacto" data-bs-dismiss="modal">
+            Consultar inscripción
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>

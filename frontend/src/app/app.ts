@@ -4,9 +4,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { BackgroundComponent } from './shared/background/background.component';
 
 @Component({
-  imports: [NavbarComponent, FooterComponent, RouterOutlet],
+  imports: [BackgroundComponent, NavbarComponent, FooterComponent, RouterOutlet],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

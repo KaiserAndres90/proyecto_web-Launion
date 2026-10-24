@@ -4,7 +4,7 @@
 
 .inicio-page {
   overflow: hidden;
-  background: #fff;
+  background: transparent;
 }
 
 .inicio-hero {
@@ -13,7 +13,7 @@
   isolation: isolate;
   overflow: hidden;
   padding-block: clamp(4rem, 8vw, 7rem) !important;
-  background: #f7f8f3;
+  background: transparent;
 }
 
 .inicio-hero__background,
@@ -246,7 +246,7 @@
   background:
     radial-gradient(circle at 10% 0%, rgb(165 195 0 / 8%), transparent 40%),
     radial-gradient(circle at 90% 100%, rgb(241 230 0 / 10%), transparent 45%),
-    #f8f9fa;
+    transparent;
 }
 
 .inicio-benefits__heading {
@@ -314,9 +314,9 @@
 }
 
 .bento-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px);
   border-color: rgb(165 195 0 / 35%);
-  box-shadow: 0 20px 40px rgb(165 195 0 / 12%);
+  box-shadow: 0 1rem 3rem rgb(32 37 28 / 18%) !important;
 }
 
 .bento-card--main {
@@ -348,9 +348,76 @@
 }
 
 .bento-card:hover .bento-icon {
-  transform: scale(1.05);
+  transform: rotate(-7deg) scale(1.08);
   background: #a5c300;
   color: #fff;
+}
+
+.inicio-benefit.card {
+  color: inherit;
+}
+
+.inicio-process__timeline {
+  position: relative;
+}
+
+.inicio-step__number {
+  position: relative;
+  top: auto;
+  right: auto;
+  z-index: 1;
+  display: inline-block;
+  min-width: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #a5c300 !important;
+  color: #252820 !important;
+  font-size: 0.9rem;
+}
+
+.inicio-testimonials__control {
+  top: 50%;
+  bottom: auto;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 50%;
+  background-color: #a5c300 !important;
+  opacity: 1;
+  transform: translateY(-50%);
+}
+
+.inicio-testimonials__control.carousel-control-prev {
+  left: -0.5rem;
+}
+
+.inicio-testimonials__control.carousel-control-next {
+  right: -0.5rem;
+}
+
+.inicio-hero__action--pulse {
+  animation: fadeInUp 1s both, pulse 2.8s ease-in-out infinite;
+}
+
+.inicio-process,
+.inicio-faq {
+  background: transparent;
+}
+
+.inicio-testimonials {
+  background:
+    radial-gradient(ellipse at 10% 90%, rgb(168 197 26 / 7%), transparent 32%),
+    transparent;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(165 195 0 / 32%);
+  }
+
+  50% {
+    box-shadow: 0 0 0 0.55rem rgb(165 195 0 / 0%);
+  }
 }
 
 .inicio-benefit--primary {
@@ -500,6 +567,32 @@
   .inicio-benefit--primary {
     min-height: 330px;
   }
+
+  .inicio-process__timeline::before {
+    position: absolute;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    left: 1.45rem;
+    border-left: 2px dashed rgb(165 195 0 / 45%);
+    content: "";
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .inicio-process__timeline::before {
+    display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .inicio-process__timeline::before {
+    position: absolute;
+    top: 1.5rem;
+    right: 12.5%;
+    left: 12.5%;
+    border-top: 2px dashed rgb(165 195 0 / 45%);
+    content: "";
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -538,7 +631,8 @@
   .inicio-hero__background,
   .floating-shape,
   .inicio-hero__entrance,
-  .inicio-locations__track {
+  .inicio-locations__track,
+  .inicio-hero__action--pulse {
     animation: none !important;
   }
 
@@ -568,5 +662,16 @@
   .benefit-card__number,
   .inicio-hero__entrance--action {
     transition: none !important;
+  }
+
+  .inicio-process__timeline::before {
+    display: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .inicio-step.animate__zoomIn {
+    animation-timeline: view();
+    animation-range: entry 0% entry 45%;
   }
 }

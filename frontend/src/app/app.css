@@ -1,4 +1,6 @@
 :host {
+  position: relative;
+  isolation: isolate;
   display: block;
   min-height: 100vh;
 }
