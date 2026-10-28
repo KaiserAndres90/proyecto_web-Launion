@@ -1,38 +1,62 @@
-<div class="admin-layout">
-  <aside class="admin-sidebar" aria-label="Menú administrativo">
-    <a class="admin-brand" routerLink="/" aria-label="CEA Conductores La Unión, inicio">
-      <span class="admin-brand__mark" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="24" r="24" fill="#A5C300"/>
-          <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#333333" stroke-width="10" stroke-linecap="round"/>
-          <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#F1E600" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/>
-        </svg>
-      </span>
-      <span>CEA <strong>La Unión</strong></span>
-    </a>
+<div class="admin-layout d-flex" [class.admin-layout--collapsed]="sidebarCollapsed()">
+  <aside class="admin-sidebar d-flex flex-column position-fixed top-0 start-0" aria-label="Menú administrativo">
+    <div class="d-flex align-items-center justify-content-between px-1 mb-3">
+      <a class="admin-brand d-flex align-items-center text-decoration-none" routerLink="/admin/inicio" aria-label="CEA Conductores La Unión, inicio">
+        <span class="admin-brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="24" fill="#A5C300"/>
+            <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#333333" stroke-width="10" stroke-linecap="round"/>
+            <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#F1E600" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/>
+          </svg>
+        </span>
+        <span class="admin-brand__text ms-2">CEA <strong>La Unión</strong></span>
+      </a>
+      <button class="btn sidebar-collapse-btn" type="button" (click)="toggleSidebar()" aria-label="Colapsar menú lateral">
+        <i class="bi" [class.bi-chevron-left]="!sidebarCollapsed()" [class.bi-chevron-right]="sidebarCollapsed()" aria-hidden="true"></i>
+      </button>
+    </div>
 
-    <p class="admin-sidebar__label">Administración</p>
-    <nav class="admin-nav" aria-label="Secciones del panel">
-      <a class="admin-nav__link" routerLink="/admin/inicio" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
-        <span aria-hidden="true">▦</span> Inicio
+    <p class="admin-sidebar__label px-2 mb-2">Administración</p>
+    <nav class="admin-nav d-grid" aria-label="Secciones del panel">
+      <a class="admin-nav__link d-flex align-items-center" routerLink="/admin/inicio" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page" title="Inicio">
+        <i class="bi bi-grid-1x2-fill" aria-hidden="true"></i><span>Inicio</span>
       </a>
-      <a class="admin-nav__link" routerLink="/admin/solicitudes" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
-        <span aria-hidden="true">☷</span> Solicitudes
+      <a class="admin-nav__link d-flex align-items-center" routerLink="/admin/solicitudes" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page" title="Solicitudes">
+        <i class="bi bi-inbox-fill" aria-hidden="true"></i><span>Solicitudes</span>
       </a>
-      <a class="admin-nav__link" routerLink="/admin/cursos" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
-        <span aria-hidden="true">▤</span> Cursos
+      <a class="admin-nav__link d-flex align-items-center" routerLink="/admin/cursos" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page" title="Cursos">
+        <i class="bi bi-journal-bookmark-fill" aria-hidden="true"></i><span>Cursos</span>
       </a>
-      <a class="admin-nav__link" routerLink="/admin/reportes" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
-        <span aria-hidden="true">▥</span> Reportes
+      <a class="admin-nav__link d-flex align-items-center" routerLink="/admin/horarios" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page" title="Horarios">
+        <i class="bi bi-calendar-week-fill" aria-hidden="true"></i><span>Horarios</span>
+      </a>
+      <a class="admin-nav__link d-flex align-items-center" routerLink="/admin/reportes" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page" title="Reportes">
+        <i class="bi bi-bar-chart-fill" aria-hidden="true"></i><span>Reportes</span>
       </a>
     </nav>
-    <a class="admin-sidebar__exit" routerLink="/admin/login">Cerrar sesión</a>
+
+    <button class="admin-sidebar__exit btn d-flex align-items-center mt-auto" type="button" (click)="cerrarSesion()">
+      <i class="bi bi-box-arrow-right" aria-hidden="true"></i><span>Cerrar sesión</span>
+    </button>
   </aside>
 
-  <main class="admin-main">
-    <header class="admin-topbar">
-      <span>Panel administrativo</span>
-      <a routerLink="/">Ver sitio público ↗</a>
+  <main class="admin-main flex-grow-1">
+    <header class="admin-topbar sticky-top d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn d-lg-none" type="button" (click)="toggleSidebar()" aria-label="Abrir menú lateral">
+          <i class="bi bi-list fs-4" aria-hidden="true"></i>
+        </button>
+        <span class="fw-semibold text-dark">Panel administrativo</span>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <div class="text-end d-none d-sm-block">
+          <div class="small fw-bold">{{ usuario().nombre }}</div>
+          <div class="admin-user-role small">{{ usuario().rol }}</div>
+        </div>
+        <button class="admin-logout-btn btn" type="button" (click)="cerrarSesion()" aria-label="Cerrar sesión">
+          <i class="bi bi-box-arrow-right fs-5" aria-hidden="true"></i>
+        </button>
+      </div>
     </header>
     <router-outlet />
   </main>

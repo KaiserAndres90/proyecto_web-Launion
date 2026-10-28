@@ -41,11 +41,23 @@ router.post(
 
 router.post(
   '/login',
-  body('email').trim().isEmail().withMessage('El email no es válido').normalizeEmail(),
-  body('password')
-    .isString()
-    .notEmpty()
-    .withMessage('La contraseña es obligatoria'),
+  body().custom((valor, { req }) => {
+    const identificador = req.body.email || req.body.username;
+
+    if (!identificador || typeof req.body.password !== 'string' || req.body.password.length === 0) {
+      throw new Error('El email o usuario y la contraseña son obligatorios');
+    }
+
+    if (req.body.email && typeof req.body.email === 'string') {
+      const emailNormalizado = req.body.email.trim();
+      if (!/^\S+@\S+\.\S+$/.test(emailNormalizado)) {
+        throw new Error('El email no es válido');
+      }
+      req.body.email = emailNormalizado.toLowerCase();
+    }
+
+    return true;
+  }),
   validarSolicitud,
   login
 );

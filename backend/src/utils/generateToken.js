@@ -1,16 +1,19 @@
 import jwt from 'jsonwebtoken';
 
-const generateToken = (usuarioId) => {
-  const { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
+const generateToken = (usuarioId, rol) => {
+  const JWT_SECRET = process.env.JWT_SECRET;
 
   if (!JWT_SECRET) {
     throw new Error('La variable de entorno JWT_SECRET es obligatoria');
   }
 
   return jwt.sign(
-    { id: usuarioId.toString() },
+    {
+      id: usuarioId.toString(),
+      rol,
+    },
     JWT_SECRET,
-    { expiresIn: JWT_EXPIRES_IN || '1d' }
+    { expiresIn: '24h' }
   );
 };
 
