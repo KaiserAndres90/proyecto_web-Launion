@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const generateToken = (usuarioId, rol) => {
+const generateToken = (usuarioId) => {
   const { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
 
   if (!JWT_SECRET) {
@@ -8,9 +8,9 @@ const generateToken = (usuarioId, rol) => {
   }
 
   return jwt.sign(
-    { id: usuarioId.toString(), rol },
+    { id: usuarioId.toString() },
     JWT_SECRET,
-    { expiresIn: JWT_EXPIRES_IN || '1d' }
+    { expiresIn: '24h' }
   );
 };
 
