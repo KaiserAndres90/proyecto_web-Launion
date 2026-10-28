@@ -3,7 +3,7 @@
     <div class="container">
       <div class="section-heading mx-auto mb-5 text-center animate__animated animate__fadeInUp">
         <p class="eyebrow">CEA Conductores La Unión</p>
-        <h1 id="contact-page-title">Ubicación y preinscripción</h1>
+        <h1 id="contact-page-title">Ubicación y formulario de contacto</h1>
         <p>Visítanos en Pasto o déjanos tus datos para recibir orientación sobre nuestros cursos.</p>
       </div>
 
@@ -22,11 +22,11 @@
               <div class="map-placeholder rounded-3" role="img" aria-label="Marcador de ubicación en Pasto, Nariño">
                 <span class="map-placeholder__pin" aria-hidden="true"><i class="bi bi-geo-alt-fill"></i></span>
                 <span>Pasto, Nariño</span>
-                <span class="map-placeholder__caption">Mapa de Google próximamente</span>
+                <span class="map-placeholder__caption">Ubicación oficial de la sede</span>
               </div>
               <div class="location-panel__actions mt-3">
-                <a class="btn btn-success" href="https://www.google.com/maps/search/?api=1&amp;query=Pasto%2C+Nari%C3%B1o" target="_blank" rel="noopener noreferrer">
-                  <i class="bi bi-map me-1" aria-hidden="true"></i> Abrir Google Maps
+                <a class="btn btn-success" href="https://maps.app.goo.gl/ZvK96ZrbkBPnhsta6" target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-map me-1" aria-hidden="true"></i> Ver ubicación en Google Maps
                 </a>
                 <a class="btn btn-outline-success" href="https://wa.me/?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20cursos%20del%20CEA%20Conductores%20La%20Uni%C3%B3n." target="_blank" rel="noopener noreferrer">
                   <i class="bi bi-whatsapp me-1" aria-hidden="true"></i> Consultar por WhatsApp
@@ -42,7 +42,7 @@
         <div class="col-12 col-lg-4">
           <div class="contact__intro h-100">
             <p class="eyebrow">Estamos aquí para ayudarte</p>
-            <h2 id="contact-title">Preinscríbete</h2>
+            <h2 id="contact-title">Solicitar información</h2>
             <p>Déjanos tus datos y el curso que te interesa. Nuestro equipo podrá orientarte sobre requisitos, horarios y precios.</p>
             <section class="contact-hours rounded-4 p-3 mt-4" aria-label="Horario de atención">
               <div class="d-flex align-items-center gap-2 mb-2">
@@ -63,7 +63,7 @@
           <form
             #preRegistrationForm="ngForm"
             class="contact-form card card-body shadow-sm"
-            aria-label="Formulario de preinscripción"
+            aria-label="Formulario de contacto"
             novalidate
             (ngSubmit)="submitPreRegistration(preRegistrationForm)">
             <div class="row g-3">
@@ -84,27 +84,6 @@
                   [attr.aria-invalid]="submitted && fullName.invalid" />
                 @if (submitted && fullName.invalid) {
                   <div class="invalid-feedback">Escribe tu nombre completo (mínimo 3 caracteres).</div>
-                }
-              </div>
-
-              <div class="col-12 col-md-6">
-                <label class="form-label" for="contact-id">Cédula</label>
-                <input
-                  #identityNumber="ngModel"
-                  class="form-control"
-                  [class.is-invalid]="submitted && identityNumber.invalid"
-                  id="contact-id"
-                  name="identityNumber"
-                  type="text"
-                  inputmode="numeric"
-                  autocomplete="off"
-                  placeholder="Número de documento"
-                  required
-                  pattern="[0-9]{5,10}"
-                  [(ngModel)]="formData.identityNumber"
-                  [attr.aria-invalid]="submitted && identityNumber.invalid" />
-                @if (submitted && identityNumber.invalid) {
-                  <div class="invalid-feedback">Ingresa una cédula válida de 5 a 10 dígitos.</div>
                 }
               </div>
 
@@ -175,7 +154,7 @@
 
               <div class="col-12">
                 <button class="btn btn-success btn-lg" type="submit">
-                  Validar preinscripción <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
+                  Solicitar información <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
                 </button>
               </div>
               @if (submissionMessage) {

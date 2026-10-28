@@ -12,7 +12,7 @@ import { autorizarRoles } from '../middlewares/roleMiddleware.js';
 import validateRequest from '../middlewares/validateRequest.js';
 
 const router = Router();
-const administrar = [proteger, autorizarRoles('admin', 'auxiliar')];
+const administrar = [proteger, autorizarRoles('admin', 'gerente')];
 const idValido = param('id').isMongoId().withMessage('El ID del curso no es válido');
 const camposCurso = [
   body('nombre').trim().notEmpty().withMessage('El nombre es obligatorio'),

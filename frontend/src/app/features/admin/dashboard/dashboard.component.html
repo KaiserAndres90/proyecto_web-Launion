@@ -22,11 +22,11 @@
       <a class="admin-nav__link" routerLink="/admin/cursos" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
         <span aria-hidden="true">▤</span> Cursos
       </a>
-      <a class="admin-nav__link" routerLink="/admin/reportes" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
+      <a *ngIf="isAdmin" class="admin-nav__link" routerLink="/admin/reportes" routerLinkActive="admin-nav__link--active" ariaCurrentWhenActive="page">
         <span aria-hidden="true">▥</span> Reportes
       </a>
     </nav>
-    <a class="admin-sidebar__exit" routerLink="/admin/login">Cerrar sesión</a>
+    <button (click)="logout()" class="btn btn-danger admin-sidebar__exit">Cerrar sesión</button>
   </aside>
 
   <main class="admin-main">

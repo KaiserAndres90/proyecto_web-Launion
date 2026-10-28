@@ -8,17 +8,17 @@ import {
   obtenerSolicitud,
 } from '../controllers/solicitudController.js';
 import { proteger } from '../middlewares/authMiddleware.js';
-import { autorizarRoles } from '../middlewares/roleMiddleware.js';
+import { checkRole } from '../middlewares/roleMiddleware.js';
 import validateRequest from '../middlewares/validateRequest.js';
 
 const router = Router();
 const leerSolicitudes = [
   proteger,
-  autorizarRoles('admin', 'auxiliar', 'gerente'),
+  checkRole(['admin', 'gerente', 'aux_atencion']),
 ];
 const administrarSolicitudes = [
   proteger,
-  autorizarRoles('admin', 'auxiliar'),
+  checkRole(['admin', 'gerente']),
 ];
 
 const validarDatosPublicos = [

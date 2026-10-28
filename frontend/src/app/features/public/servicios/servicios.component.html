@@ -36,14 +36,8 @@
               <h2 class="card-title h4">{{ curso.name }}</h2>
               <p class="small text-secondary">{{ curso.shortDescription }}</p>
               <p class="small course-card__hours">
-                <ng-container *ngIf="curso.hoursTeoria !== null && curso.hoursPractica !== null; else hoursAsNeeded">
-                  <strong>Formación:</strong> {{ curso.hoursTeoria }} horas de teoría y
-                  {{ curso.hoursPractica }} horas de práctica.
-                </ng-container>
-                <ng-template #hoursAsNeeded><strong>Formación:</strong> Horas según necesidad del estudiante.</ng-template>
+                <strong>Formación:</strong> {{ curso.hoursLabel }}
               </p>
-              <p class="course-card__price mb-0">{{ curso.price }} <span>{{ curso.priceUnit }}</span></p>
-              <p class="small text-secondary mb-4">Precio de referencia; confirma el valor vigente al inscribirte.</p>
               <h3 class="h6 fw-bold">Requisitos</h3>
               <ul class="course-requirements list-unstyled mb-4">
                 <li *ngFor="let requisito of curso.requirements">
@@ -53,8 +47,6 @@
               <button
                 type="button"
                 class="btn btn-success mt-auto"
-                data-bs-toggle="modal"
-                data-bs-target="#courseModal"
                 (click)="abrirModal(curso)">
                 Más información <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
               </button>
@@ -85,8 +77,6 @@
             <button
               type="button"
               class="btn btn-success btn-lg px-4"
-              data-bs-toggle="modal"
-              data-bs-target="#instructoresModal"
               (click)="abrirModalInstructores()">
               Más información <i class="bi bi-arrow-up-right ms-1" aria-hidden="true"></i>
             </button>
@@ -120,13 +110,22 @@
   </section>
 
   <div
-    #courseModal
+    *ngIf="cursoSeleccionado"
+    class="course-modal-backdrop"
+    [class.closing]="cursoModalCerrando"
+    aria-hidden="true"
+    (click)="cerrarModalCurso()">
+  </div>
+
+  <div
     id="courseModal"
-    class="modal fade course-modal"
+    class="modal course-modal"
+    [class.show]="cursoSeleccionado !== null"
+    [class.d-block]="cursoSeleccionado !== null"
+    [class.closing]="cursoModalCerrando"
     tabindex="-1"
     aria-labelledby="course-modal-title"
-    aria-hidden="true"
-    (hidden.bs.modal)="limpiarCursoSeleccionado()">
+    [attr.aria-hidden]="cursoSeleccionado === null ? 'true' : 'false'">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
       <div class="modal-content border-0 rounded-4 shadow-lg">
         <ng-container *ngIf="cursoSeleccionado as curso">
@@ -138,29 +137,16 @@
             <button
               type="button"
               class="btn-close btn-close-white"
-              data-bs-dismiss="modal"
-              aria-label="Cerrar">
+              aria-label="Cerrar"
+              (click)="cerrarModalCurso()">
             </button>
           </div>
           <div class="modal-body p-4 p-lg-5">
             <p class="lead fs-6">{{ curso.descripcionLarga }}</p>
-            <div class="row g-3 mb-4">
-              <div class="col-12 col-md-6">
-                <div class="course-modal__detail h-100 rounded-3 p-3">
-                  <span class="d-block small text-secondary mb-1">Formación</span>
-                  <strong>
-                    <ng-container *ngIf="curso.hoursTeoria !== null && curso.hoursPractica !== null; else modalHoursAsNeeded">
-                      {{ curso.hoursTeoria }} h teoría · {{ curso.hoursPractica }} h práctica
-                    </ng-container>
-                    <ng-template #modalHoursAsNeeded>Horas según necesidad del estudiante</ng-template>
-                  </strong>
-                </div>
-              </div>
-              <div class="col-12 col-md-6">
-                <div class="course-modal__detail h-100 rounded-3 p-3">
-                  <span class="d-block small text-secondary mb-1">Precio de referencia</span>
-                  <strong class="course-modal__price">{{ curso.price }} {{ curso.priceUnit }}</strong>
-                </div>
+            <div class="mb-4">
+              <div class="course-modal__detail rounded-3 p-3">
+                <span class="d-block small text-secondary mb-1">Formación</span>
+                <strong>{{ curso.hoursLabel }}</strong>
               </div>
             </div>
             <h3 class="h6 fw-bold mb-3">Requisitos</h3>
@@ -174,20 +160,28 @@
             </p>
           </div>
           <div class="modal-footer border-0 px-4 pb-4 pt-0">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <a class="btn btn-success px-4" routerLink="/contacto" data-bs-dismiss="modal">Inscribirme</a>
+            <button type="button" class="btn btn-outline-secondary" (click)="cerrarModalCurso()">Cerrar</button>
+            <a class="btn btn-success px-4" routerLink="/contacto" (click)="cerrarModalCurso()">Solicitar información</a>
           </div>
         </ng-container>
       </div>
     </div>
   </div>
   <div
+    *ngIf="mostrarModalInstructores"
+    class="instructor-modal-backdrop"
+    aria-hidden="true"
+    (click)="cerrarModalInstructores()">
+  </div>
+
+  <div
     id="instructoresModal"
     class="modal fade instructor-modal"
+    [class.show]="mostrarModalInstructores"
+    [class.d-block]="mostrarModalInstructores"
     tabindex="-1"
     aria-labelledby="instructoresModalLabel"
-    aria-hidden="true"
-    (hidden.bs.modal)="cerrarModalInstructores()">
+    [attr.aria-hidden]="mostrarModalInstructores ? 'false' : 'true'">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content rounded-4 shadow-lg border-0">
         <div class="modal-header bg-dark text-white instructor-modal__header">
@@ -198,19 +192,26 @@
             <div>
               <p class="small text-white-50 mb-1">Programa de formación</p>
               <h2 class="modal-title fs-4 fw-bold mb-0" id="instructoresModalLabel">
-                Formación de Instructores
+                {{ instructorSeleccionado?.name || 'Formación de Instructores' }}
               </h2>
             </div>
           </div>
           <button
             type="button"
             class="btn-close btn-close-white"
-            data-bs-dismiss="modal"
             aria-label="Cerrar"
             (click)="cerrarModalInstructores()">
           </button>
         </div>
         <div class="modal-body p-4 p-lg-5" *ngIf="mostrarModalInstructores">
+          <div *ngIf="instructorSeleccionado as instructor" class="instructor-modal__module rounded-3 p-3 mb-4">
+            <div class="row align-items-center g-3">
+              <div class="col-md-7">
+                <p class="mb-1 fw-bold">{{ instructor.hours }}</p>
+                <p class="mb-0 text-secondary">{{ instructor.description }}</p>
+              </div>
+            </div>
+          </div>
           <div class="accordion instructor-modal__accordion" id="instructorProgramAccordion">
             <section class="accordion-item">
               <h3 class="accordion-header" id="instructorIntroHeading">
@@ -265,8 +266,8 @@
                           <th scope="col">Categoría</th>
                           <th scope="col">Tipo</th>
                           <th scope="col">Teoría (h)</th>
-                          <th scope="col">Pedagógica (h)</th>
-                          <th scope="col">Manejo (h)</th>
+                          <th scope="col">Práctica (h)</th>
+                          <th scope="col">Total estructurado (h)</th>
                           <th scope="col">Total (h)</th>
                         </tr>
                       </thead>
@@ -275,7 +276,6 @@
                           <th scope="row">{{ formacion.cat }}</th>
                           <td>{{ formacion.tipo }}</td>
                           <td>{{ formacion.teoria }}</td>
-                          <td>{{ formacion.pedagogica }}</td>
                           <td>{{ formacion.manejo }}</td>
                           <td class="fw-bold">{{ formacion.total }}</td>
                         </tr>
@@ -305,11 +305,11 @@
                 data-bs-parent="#instructorProgramAccordion">
                 <div class="accordion-body">
                   <ul class="instructor-modal__list mb-0">
-                    <li><strong>Identificación:</strong> documento vigente para el proceso de inscripción.</li>
+                    <li><strong>Identificación:</strong> documento vigente para el proceso de solicitud de información.</li>
                     <li><strong>Licencia de conducción:</strong> categoría correspondiente al programa, según validación del centro de formación.</li>
                     <li><strong>Aptitud:</strong> cumplir las evaluaciones médicas y demás condiciones aplicables.</li>
                     <li><strong>Formación:</strong> asistir y aprobar los componentes teóricos, pedagógicos y prácticos.</li>
-                    <li><strong>Verificación normativa:</strong> confirmar con el centro los requisitos y documentos vigentes antes de inscribirse.</li>
+                    <li><strong>Verificación normativa:</strong> confirmar con el centro los requisitos y documentos vigentes antes de solicitar información.</li>
                   </ul>
                 </div>
               </div>
@@ -362,12 +362,11 @@
           <button
             type="button"
             class="btn btn-outline-secondary"
-            data-bs-dismiss="modal"
             (click)="cerrarModalInstructores()">
             Cerrar
           </button>
-          <a class="btn btn-success px-4" routerLink="/contacto" data-bs-dismiss="modal">
-            Consultar inscripción
+          <a class="btn btn-success px-4" routerLink="/contacto" (click)="cerrarModalInstructores()">
+            Solicitar información
           </a>
         </div>
       </div>

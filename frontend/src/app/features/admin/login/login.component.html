@@ -11,23 +11,18 @@
       <h1 id="login-title" class="h3 fw-bold mb-2">Acceso Administrativo - KYBER</h1>
       <p class="login-description mb-4">Ingresa tus credenciales para continuar al panel administrativo.</p>
 
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <form [formGroup]="credentialsForm" (ngSubmit)="handleSubmit()">
         <div class="mb-3">
-          <label for="admin-email" class="form-label fw-semibold">Correo electrónico</label>
+          <label for="admin-username" class="form-label fw-semibold">Correo electrónico</label>
           <div class="input-group">
-            <span class="input-group-text" aria-hidden="true"><i class="bi bi-envelope"></i></span>
+            <span class="input-group-text" aria-hidden="true"><i class="bi bi-person"></i></span>
             <input
-              id="admin-email"
+              id="admin-username"
               class="form-control"
               type="email"
-              formControlName="email"
+              formControlName="username"
               autocomplete="username"
-              placeholder="admin@cea.com"
-              [attr.aria-invalid]="loginForm.controls.email.invalid && loginForm.controls.email.touched">
-          </div>
-          <div *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched" class="invalid-feedback d-block">
-            <span *ngIf="loginForm.controls.email.errors?.['required']">El correo electrónico es obligatorio.</span>
-            <span *ngIf="loginForm.controls.email.errors?.['email']">Ingresa un correo electrónico válido.</span>
+              placeholder="Correo electrónico">
           </div>
         </div>
 
@@ -41,29 +36,22 @@
               type="password"
               formControlName="password"
               autocomplete="current-password"
-              placeholder="Ingresa tu contraseña"
-              [attr.aria-invalid]="loginForm.controls.password.invalid && loginForm.controls.password.touched">
-          </div>
-          <div *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched" class="invalid-feedback d-block">
-            La contraseña es obligatoria.
+              placeholder="Ingresa tu contraseña">
           </div>
         </div>
 
-        <div class="form-check mb-3">
-          <input id="remember-me" class="form-check-input" type="checkbox" formControlName="remember">
-          <label class="form-check-label" for="remember-me">Recordarme</label>
+        <div *ngIf="loginError" class="alert alert-danger py-2 mt-2" role="alert">
+          {{ loginError }}
         </div>
 
-        <div *ngIf="errorMessage" class="alert alert-danger py-2" role="alert">{{ errorMessage }}</div>
-
-        <button class="btn btn-success w-100 login-submit" type="submit" [disabled]="isLoading">
-          <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-          <span>{{ isLoading ? 'Ingresando…' : 'Ingresar' }}</span>
+        <button class="btn btn-success w-100 login-submit" type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Ingresando...' : 'Ingresar' }}
         </button>
+        <button type="button" class="btn btn-warning ms-2" routerLink="/admin/recover">Olvidé mi contraseña</button>
       </form>
 
       <p class="login-notice small text-center mt-3 mb-3">
-        Acceso de demostración: la autenticación aún no está conectada.
+        Use las credenciales de administrador registradas en el sistema.
       </p>
       <a class="login-back d-block text-center" routerLink="/inicio">Volver al sitio público</a>
     </div>

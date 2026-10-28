@@ -11,7 +11,6 @@ export class ContactoComponent {
   protected submissionMessage = '';
   protected formData = {
     fullName: '',
-    identityNumber: '',
     phone: '',
     email: '',
     course: '',

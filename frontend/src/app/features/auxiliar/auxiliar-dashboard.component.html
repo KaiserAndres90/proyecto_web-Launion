@@ -1,0 +1,32 @@
+<div class="auxiliar-layout">
+  <aside class="auxiliar-sidebar">
+    <a class="auxiliar-brand" routerLink="/inicio">CEA <strong>La Unión</strong></a>
+    <p class="auxiliar-label">Panel de auxiliar</p>
+
+    <nav class="auxiliar-nav" aria-label="Opciones del auxiliar">
+      <a *ngFor="let option of menuOptions" href="#" class="auxiliar-nav__link">
+        <span>{{ option.label }}</span>
+      </a>
+    </nav>
+
+    <button type="button" class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
+  </aside>
+
+  <main class="auxiliar-main">
+    <header class="auxiliar-header">
+      <div>
+        <p>Área asignada</p>
+        <h1>{{ role }}</h1>
+      </div>
+      <a routerLink="/">Ver sitio público</a>
+    </header>
+
+    <section class="auxiliar-grid">
+      <article *ngFor="let option of menuOptions" class="auxiliar-card">
+        <h2>{{ option.label }}</h2>
+        <p>{{ option.placeholder }}</p>
+        <button type="button" class="btn btn-success" disabled>Sección disponible próximamente</button>
+      </article>
+    </section>
+  </main>
+</div>

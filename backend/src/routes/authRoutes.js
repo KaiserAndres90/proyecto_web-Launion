@@ -2,10 +2,12 @@ import { Router } from 'express';
 import { validationResult, body } from 'express-validator';
 import {
   login,
+  forgotPassword,
   obtenerPerfil,
   registrarUsuario,
 } from '../controllers/authController.js';
 import { proteger } from '../middlewares/authMiddleware.js';
+import { checkRole } from '../middlewares/roleMiddleware.js';
 
 const router = Router();
 
@@ -25,6 +27,8 @@ const validarSolicitud = (req, res, next) => {
 
 router.post(
   '/register',
+  proteger,
+  checkRole(['admin', 'gerente']),
   body('nombre').trim().notEmpty().withMessage('El nombre es obligatorio'),
   body('email').trim().isEmail().withMessage('El email no es válido').normalizeEmail(),
   body('telefono')
@@ -35,6 +39,10 @@ router.post(
     .isString()
     .isLength({ min: 6 })
     .withMessage('La contraseña debe tener al menos 6 caracteres'),
+  body('rol')
+    .optional()
+    .isIn(['admin', 'gerente', 'aux_teoria', 'aux_practica', 'aux_documentacion', 'aux_atencion'])
+    .withMessage('El rol proporcionado no es válido'),
   validarSolicitud,
   registrarUsuario
 );
@@ -49,6 +57,8 @@ router.post(
   validarSolicitud,
   login
 );
+
+router.post('/forgot-password', forgotPassword);
 
 router.get('/me', proteger, obtenerPerfil);
 

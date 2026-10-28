@@ -29,7 +29,10 @@ const importarDatos = async () => {
     const usuarios = await Usuario.create([
       { nombre: 'Administrador CEA', email: 'admin@launion.com', telefono: '3001234567', password: 'admin123', rol: 'admin' },
       { nombre: 'Gerente CEA', email: 'gerente@launion.com', telefono: '3007654321', password: 'gerente123', rol: 'gerente' },
-      { nombre: 'Auxiliar CEA', email: 'auxiliar@launion.com', telefono: '3009876543', password: 'auxiliar123', rol: 'auxiliar' },
+      { nombre: 'Auxiliar de Atención CEA', email: 'auxiliar.atencion@launion.com', telefono: '3009876543', password: 'auxiliar123', rol: 'aux_atencion' },
+      { nombre: 'Auxiliar de Teoría CEA', email: 'auxiliar.teoria@launion.com', telefono: '3009876544', password: 'auxiliar123', rol: 'aux_teoria' },
+      { nombre: 'Auxiliar de Práctica CEA', email: 'auxiliar.practica@launion.com', telefono: '3009876545', password: 'auxiliar123', rol: 'aux_practica' },
+      { nombre: 'Auxiliar de Documentación CEA', email: 'auxiliar.documentacion@launion.com', telefono: '3009876546', password: 'auxiliar123', rol: 'aux_documentacion' },
     ]);
     console.log(`👥 ${usuarios.length} usuarios creados`);
 

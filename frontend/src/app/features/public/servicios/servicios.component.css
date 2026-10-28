@@ -46,6 +46,28 @@
   place-items: center;
 }
 
+.instructor-course-card {
+  overflow: hidden;
+  background: #fff;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.instructor-course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 18%) !important;
+}
+
+.instructor-course-card__image-frame {
+  height: 180px;
+  overflow: hidden;
+  background: #eceeeb;
+}
+
+.instructor-course-card__image-frame .card-img-top {
+  height: 180px;
+  border-radius: 0;
+}
+
 .course-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 1.25rem 2.5rem rgb(37 40 32 / 18%) !important;
@@ -263,6 +285,117 @@
 
 .row > .col:nth-child(3n) .course-card {
   animation-delay: 240ms;
+}
+
+/* Backdrops y modales de información */
+.instructor-modal-backdrop {
+  position: fixed;
+  z-index: 1050;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.instructor-modal {
+  z-index: 1055;
+  background: transparent;
+}
+
+.modal.instructor-modal.show {
+  display: block;
+}
+
+.course-modal-backdrop {
+  position: fixed;
+  z-index: 1050;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+  transition: opacity 220ms ease;
+}
+
+.course-modal-backdrop.closing {
+  opacity: 0;
+}
+
+.modal.course-modal {
+  z-index: 1055 !important;
+}
+
+.modal.course-modal.show {
+  display: block;
+}
+
+.modal.course-modal.show:not(.closing) {
+  animation: course-modal-fade-in 220ms ease-out;
+}
+
+.modal.course-modal.closing {
+  pointer-events: none;
+}
+
+.modal.course-modal.closing .modal-dialog {
+  opacity: 0;
+  transform: translateY(18px) scale(0.97);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.modal.course-modal.show:not(.closing) .modal-dialog {
+  animation: course-modal-dialog-in 220ms ease-out;
+}
+
+@keyframes course-modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes course-modal-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .course-modal-backdrop,
+  .modal.course-modal .modal-dialog {
+    animation: none !important;
+    transition-duration: 0ms !important;
+  }
+}
+
+.modal.course-modal .modal-header,
+.course-modal__header {
+  background-color: #333333 !important;
+  background-image: none !important;
+}
+
+.modal.course-modal .modal-title,
+.modal.course-modal .modal-header h2,
+.modal.course-modal .modal-header h4,
+.modal.course-modal .modal-header h5 {
+  color: #ffffff !important;
+}
+
+.modal.course-modal .modal-header .btn-close {
+  filter: none;
+  opacity: 1;
+}
+
+.modal.course-modal .modal-body {
+  background-color: #f8f9fa !important;
+}
+
+::ng-deep .modal-backdrop {
+  z-index: 1050 !important;
+}
+
+.modal.course-modal .modal-content {
+  position: relative;
+  z-index: 1056;
 }
 
 @media (prefers-reduced-motion: reduce) {
