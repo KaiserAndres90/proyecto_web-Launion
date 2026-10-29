@@ -1,0 +1,82 @@
+<main class="solicitud-page bg-light min-vh-100 d-flex align-items-center justify-content-center py-5">
+  <section class="container" aria-labelledby="solicitud-title">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+        <article class="solicitud-card card border-0 shadow-lg rounded-4 animate__animated animate__fadeInUp">
+          <div class="card-body p-4 p-md-5">
+            <div class="text-center mb-4">
+              <span class="solicitud-card__icon"><i class="bi bi-person-lines-fill" aria-hidden="true"></i></span>
+              <h1 id="solicitud-title" class="h2 fw-bold mt-3 mb-2">Solicita Información</h1>
+              <p class="text-secondary mb-0">Déjanos tus datos y te contactaremos pronto.</p>
+            </div>
+
+            <form #solicitudForm="ngForm" novalidate (ngSubmit)="enviarSolicitud(solicitudForm)">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label" for="solicitud-nombre">Nombre</label>
+                  <input #nombre="ngModel" id="solicitud-nombre" name="nombre" type="text" autocomplete="name"
+                    class="form-control" minlength="3" required [(ngModel)]="formData.nombre"
+                    [class.is-invalid]="submitted && nombre.invalid" placeholder="Tu nombre completo">
+                  @if (submitted && nombre.invalid) {
+                    <div class="invalid-feedback">Escribe tu nombre completo.</div>
+                  }
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="solicitud-telefono">Teléfono</label>
+                  <input #telefono="ngModel" id="solicitud-telefono" name="telefono" type="tel" inputmode="tel"
+                    autocomplete="tel" class="form-control" required pattern="[0-9]{10}" [(ngModel)]="formData.telefono"
+                    [class.is-invalid]="submitted && telefono.invalid" placeholder="Número de contacto">
+                  @if (submitted && telefono.invalid) {
+                    <div class="invalid-feedback">Ingresa un teléfono de 10 dígitos.</div>
+                  }
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="solicitud-correo">Correo</label>
+                  <input #email="ngModel" id="solicitud-correo" name="email" type="email" autocomplete="email"
+                    class="form-control" required email [(ngModel)]="formData.email"
+                    [class.is-invalid]="submitted && email.invalid" placeholder="nombre@correo.com">
+                  @if (submitted && email.invalid) {
+                    <div class="invalid-feedback">Ingresa un correo válido.</div>
+                  }
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label" for="solicitud-curso">Curso de interés</label>
+                  <select #curso="ngModel" id="solicitud-curso" name="curso" class="form-select" required
+                    [(ngModel)]="formData.curso" [class.is-invalid]="submitted && curso.invalid">
+                    <option value="" disabled>Selecciona un curso</option>
+                    <option value="A2 - Motos">Curso A2 - Motos</option>
+                    <option value="B1 - Automóviles">Curso B1 - Automóviles</option>
+                    <option value="Curso de Refuerzo">Curso de Refuerzo</option>
+                    <option value="C1 - Carros y Microbuses">Curso C1 - Carros y Microbuses</option>
+                    <option value="C2 - Servicio Público">Curso C2 - Servicio Público</option>
+                    <option value="C3 - Transporte de Carga Pesada">Curso C3 - Transporte de Carga Pesada</option>
+                    <option value="Formación de Instructor">Formación de Instructor</option>
+                  </select>
+                  @if (submitted && curso.invalid) {
+                    <div class="invalid-feedback">Selecciona el curso que te interesa.</div>
+                  }
+                </div>
+
+                @if (successMessage) {
+                  <div class="col-12"><div class="alert alert-success mb-0" role="status">{{ successMessage }}</div></div>
+                }
+                @if (errorMessage) {
+                  <div class="col-12"><div class="alert alert-danger mb-0" role="alert">{{ errorMessage }}</div></div>
+                }
+
+                <div class="col-12 mt-4">
+                  <button class="btn btn-success btn-lg w-100 solicitud-card__button" type="submit" [disabled]="isSubmitting">
+                    {{ isSubmitting ? 'Enviando...' : 'Enviar Solicitud' }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>

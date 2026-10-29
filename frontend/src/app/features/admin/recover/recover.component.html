@@ -1,8 +1,82 @@
-<form [formGroup]="recoverForm" (ngSubmit)="handleRecover()">
-  <input type="email" formControlName="email">
-  <button type="submit">Recuperar contraseña</button>
-</form>
+<main
+  class="recover-page min-vh-100 d-flex align-items-center justify-content-center px-3 py-5"
+  aria-label="Recuperación de cuenta"
+>
+  <section
+    class="recover-card card border-0 rounded-4 shadow-lg w-100 animate__animated animate__fadeInUp"
+    aria-labelledby="recover-title"
+  >
+    <div class="card-body p-4 p-sm-5">
+      <header class="text-center mb-4">
+        <div class="recover-icon mx-auto mb-3" aria-hidden="true">
+          <i class="bi bi-shield-lock-fill"></i>
+        </div>
+        <p class="recover-eyebrow mb-2">Recuperación de cuenta</p>
+        <h1 id="recover-title" class="h3 fw-bold mb-2">¿Olvidaste tu contraseña?</h1>
+        <p class="recover-description mb-0">
+          Ingresa tu correo y te mostraremos las instrucciones de recuperación.
+        </p>
+      </header>
 
-@if (mensaje()) {
-  <div class="alert alert-info mt-3">{{ mensaje() }}</div>
-}
+      @if (emailEnviado()) {
+        <div class="alert alert-success recover-success mb-4" role="status" aria-live="polite">
+          <i class="bi bi-check-circle-fill me-2" aria-hidden="true"></i>
+          Si el correo existe, recibirás un enlace para restablecer tu contraseña.
+        </div>
+      }
+
+      <form [formGroup]="recoverForm" (ngSubmit)="handleRecover()" novalidate>
+        <div class="mb-4">
+          <label for="recover-email" class="form-label fw-semibold">
+            Correo electrónico
+          </label>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" aria-hidden="true">
+              <i class="bi bi-envelope"></i>
+            </span>
+            <input
+              id="recover-email"
+              type="email"
+              class="form-control form-control-lg"
+              formControlName="email"
+              autocomplete="email"
+              inputmode="email"
+              placeholder="nombre@correo.com"
+              aria-label="Correo electrónico para recuperación"
+              [attr.aria-invalid]="recoverForm.controls.email.invalid && recoverForm.controls.email.touched"
+            >
+          </div>
+
+          @if (recoverForm.controls.email.touched && recoverForm.controls.email.invalid) {
+            <div class="recover-validation mt-2" role="alert">
+              @if (recoverForm.controls.email.hasError('required')) {
+                El correo electrónico es obligatorio.
+              } @else if (recoverForm.controls.email.hasError('email')) {
+                Ingresa un correo electrónico válido.
+              }
+            </div>
+          }
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-lg w-100 recover-submit"
+          [disabled]="isLoading() || recoverForm.disabled"
+        >
+          @if (isLoading()) {
+            <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+            Enviando...
+          } @else {
+            <i class="bi bi-send-fill me-2" aria-hidden="true"></i>
+            Enviar enlace de recuperación
+          }
+        </button>
+      </form>
+
+      <a class="recover-back d-flex align-items-center justify-content-center mt-4" routerLink="/admin/login">
+        <i class="bi bi-arrow-left me-2" aria-hidden="true"></i>
+        Volver al inicio de sesión
+      </a>
+    </div>
+  </section>
+</main>

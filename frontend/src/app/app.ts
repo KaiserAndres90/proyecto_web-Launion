@@ -27,8 +27,13 @@ export class AppComponent {
   }
 
   private setPublicLayoutVisibility(url: string): void {
-    const isAdminRoute = url.startsWith('/admin');
-    this.showNavbar.set(!isAdminRoute);
-    this.showFooter.set(!isAdminRoute);
+    const normalizedUrl = url.split('?')[0];
+    const isAdminRoute = normalizedUrl.startsWith('/admin');
+    const knownPublicRoutes = ['/inicio', '/servicios', '/horarios', '/tramites', '/contacto', '/solicitud', '/auxiliar', '/auxiliar/inicio'];
+    const isKnownRoute = normalizedUrl === '/' || knownPublicRoutes.includes(normalizedUrl);
+    const isNotFoundRoute = !isAdminRoute && !isKnownRoute;
+
+    this.showNavbar.set(!isAdminRoute && !isNotFoundRoute);
+    this.showFooter.set(!isAdminRoute && !isNotFoundRoute);
   }
 }

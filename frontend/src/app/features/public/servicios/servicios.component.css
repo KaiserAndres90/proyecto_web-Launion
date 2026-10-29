@@ -73,6 +73,28 @@
   box-shadow: 0 1.25rem 2.5rem rgb(37 40 32 / 18%) !important;
 }
 
+.course-card__icon-wrap {
+  display: grid;
+  min-height: 150px;
+  place-items: center;
+  border-radius: 1.5rem 1.5rem 0 0;
+  background:
+    radial-gradient(circle at 85% 15%, rgb(241 230 0 / 28%), transparent 28%),
+    linear-gradient(135deg, rgb(165 195 0 / 18%), #f7f8f2);
+  color: #657900;
+  font-size: 4rem;
+}
+
+.course-card__vehicle {
+  min-height: 112px;
+  margin-bottom: 0;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: #f3f4ef;
+  color: #44483f;
+  line-height: 1.55;
+}
+
 .course-card__hours {
   min-height: 2.5rem;
 }

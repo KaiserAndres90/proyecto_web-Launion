@@ -1,21 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, HostListener, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 interface Curso {
-  code: string;
-  category: string;
-  name: string;
-  image: string;
-  imageAlt: string;
-  price: string;
-  priceUnit: string;
-  shortDescription: string;
-  requirements: string[];
-  hoursTeoria: number | null;
-  hoursPractica: number | null;
-  hoursLabel: string;
-  descripcionLarga: string;
+  readonly id: string;
+  readonly nombre: string;
+  readonly tipoVehiculo: string;
+  readonly requisitos: readonly string[];
 }
 
 interface HorasFormacionInstructor {
@@ -42,11 +33,14 @@ interface FormacionInstructor {
   imports: [CommonModule, RouterLink],
   templateUrl: './servicios.component.html',
   styleUrl: './servicios.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServiciosComponent {
-  protected readonly failedImages = new Set<string>();
-  protected cursoSeleccionado: Curso | null = null;
-  protected cursoModalCerrando = false;
+  private readonly destroyRef = inject(DestroyRef);
+  private closeModalTimeoutId: number | null = null;
+
+  protected readonly cursoSeleccionado = signal<Curso | null>(null);
+  protected readonly cursoModalCerrando = signal(false);
   protected mostrarModalInstructores = false;
   protected instructorSeleccionado: FormacionInstructor | null = null;
 
@@ -86,84 +80,80 @@ export class ServiciosComponent {
     { cat: 'C1', tipo: 'Servicio Público', teoria: '90', pedagogica: '—', manejo: '60', total: '150' },
   ];
 
-  protected readonly cursos: Curso[] = [
+  constructor() {
+    this.destroyRef.onDestroy(() => this.cancelCloseModal());
+  }
+
+  protected readonly cursos: readonly Curso[] = [
     {
-      code: 'a2', category: 'Motocicletas',
-      name: 'Curso conducción motocicletas 🏍️ A2', image: 'img/curso-a2.jpg',
-      imageAlt: 'Curso de conducción de motocicletas categoría A2',
-      price: '$ 1.100.000', priceUnit: 'COP',
-      shortDescription: 'Formación para conducir motocicletas categoría A2.',
-      requirements: ['Tener 16 años cumplidos', 'Documento de identidad', 'Certificado médico', 'Registro en el RUNT'],
-      hoursTeoria: 30, hoursPractica: 15, hoursLabel: '30 horas de teoría - 15 horas práctica',
-      descripcionLarga: 'Curso de conducción de motocicletas A2 con formación teórica y práctica.',
+      id: 'a1',
+      nombre: 'Curso A1',
+      tipoVehiculo: 'Motocicletas con cilindrada de hasta 125 c.c.',
+      requisitos: ['Ser mayor de 16 años', 'Tarjeta de identidad o cédula de ciudadanía original', 'Certificado médico vigente', 'Registro en el RUNT'],
     },
     {
-      code: 'b1', category: 'Automóviles',
-      name: 'Curso conducción particular B1', image: 'img/curso-b1.jpg',
-      imageAlt: 'Curso de conducción particular categoría B1',
-      price: '$ 1.300.000', priceUnit: 'COP',
-      shortDescription: 'Formación para conducir automóviles particulares.',
-      requirements: ['Tener 16 años cumplidos', 'Documento de identidad', 'Certificado médico', 'Registro en el RUNT'],
-      hoursTeoria: 30, hoursPractica: 20, hoursLabel: '30 horas teoría - 20 horas práctica',
-      descripcionLarga: 'Curso de conducción particular categoría B1 con formación teórica y práctica.',
+      id: 'a2',
+      nombre: 'Curso A2',
+      tipoVehiculo: 'Motocicletas, motociclos y mototriciclos con cilindrada mayor a 125 c.c.',
+      requisitos: ['Ser mayor de 16 años', 'Tarjeta de identidad o cédula de ciudadanía original', 'Certificado médico vigente', 'Registro en el RUNT'],
     },
     {
-      code: 'c1', category: 'Servicio Público',
-      name: 'Curso de conducción público C1 🚕', image: 'img/curso-c1.jpg',
-      imageAlt: 'Curso de conducción público categoría C1',
-      price: '$ 1.500.000', priceUnit: 'COP',
-      shortDescription: 'Formación para conducción de servicio público categoría C1.',
-      requirements: ['Tener 18 años cumplidos', 'Certificado médico', 'Registro en el RUNT', 'Requisitos vigentes para servicio público'],
-      hoursTeoria: 30, hoursPractica: 30, hoursLabel: '30 horas teoría - 30 horas práctica',
-      descripcionLarga: 'Curso de conducción público C1 con formación teórica y práctica.',
+      id: 'b1',
+      nombre: 'Curso B1',
+      tipoVehiculo: 'Automóviles, motocarros, cuatrimotos, camperos, camionetas y microbuses de servicio particular.',
+      requisitos: ['Ser mayor de 16 años', 'Tarjeta de identidad o cédula de ciudadanía original', 'Certificado médico vigente', 'Registro en el RUNT'],
     },
     {
-      code: 'c2', category: 'Camión',
-      name: 'Curso de conducción C2 camión 🚛', image: 'img/curso-c2.jpg',
-      imageAlt: 'Curso de conducción categoría C2 para camión',
-      price: '$ 1.800.000', priceUnit: 'COP',
-      shortDescription: 'Formación para conducción de vehículos categoría C2.',
-      requirements: ['Tener 18 años cumplidos', 'Certificado médico', 'Registro en el RUNT', 'Licencia C1 vigente'],
-      hoursTeoria: 40, hoursPractica: 15, hoursLabel: '40 horas teoría - 15 horas práctica',
-      descripcionLarga: 'Curso de conducción C2 para camiones con formación teórica y práctica.',
+      id: 'c1',
+      nombre: 'Curso C1',
+      tipoVehiculo: 'Automóviles, motocarros, camperos, camionetas y microbuses de servicio público.',
+      requisitos: ['Ser mayor de 18 años', 'Cédula de ciudadanía original', 'Certificado médico vigente', 'Registro en el RUNT'],
     },
     {
-      code: 'c3', category: 'Tractocamión',
-      name: 'Curso conducción C3 tractocamión', image: 'img/curso-c3.jpg',
-      imageAlt: 'Curso de conducción categoría C3 para tractocamión',
-      price: '$ 3.300.000', priceUnit: 'COP',
-      shortDescription: 'Formación para conducción de tractocamiones categoría C3.',
-      requirements: ['Tener 18 años cumplidos', 'Certificado médico', 'Registro en el RUNT', 'Licencia C2 vigente'],
-      hoursTeoria: 45, hoursPractica: 20, hoursLabel: '45 horas teoría - 20 horas práctica',
-      descripcionLarga: 'Curso de conducción C3 para tractocamiones con formación teórica y práctica.',
+      id: 'c2',
+      nombre: 'Curso C2',
+      tipoVehiculo: 'Camiones rígidos, busetas y buses de servicio público.',
+      requisitos: ['Ser mayor de 18 años', 'Cédula de ciudadanía original', 'Certificado médico vigente', 'Licencia de conducción C1 vigente', 'Registro en el RUNT'],
+    },
+    {
+      id: 'c3',
+      nombre: 'Curso C3',
+      tipoVehiculo: 'Vehículos articulados de servicio público.',
+      requisitos: ['Ser mayor de 18 años', 'Cédula de ciudadanía original', 'Certificado médico vigente', 'Licencia de conducción C2 vigente', 'Registro en el RUNT'],
     },
   ];
 
   protected abrirModal(curso: Curso): void {
+    this.cancelCloseModal();
     this.cerrarModalInstructores();
-    this.cursoModalCerrando = false;
-    this.cursoSeleccionado = curso;
-    document.body.classList.remove('modal-open');
+    this.cursoModalCerrando.set(false);
+    this.cursoSeleccionado.set(curso);
   }
 
   protected cerrarModalCurso(): void {
-    if (!this.cursoSeleccionado) {
+    if (!this.cursoSeleccionado() || this.cursoModalCerrando()) {
       return;
     }
 
-    this.cursoModalCerrando = true;
-    window.setTimeout(() => {
-      this.cursoSeleccionado = null;
-      this.cursoModalCerrando = false;
-      document.body.classList.remove('modal-open');
-      document.body.style.removeProperty('overflow');
-      document.body.style.removeProperty('padding-right');
+    this.cursoModalCerrando.set(true);
+    this.closeModalTimeoutId = window.setTimeout(() => {
+      this.cursoSeleccionado.set(null);
+      this.cursoModalCerrando.set(false);
+      this.closeModalTimeoutId = null;
     }, 220);
+  }
+
+  private cancelCloseModal(): void {
+    if (this.closeModalTimeoutId !== null) {
+      window.clearTimeout(this.closeModalTimeoutId);
+      this.closeModalTimeoutId = null;
+    }
+    this.cursoModalCerrando.set(false);
   }
 
   @HostListener('document:keydown.escape')
   protected cerrarModalConEscape(): void {
-    if (this.cursoSeleccionado) {
+    if (this.cursoSeleccionado()) {
       this.cerrarModalCurso();
     }
     if (this.mostrarModalInstructores) {
@@ -171,9 +161,14 @@ export class ServiciosComponent {
     }
   }
 
+  protected trackCurso(_index: number, curso: Curso): string {
+    return curso.id;
+  }
+
   protected limpiarCursoSeleccionado(): void {
-    this.cursoSeleccionado = null;
-    this.cursoModalCerrando = false;
+    this.cancelCloseModal();
+    this.cursoSeleccionado.set(null);
+    this.cursoModalCerrando.set(false);
   }
 
   protected abrirModalInstructores(instructor?: FormacionInstructor): void {
@@ -204,10 +199,6 @@ export class ServiciosComponent {
 
     this.mostrarModalInstructores = false;
     this.instructorSeleccionado = null;
-  }
-
-  protected markImageUnavailable(courseCode: string): void {
-    this.failedImages.add(courseCode);
   }
 
 }

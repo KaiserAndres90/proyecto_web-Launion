@@ -1,0 +1,67 @@
+<main class="tramites-page bg-light py-5 py-lg-6" aria-labelledby="tramites-title">
+  <div class="container">
+    <header class="section-heading mx-auto mb-5 text-center animate__animated animate__fadeInUp">
+      <p class="eyebrow">Información útil y enlaces oficiales</p>
+      <h1 id="tramites-title">Trámites y Servicios</h1>
+      <p>Conoce los pasos esenciales para consultar multas, obtener tu certificado médico y gestionar tu registro en el RUNT.</p>
+    </header>
+
+    <div class="accordion tramites-accordion" id="tramitesAccordion">
+      @for (tramite of tramites(); track tramite.id; let first = $first) {
+        <div class="accordion-item tramites-accordion__item mb-3 rounded-4 overflow-hidden">
+          <h2 class="accordion-header" [id]="tramite.id + '-heading'">
+            <button
+              class="accordion-button tramites-accordion__button"
+              [class.collapsed]="!first"
+              type="button"
+              data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#' + tramite.id + '-content'"
+              [attr.aria-expanded]="first"
+              [attr.aria-controls]="tramite.id + '-content'">
+              <span class="tramites-accordion__icon" aria-hidden="true">
+                <i class="bi" [class]="tramite.icono"></i>
+              </span>
+              <span class="text-start">
+                <span class="tramites-accordion__title d-block">{{ tramite.titulo }}</span>
+                <span class="tramites-accordion__summary d-block">{{ tramite.descripcion }}</span>
+              </span>
+            </button>
+          </h2>
+
+          <div
+            [id]="tramite.id + '-content'"
+            class="accordion-collapse collapse"
+            [class.show]="first"
+            [attr.aria-labelledby]="tramite.id + '-heading'"
+            data-bs-parent="#tramitesAccordion">
+            <div class="accordion-body px-4 px-lg-5 pb-4 pb-lg-5">
+              <p class="tramites-description mb-4">{{ tramite.descripcion }}</p>
+
+              <ol class="tramites-steps list-group list-group-numbered mb-4">
+                @for (paso of tramite.pasos; track paso) {
+                  <li class="list-group-item border-0 ps-0 pb-3">{{ paso }}</li>
+                }
+              </ol>
+
+              <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3">
+                <a
+                  class="btn btn-success btn-lg tramites-cta"
+                  [href]="tramite.enlace"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  [attr.aria-label]="tramite.textoEnlace + ' (abre en una nueva pestaña)'">
+                  {{ tramite.textoEnlace }}
+                  <i class="bi bi-box-arrow-up-right ms-2" aria-hidden="true"></i>
+                </a>
+                <span class="tramites-official badge rounded-pill">
+                  <i class="bi bi-shield-check me-1" aria-hidden="true"></i>
+                  Enlaces oficiales
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</main>

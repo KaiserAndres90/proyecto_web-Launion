@@ -1,172 +1,61 @@
-<main>
-  <section class="contact-page py-5 py-lg-6" aria-labelledby="contact-page-title">
-    <div class="container">
-      <div class="section-heading mx-auto mb-5 text-center animate__animated animate__fadeInUp">
-        <p class="eyebrow">CEA Conductores La Unión</p>
-        <h1 id="contact-page-title">Ubicación y formulario de contacto</h1>
-        <p>Visítanos en Pasto o déjanos tus datos para recibir orientación sobre nuestros cursos.</p>
-      </div>
+﻿<main class="contact-info-page bg-light min-vh-100 py-5">
+  <section class="container" aria-labelledby="contact-info-title">
+    <div class="text-center mb-5 animate__animated animate__fadeInDown">
+      <p class="contact-info-page__eyebrow text-uppercase fw-bold mb-2">CEA Conductores La Unión</p>
+      <h1 id="contact-info-title" class="contact-info-page__title display-5 fw-bold">Información de Contacto</h1>
+      <p class="text-secondary mx-auto mt-3">Visítanos o comunícate con nuestra sede para recibir orientación personalizada.</p>
+    </div>
 
-      <div class="row justify-content-center g-4 mb-5">
-        <div class="col-12 col-xl-10">
-          <section class="contact-location card shadow-sm" aria-labelledby="location-title">
-            <div class="card-body p-4">
-              <div class="d-flex align-items-center gap-3 mb-3">
-                <span class="detail-item__icon" aria-hidden="true"><i class="bi bi-geo-alt-fill"></i></span>
-                <div>
-                  <p class="eyebrow mb-1">Visítanos</p>
-                  <h2 id="location-title" class="h4 mb-1">Pasto, Nariño</h2>
-                  <p class="text-secondary mb-0">Consulta nuestra ubicación y cómo llegar.</p>
-                </div>
-              </div>
-              <div class="map-placeholder rounded-3" role="img" aria-label="Marcador de ubicación en Pasto, Nariño">
-                <span class="map-placeholder__pin" aria-hidden="true"><i class="bi bi-geo-alt-fill"></i></span>
-                <span>Pasto, Nariño</span>
-                <span class="map-placeholder__caption">Ubicación oficial de la sede</span>
-              </div>
-              <div class="location-panel__actions mt-3">
-                <a class="btn btn-success" href="https://maps.app.goo.gl/ZvK96ZrbkBPnhsta6" target="_blank" rel="noopener noreferrer">
-                  <i class="bi bi-map me-1" aria-hidden="true"></i> Ver ubicación en Google Maps
-                </a>
-                <a class="btn btn-outline-success" href="https://wa.me/?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20cursos%20del%20CEA%20Conductores%20La%20Uni%C3%B3n." target="_blank" rel="noopener noreferrer">
-                  <i class="bi bi-whatsapp me-1" aria-hidden="true"></i> Consultar por WhatsApp
-                </a>
-              </div>
-              <p class="location-panel__note mt-2 mb-0">El enlace de WhatsApp abre un mensaje preparado; falta el número oficial del CEA para dirigirlo directamente.</p>
+    <div class="row g-4 align-items-stretch">
+      <div class="col-12 col-lg-5">
+        <div class="contact-info-list card border-0 shadow-sm rounded-4 h-100 animate__animated animate__fadeInLeft">
+          <div class="card-body p-4 p-lg-5">
+            <div class="contact-info-item">
+              <span class="contact-info-item__icon"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i></span>
+              <div><small>Dirección</small><strong>Pasto, Nariño</strong></div>
             </div>
-          </section>
-        </div>
-      </div>
 
-      <div class="row justify-content-center g-4">
-        <div class="col-12 col-lg-4">
-          <div class="contact__intro h-100">
-            <p class="eyebrow">Estamos aquí para ayudarte</p>
-            <h2 id="contact-title">Solicitar información</h2>
-            <p>Déjanos tus datos y el curso que te interesa. Nuestro equipo podrá orientarte sobre requisitos, horarios y precios.</p>
-            <section class="contact-hours rounded-4 p-3 mt-4" aria-label="Horario de atención">
-              <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="contact-hours__icon" aria-hidden="true"><i class="bi bi-clock"></i></span>
-                <h3 class="h6 fw-bold mb-0">Horario de atención</h3>
-              </div>
-              <p class="small mb-0"><strong>Lunes a sábado</strong><br>7:00 a. m. – 6:00 p. m. · Jornada continua</p>
-            </section>
-            <img
-              src="/certificacion.jpg"
-              alt="Entrega de certificado"
-              class="img-fluid rounded-4 shadow-sm mt-4">
-            <div class="contact__accent" aria-hidden="true"></div>
+            <a class="contact-info-item contact-info-item--link" href="https://maps.app.goo.gl/kr3i8vYMjMszmjMx5" target="_blank" rel="noopener noreferrer">
+              <span class="contact-info-item__icon"><i class="bi bi-map-fill" aria-hidden="true"></i></span>
+              <div><small>Mapa</small><strong>Ver ubicación en Google Maps</strong></div>
+              <i class="bi bi-box-arrow-up-right ms-auto" aria-hidden="true"></i>
+            </a>
+
+            <a class="contact-info-item contact-info-item--link" href="https://wa.me/?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20cursos%20del%20CEA%20Conductores%20La%20Uni%C3%B3n." target="_blank" rel="noopener noreferrer">
+              <span class="contact-info-item__icon"><i class="bi bi-whatsapp" aria-hidden="true"></i></span>
+              <div><small>Teléfono / WhatsApp</small><strong>Consultar por WhatsApp</strong></div>
+              <i class="bi bi-box-arrow-up-right ms-auto" aria-hidden="true"></i>
+            </a>
+
+            <div class="contact-info-item">
+              <span class="contact-info-item__icon"><i class="bi bi-envelope-fill" aria-hidden="true"></i></span>
+              <div><small>Correo electrónico</small><strong>Por confirmar</strong></div>
+            </div>
+
+            <div class="contact-info-item">
+              <span class="contact-info-item__icon"><i class="bi bi-clock-fill" aria-hidden="true"></i></span>
+              <div><small>Horario de atención</small><strong>Lunes a Viernes</strong><em>7:00 a. m. – 12:00 p. m.<br>2:00 p. m. – 5:00 p. m.</em></div>
+            </div>
+
+            <a routerLink="/solicitud" class="btn btn-success btn-lg w-100 mt-4">
+              Ir al formulario de solicitud <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
+      </div>
 
-        <div class="col-12 col-lg-7">
-          <form
-            #preRegistrationForm="ngForm"
-            class="contact-form card card-body shadow-sm"
-            aria-label="Formulario de contacto"
-            novalidate
-            (ngSubmit)="submitPreRegistration(preRegistrationForm)">
-            <div class="row g-3">
-              <div class="col-12 col-md-6">
-                <label class="form-label" for="contact-name">Nombre completo</label>
-                <input
-                  #fullName="ngModel"
-                  class="form-control"
-                  [class.is-invalid]="submitted && fullName.invalid"
-                  id="contact-name"
-                  name="fullName"
-                  type="text"
-                  autocomplete="name"
-                  placeholder="Tu nombre y apellidos"
-                  required
-                  minlength="3"
-                  [(ngModel)]="formData.fullName"
-                  [attr.aria-invalid]="submitted && fullName.invalid" />
-                @if (submitted && fullName.invalid) {
-                  <div class="invalid-feedback">Escribe tu nombre completo (mínimo 3 caracteres).</div>
-                }
-              </div>
-
-              <div class="col-12 col-md-6">
-                <label class="form-label" for="contact-phone">Teléfono</label>
-                <input
-                  #phone="ngModel"
-                  class="form-control"
-                  [class.is-invalid]="submitted && phone.invalid"
-                  id="contact-phone"
-                  name="phone"
-                  type="tel"
-                  inputmode="tel"
-                  autocomplete="tel"
-                  placeholder="Número de contacto"
-                  required
-                  pattern="[0-9]{10}"
-                  [(ngModel)]="formData.phone"
-                  [attr.aria-invalid]="submitted && phone.invalid" />
-                @if (submitted && phone.invalid) {
-                  <div class="invalid-feedback">Ingresa un teléfono de 10 dígitos.</div>
-                }
-              </div>
-
-              <div class="col-12 col-md-6">
-                <label class="form-label" for="contact-email">Correo electrónico</label>
-                <input
-                  #email="ngModel"
-                  class="form-control"
-                  [class.is-invalid]="submitted && email.invalid"
-                  id="contact-email"
-                  name="email"
-                  type="email"
-                  autocomplete="email"
-                  placeholder="nombre@correo.com"
-                  required
-                  email
-                  [(ngModel)]="formData.email"
-                  [attr.aria-invalid]="submitted && email.invalid" />
-                @if (submitted && email.invalid) {
-                  <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
-                }
-              </div>
-
-              <div class="col-12">
-                <label class="form-label" for="contact-course">Curso de interés</label>
-                <select
-                  #course="ngModel"
-                  class="form-select"
-                  [class.is-invalid]="submitted && course.invalid"
-                  id="contact-course"
-                  name="course"
-                  required
-                  [(ngModel)]="formData.course"
-                  [attr.aria-invalid]="submitted && course.invalid">
-                  <option value="" disabled>Selecciona un curso</option>
-                  <option value="A2 - Motos">Curso A2 - Motos</option>
-                  <option value="B1 - Automóviles">Curso B1 - Automóviles</option>
-                  <option value="Curso de Refuerzo">Curso de Refuerzo</option>
-                  <option value="C1 - Carros y Microbuses">Curso C1 - Carros y Microbuses (máximo 10 personas)</option>
-                  <option value="C2 - Servicio Público">Curso C2 - Servicio Público</option>
-                  <option value="C3 - Transporte de Carga Pesada">Curso C3 - Transporte de Carga Pesada</option>
-                </select>
-                @if (submitted && course.invalid) {
-                  <div class="invalid-feedback">Selecciona el curso que te interesa.</div>
-                }
-              </div>
-
-              <div class="col-12">
-                <button class="btn btn-success btn-lg" type="submit">
-                  Solicitar información <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
-                </button>
-              </div>
-              @if (submissionMessage) {
-                <div class="col-12">
-                  <p class="contact-form__status alert alert-success mb-0" role="status">{{ submissionMessage }}</p>
-                </div>
-              }
-              <div class="col-12">
-                <p class="contact-form__note mb-0">Esta vista valida tus datos en el navegador; todavía no los envía ni almacena.</p>
-              </div>
-            </div>
-          </form>
+      <div class="col-12 col-lg-7">
+        <div class="contact-map card border-0 shadow-sm rounded-4 overflow-hidden h-100 animate__animated animate__fadeInRight">
+          <iframe
+            width="100%"
+            height="450"
+            style="border:0;"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d18678.096279881138!2d-77.29317086838674!3d1.207215164440167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e2ed5a516aae6a9%3A0x74ea7315a4c34336!2sConductores%20la%20Uni%C3%B3n%20N1%20-%20Escuela%20de%20Conducci%C3%B3n%20en%20Pasto!5e0!3m2!1ses!2sco!4v1793234005461!5m2!1ses!2sco"
+            title="Mapa de la sede Conductores La Unión N1 en Pasto"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
         </div>
       </div>
     </div>

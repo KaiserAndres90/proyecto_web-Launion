@@ -23,9 +23,11 @@
 }
 
 .login-card {
-  width: min(100%, 470px);
+  width: 100%;
+  max-width: 400px;
+  margin-inline: auto;
   border: 1px solid rgb(255 255 255 / 35%) !important;
-  background: rgb(255 255 255 / 91%);
+  background: rgb(255 255 255 / 95%);
   box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 32%) !important;
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
@@ -38,14 +40,13 @@
   font-weight: 700;
 }
 
-.login-brand strong,
 .login-eyebrow {
   color: #657900;
 }
 
 .login-brand__logo {
-  width: 48px;
-  height: 48px;
+  width: 72px;
+  height: 72px;
   border: 2px solid rgb(165 195 0 / 70%);
   border-radius: 50%;
   object-fit: cover;
@@ -95,18 +96,27 @@
 }
 
 .login-submit {
-  min-height: 48px;
+  min-height: 52px;
   border-color: #a5c300;
   background-color: #a5c300;
   color: #252820;
   font-weight: 700;
+  box-shadow: 0 8px 18px rgb(165 195 0 / 22%);
+  transition: transform 180ms ease, background-color 180ms ease,
+    border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .login-submit:hover,
 .login-submit:focus-visible {
+  transform: translateY(-2px);
   border-color: #8ca600;
   background-color: #8ca600;
   color: #fff;
+  box-shadow: 0 12px 24px rgb(165 195 0 / 32%);
+}
+
+.login-submit:active {
+  transform: translateY(0);
 }
 
 .login-submit:disabled {

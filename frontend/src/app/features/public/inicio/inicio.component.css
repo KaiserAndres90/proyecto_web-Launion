@@ -168,28 +168,24 @@
 }
 
 .inicio-locations {
-  position: relative;
-  z-index: 2;
-  height: 88px;
-  margin-block: -0.25rem;
-  overflow: hidden;
+ position: relative;
+ z-index: 2;
+ height: 80px;
+ overflow: hidden;
+ background: #20251c;
 }
 
 .inicio-locations__banner {
-  position: absolute;
-  top: 0;
-  left: -5%;
-  display: flex;
-  width: 110%;
-  height: 76px;
-  align-items: center;
-  overflow: hidden;
-  border-block: 1px solid rgb(255 255 255 / 12%);
-  background:
-    repeating-linear-gradient(135deg, transparent 0 18px, rgb(255 255 255 / 4%) 18px 20px),
-    linear-gradient(105deg, #20251c 0%, #303a22 52%, #20251c 100%);
-  box-shadow: 0 12px 28px rgb(32 37 28 / 18%);
-  transform: rotate(-2deg);
+ display: flex;
+ width: 100%;
+ height: 80px;
+ align-items: center;
+ overflow: hidden;
+ border-block: 1px solid rgb(255 255 255 / 8%);
+ background:
+   repeating-linear-gradient(135deg, transparent 0 18px, rgb(255 255 255 / 4%) 18px 20px),
+   linear-gradient(105deg, #20251c 0%, #303a22 52%, #20251c 100%);
+ box-shadow: 0 12px 28px rgb(32 37 28 / 18%);
 }
 
 .inicio-locations__viewport {
@@ -612,18 +608,16 @@
     min-height: 300px;
   }
 
-  .inicio-locations {
-    height: 76px;
-  }
-
+  .inicio-locations,
   .inicio-locations__banner {
-    height: 66px;
+    height: 68px;
   }
 
   .inicio-locations__group > span {
     gap: 0.45rem;
     padding-inline: 1rem;
-    letter-spacing: 0.07em;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
   }
 }
 

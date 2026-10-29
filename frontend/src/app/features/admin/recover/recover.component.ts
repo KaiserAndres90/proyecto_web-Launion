@@ -1,37 +1,44 @@
-import { Component, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [ReactiveFormsModule],
-  selector: 'app-recover',
+  selector: 'app-forgot-password',
+  standalone: true,
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './recover.component.html',
+  styleUrl: './recover.component.css',
 })
 export class Recover {
-  private readonly http = inject(HttpClient);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly formBuilder = inject(FormBuilder);
 
-  protected readonly recoverForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+  protected readonly recoverForm = this.formBuilder.nonNullable.group({
+    email: ['', [Validators.required, Validators.email]],
   });
-  protected readonly mensaje = signal<string>('');
+
+  protected readonly isLoading = signal(false);
+  protected readonly emailEnviado = signal(false);
 
   protected handleRecover(): void {
-    if (this.recoverForm.valid) {
-      const email = this.recoverForm.value.email;
+    this.recoverForm.markAllAsTouched();
 
-      this.http
-        .post<any>('http://localhost:3000/api/auth/forgot-password', { email })
-        .subscribe({
-          next: (res) => {
-            this.mensaje.set(res.message || 'Revisa tu correo para ver el nuevo password');
-          },
-          error: (err) => {
-            this.mensaje.set('Ocurrió un error al enviar el correo');
-            console.log(err);
-          },
-        });
-    } else {
-      this.mensaje.set('Por favor ingrese un correo electrónico válido');
+    if (this.recoverForm.invalid) {
+      return;
     }
+
+    const email = this.recoverForm.controls.email.value?.trim() ?? '';
+    console.log('Solicitud simulada de recuperación:', email);
+
+    this.isLoading.set(true);
+
+    // Simulación de carga; permite reemplazar fácilmente esta parte por una API real.
+    const timeoutId = window.setTimeout(() => {
+      this.isLoading.set(false);
+      this.emailEnviado.set(true);
+      this.recoverForm.disable();
+    }, 900);
+
+    this.destroyRef.onDestroy(() => window.clearTimeout(timeoutId));
   }
 }

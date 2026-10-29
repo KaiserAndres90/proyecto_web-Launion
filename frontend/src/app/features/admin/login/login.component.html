@@ -1,59 +1,82 @@
-<main class="login-page container-fluid min-vh-100 d-flex align-items-center justify-content-center px-3 py-5">
+<main class="login-page min-vh-100 d-flex align-items-center justify-content-center px-3 py-5">
   <div class="login-page__overlay" aria-hidden="true"></div>
-  <section class="login-card card border-0 rounded-4 shadow-lg animate__animated animate__fadeIn" aria-labelledby="login-title">
-    <div class="card-body p-4 p-sm-5">
-      <a class="login-brand d-flex align-items-center gap-3 mb-4 text-decoration-none" routerLink="/inicio" aria-label="CEA Conductores La Unión, página principal">
-        <img src="/logo-cea.jpg" alt="" class="login-brand__logo">
-        <span>CEA Conductores <strong>La Unión</strong></span>
-      </a>
 
-      <p class="login-eyebrow mb-2">Área administrativa</p>
-      <h1 id="login-title" class="h3 fw-bold mb-2">Acceso Administrativo - KYBER</h1>
-      <p class="login-description mb-4">Ingresa tus credenciales para continuar al panel administrativo.</p>
+  <section
+    class="login-card card border-0 rounded-4 shadow-lg w-100 animate__animated animate__fadeIn"
+    aria-labelledby="login-title"
+  >
+    <div class="card-body p-4 p-sm-5">
+      <div class="text-center mb-4">
+        <a
+          class="login-brand d-inline-block text-decoration-none"
+          routerLink="/inicio"
+          aria-label="CEA Conductores La Unión, página principal"
+        >
+          <img src="/logo-cea.jpg" alt="CEA Conductores La Unión" class="login-brand__logo">
+        </a>
+
+        <p class="login-eyebrow mb-2 mt-3">Área administrativa</p>
+        <h1 id="login-title" class="h3 fw-bold mb-2">Iniciar Sesión</h1>
+        <p class="login-description mb-0">
+          Ingresa tus credenciales para continuar al panel administrativo.
+        </p>
+      </div>
 
       <form [formGroup]="credentialsForm" (ngSubmit)="handleSubmit()">
         <div class="mb-3">
           <label for="admin-username" class="form-label fw-semibold">Correo electrónico</label>
-          <div class="input-group">
-            <span class="input-group-text" aria-hidden="true"><i class="bi bi-person"></i></span>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" aria-hidden="true">
+              <i class="bi bi-envelope"></i>
+            </span>
             <input
               id="admin-username"
-              class="form-control"
+              class="form-control form-control-lg w-100"
               type="email"
               formControlName="username"
               autocomplete="username"
-              placeholder="Correo electrónico">
+              placeholder="Correo electrónico"
+            >
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-4">
           <label for="admin-password" class="form-label fw-semibold">Contraseña</label>
-          <div class="input-group">
-            <span class="input-group-text" aria-hidden="true"><i class="bi bi-lock"></i></span>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" aria-hidden="true">
+              <i class="bi bi-lock"></i>
+            </span>
             <input
               id="admin-password"
-              class="form-control"
+              class="form-control form-control-lg w-100"
               type="password"
               formControlName="password"
               autocomplete="current-password"
-              placeholder="Ingresa tu contraseña">
+              placeholder="Ingresa tu contraseña"
+            >
           </div>
         </div>
 
-        <div *ngIf="loginError" class="alert alert-danger py-2 mt-2" role="alert">
+        <div *ngIf="loginError" class="alert alert-danger py-2 mb-3" role="alert">
           {{ loginError }}
         </div>
 
-        <button class="btn btn-success w-100 login-submit" type="submit" [disabled]="isSubmitting">
+        <button
+          class="btn btn-success btn-lg w-100 login-submit mb-3"
+          type="submit"
+          [disabled]="isSubmitting"
+        >
           {{ isSubmitting ? 'Ingresando...' : 'Ingresar' }}
         </button>
-        <button type="button" class="btn btn-warning ms-2" routerLink="/admin/recover">Olvidé mi contraseña</button>
+
+        <a class="login-back d-block text-center mb-3" routerLink="/admin/recover">
+          ¿Olvidaste tu contraseña?
+        </a>
       </form>
 
-      <p class="login-notice small text-center mt-3 mb-3">
-        Use las credenciales de administrador registradas en el sistema.
-      </p>
-      <a class="login-back d-block text-center" routerLink="/inicio">Volver al sitio público</a>
+      <a class="login-back login-back--public d-block text-center" routerLink="/inicio">
+        Volver al sitio público
+      </a>
     </div>
   </section>
 </main>

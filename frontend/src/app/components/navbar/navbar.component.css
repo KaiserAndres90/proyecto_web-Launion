@@ -38,10 +38,23 @@
 
 .navigation__cta {
   color: var(--color-charcoal);
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.navigation__cta:hover,
+.navigation__cta:focus-visible {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 22px rgb(165 195 0 / 35%);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .navbar-dark .navbar-nav .nav-link {
+  .navbar-dark .navbar-nav .nav-link,
+  .navigation__cta {
     transition: none;
+  }
+
+  .navigation__cta:hover,
+  .navigation__cta:focus-visible {
+    transform: none;
   }
 }

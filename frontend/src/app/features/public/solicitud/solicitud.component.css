@@ -1,0 +1,102 @@
+:host { display: block; }
+
+.solicitud-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa, #eef2e0) !important;
+}
+
+.solicitud-card {
+  width: 100%;
+  max-width: 600px;
+  margin-inline: auto;
+  background: #ffffff;
+  --animate-duration: 650ms;
+}
+
+.solicitud-card__icon,
+.solicitud-card form {
+  animation: solicitudFadeIn 550ms ease-out both;
+}
+
+.solicitud-card form {
+  animation-delay: 180ms;
+}
+
+@keyframes solicitudFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.solicitud-card__icon {
+  display: inline-flex;
+  width: 64px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(165, 195, 0, 0.16);
+  color: #a5c300;
+  font-size: 1.8rem;
+}
+
+.solicitud-card .form-label {
+  color: #333333;
+  font-weight: 700;
+}
+
+.solicitud-card .form-control,
+.solicitud-card .form-select {
+  min-height: 52px;
+  border-radius: 0.75rem;
+}
+
+.solicitud-card .form-control:focus,
+.solicitud-card .form-select:focus {
+  border-color: #a5c300;
+  box-shadow: 0 0 0 0.25rem rgba(165, 195, 0, 0.18);
+}
+
+.solicitud-card__button {
+  min-height: 56px;
+  border-radius: 0.75rem;
+  background-color: #a5c300;
+  border-color: #a5c300;
+  box-shadow: 0 8px 18px rgba(165, 195, 0, 0.22);
+  transition: transform 0.2s ease, background-color 0.2s ease,
+    border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.solicitud-card__button:hover,
+.solicitud-card__button:focus {
+  transform: translateY(-3px);
+  background-color: #8da500;
+  border-color: #8da500;
+  box-shadow: 0 12px 24px rgba(165, 195, 0, 0.32);
+}
+
+.solicitud-card__button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(165, 195, 0, 0.24);
+}
+
+.solicitud-card__button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solicitud-card,
+  .solicitud-card__icon,
+  .solicitud-card form,
+  .solicitud-card__button {
+    animation: none;
+    transition: none;
+  }
+}

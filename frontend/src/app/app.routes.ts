@@ -12,20 +12,25 @@ import { ContactoComponent } from './features/public/contacto/contacto.component
 import { HorariosComponent } from './features/public/horarios/horarios.component';
 import { InicioComponent } from './features/public/inicio/inicio.component';
 import { ServiciosComponent } from './features/public/servicios/servicios.component';
+import { NotFoundComponent } from './features/not-found/not-found.component';
+import { SolicitudComponent } from './features/public/solicitud/solicitud.component';
+import { TramitesComponent } from './features/public/tramites/tramites.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'inicio' },
   { path: 'inicio', component: InicioComponent },
   { path: 'servicios', component: ServiciosComponent },
   { path: 'horarios', component: HorariosComponent },
+  { path: 'tramites', component: TramitesComponent },
   { path: 'contacto', component: ContactoComponent },
+  { path: 'solicitud', component: SolicitudComponent },
   { path: 'admin/login', component: LoginComponent },
   { path: 'admin/recover', component: Recover },
   { path: 'auxiliar', redirectTo: 'auxiliar/inicio', pathMatch: 'full' },
   {
     path: 'auxiliar/inicio',
     component: AuxiliarDashboardComponent,
-    canActivate: [auxiliarGuard],
+    canActivate: [authGuard, auxiliarGuard],
   },
   {
     path: 'admin',
@@ -39,5 +44,5 @@ export const routes: Routes = [
       { path: 'reportes', component: ReportesComponent },
     ],
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', component: NotFoundComponent },
 ];

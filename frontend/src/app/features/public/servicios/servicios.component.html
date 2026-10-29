@@ -8,51 +8,38 @@
       </div>
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        <div class="col" *ngFor="let curso of cursos">
-          <article
-            class="card course-card h-100 border-0 rounded-4 shadow animate__animated animate__fadeInUp"
-            [class.course-card--featured]="curso.code === 'b1'">
-            <div class="course-card__image-frame">
-              <div
-                *ngIf="failedImages.has(curso.code); else courseImage"
-                class="course-card__image-fallback"
-                role="img"
-                [attr.aria-label]="'Imagen no disponible: ' + curso.name">
-                <i class="bi bi-truck" aria-hidden="true"></i>
+        @for (curso of cursos; track curso.id) {
+          <div class="col">
+            <article
+              class="card course-card h-100 border-0 rounded-4 shadow animate__animated animate__fadeInUp"
+              [class.course-card--featured]="curso.id === 'b1'">
+              <div class="course-card__icon-wrap" aria-hidden="true">
+                <i
+                  class="bi"
+                  [class.bi-bicycle]="curso.id === 'a1' || curso.id === 'a2'"
+                  [class.bi-car-front-fill]="curso.id === 'b1'"
+                  [class.bi-truck-front-fill]="curso.id === 'c1' || curso.id === 'c2' || curso.id === 'c3'">
+                </i>
               </div>
-              <ng-template #courseImage>
-                <img
-                  [src]="curso.image"
-                  class="card-img-top"
-                  [alt]="curso.imageAlt"
-                  (error)="markImageUnavailable(curso.code)">
-              </ng-template>
-            </div>
-            <span *ngIf="curso.code === 'b1'" class="course-card__ribbon badge text-bg-success">
-              Más popular
-            </span>
-            <div class="card-body d-flex flex-column p-4">
-              <span class="course-card__tag align-self-start mb-3">{{ curso.category }}</span>
-              <h2 class="card-title h4">{{ curso.name }}</h2>
-              <p class="small text-secondary">{{ curso.shortDescription }}</p>
-              <p class="small course-card__hours">
-                <strong>Formación:</strong> {{ curso.hoursLabel }}
-              </p>
-              <h3 class="h6 fw-bold">Requisitos</h3>
-              <ul class="course-requirements list-unstyled mb-4">
-                <li *ngFor="let requisito of curso.requirements">
-                  <i class="bi bi-check-circle-fill" aria-hidden="true"></i> {{ requisito }}
-                </li>
-              </ul>
-              <button
-                type="button"
-                class="btn btn-success mt-auto"
-                (click)="abrirModal(curso)">
-                Más información <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
-              </button>
-            </div>
-          </article>
-        </div>
+
+              @if (curso.id === 'b1') {
+                <span class="course-card__ribbon badge text-bg-success">Más solicitado</span>
+              }
+
+              <div class="card-body d-flex flex-column p-4">
+                <h2 class="card-title h4 fw-bold mb-3">{{ curso.nombre }}</h2>
+                <p class="course-card__vehicle mb-4">
+                  <span class="d-block small fw-bold text-secondary mb-1">Tipo de vehículo</span>
+                  {{ curso.tipoVehiculo }}
+                </p>
+                <button type="button" class="btn btn-success mt-auto w-100" (click)="abrirModal(curso)">
+                  Ver requisitos
+                  <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
+                </button>
+              </div>
+            </article>
+          </div>
+        }
       </div>
 
       <section class="instructor-banner animate__animated animate__fadeInUp mt-5 p-4 p-lg-5 rounded-4 shadow-lg" aria-labelledby="instructor-banner-title">
@@ -101,7 +88,7 @@
         </div>
         <div class="col-12 col-lg-6">
           <p class="mb-3">Escríbenos para confirmar precios vigentes, requisitos y horarios disponibles.</p>
-          <a class="btn btn-light" routerLink="/contacto">
+          <a class="btn btn-light" routerLink="/solicitud">
             Contáctanos <i class="bi bi-arrow-up-right ms-1" aria-hidden="true"></i>
           </a>
         </div>
@@ -109,64 +96,52 @@
     </div>
   </section>
 
-  <div
-    *ngIf="cursoSeleccionado"
-    class="course-modal-backdrop"
-    [class.closing]="cursoModalCerrando"
-    aria-hidden="true"
-    (click)="cerrarModalCurso()">
-  </div>
+  @if (cursoSeleccionado(); as curso) {
+    <div
+      class="course-modal-backdrop"
+      [class.closing]="cursoModalCerrando()"
+      aria-hidden="true"
+      (click)="cerrarModalCurso()">
+    </div>
 
-  <div
-    id="courseModal"
-    class="modal course-modal"
-    [class.show]="cursoSeleccionado !== null"
-    [class.d-block]="cursoSeleccionado !== null"
-    [class.closing]="cursoModalCerrando"
-    tabindex="-1"
-    aria-labelledby="course-modal-title"
-    [attr.aria-hidden]="cursoSeleccionado === null ? 'true' : 'false'">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-      <div class="modal-content border-0 rounded-4 shadow-lg">
-        <ng-container *ngIf="cursoSeleccionado as curso">
+    <div
+      id="courseModal"
+      class="modal course-modal show d-block"
+      [class.closing]="cursoModalCerrando()"
+      tabindex="-1"
+      aria-labelledby="course-modal-title"
+      aria-modal="true"
+      role="dialog">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content border-0 rounded-4 shadow-lg">
           <div class="modal-header course-modal__header border-0 rounded-top-4 p-4">
             <div>
-              <span class="badge rounded-pill text-bg-light mb-2">{{ curso.category }}</span>
-              <h2 class="modal-title fs-4 fw-bold" id="course-modal-title">{{ curso.name }}</h2>
+              <span class="badge rounded-pill text-bg-light mb-2">Requisitos de inscripción</span>
+              <h2 class="modal-title fs-4 fw-bold" id="course-modal-title">{{ curso.nombre }}</h2>
             </div>
-            <button
-              type="button"
-              class="btn-close btn-close-white"
-              aria-label="Cerrar"
-              (click)="cerrarModalCurso()">
-            </button>
+            <button type="button" class="btn-close btn-close-white" aria-label="Cerrar" (click)="cerrarModalCurso()"></button>
           </div>
           <div class="modal-body p-4 p-lg-5">
-            <p class="lead fs-6">{{ curso.descripcionLarga }}</p>
-            <div class="mb-4">
-              <div class="course-modal__detail rounded-3 p-3">
-                <span class="d-block small text-secondary mb-1">Formación</span>
-                <strong>{{ curso.hoursLabel }}</strong>
-              </div>
+            <div class="course-modal__detail rounded-3 p-3 mb-4">
+              <span class="d-block small fw-bold text-secondary mb-1">Tipo de vehículo</span>
+              <strong>{{ curso.tipoVehiculo }}</strong>
             </div>
-            <h3 class="h6 fw-bold mb-3">Requisitos</h3>
+            <h3 class="h6 fw-bold mb-3">Requisitos de inscripción</h3>
             <ul class="course-requirements list-unstyled mb-0">
-              <li *ngFor="let requisito of curso.requirements">
-                <i class="bi bi-check-circle-fill" aria-hidden="true"></i> {{ requisito }}
-              </li>
+              @for (requisito of curso.requisitos; track requisito) {
+                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> {{ requisito }}</li>
+              }
             </ul>
-            <p class="small text-secondary mt-4 mb-0">
-              Confirma los requisitos y el precio vigente al momento de inscribirte.
-            </p>
+            <p class="small text-secondary mt-4 mb-0">Confirma los requisitos y el precio vigente al momento de inscribirte.</p>
           </div>
           <div class="modal-footer border-0 px-4 pb-4 pt-0">
             <button type="button" class="btn btn-outline-secondary" (click)="cerrarModalCurso()">Cerrar</button>
-            <a class="btn btn-success px-4" routerLink="/contacto" (click)="cerrarModalCurso()">Solicitar información</a>
+            <a class="btn btn-success px-4" routerLink="/solicitud" (click)="cerrarModalCurso()">Solicitar más información</a>
           </div>
-        </ng-container>
+        </div>
       </div>
     </div>
-  </div>
+  }
   <div
     *ngIf="mostrarModalInstructores"
     class="instructor-modal-backdrop"
@@ -365,7 +340,7 @@
             (click)="cerrarModalInstructores()">
             Cerrar
           </button>
-          <a class="btn btn-success px-4" routerLink="/contacto" (click)="cerrarModalInstructores()">
+          <a class="btn btn-success px-4" routerLink="/solicitud" (click)="cerrarModalInstructores()">
             Solicitar información
           </a>
         </div>
