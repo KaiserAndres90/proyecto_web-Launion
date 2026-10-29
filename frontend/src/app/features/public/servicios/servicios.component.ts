@@ -55,13 +55,13 @@ export class ServiciosComponent {
       description: 'Programa de formación para instructores de motocicletas categoría A2.',
     },
     {
-      code: 'instructor-c2',
-      name: 'Formación instructor C2',
-      image: 'img/instructor-c2.jpg',
-      imageAlt: 'Formación de instructor C2 para camiones',
+      code: 'instructor-b1',
+      name: 'Formación instructor B1',
+      image: 'img/instructor-B1.jpg',
+      imageAlt: 'Formación de instructor B1 para automóviles',
       hours: '90 horas teoría - 70 horas práctica',
       price: '$ 5.200.000',
-      description: 'Programa de formación para instructores de conducción categoría C2.',
+      description: 'Programa de formación para instructores de conducción categoría B1.',
     },
     {
       code: 'instructor-c1',
@@ -72,12 +72,23 @@ export class ServiciosComponent {
       price: '$ 4.200.000',
       description: 'Programa de formación para instructores de servicio público categoría C1.',
     },
+    {
+      code: 'instructor-c2',
+      name: 'Formación instructor C2',
+      image: 'img/instructor-c2.jpg',
+      imageAlt: 'Formación de instructor C2 para camiones',
+      hours: '90 horas teoría - 70 horas práctica',
+      price: '$ 5.200.000',
+      description: 'Programa de formación para instructores de conducción categoría C2.',
+    },
   ];
 
   protected readonly horasFormacionInstructor: HorasFormacionInstructor[] = [
     { cat: 'A2', tipo: 'Motocicletas', teoria: '90', pedagogica: '—', manejo: '60', total: '150' },
-    { cat: 'C2', tipo: 'Camiones', teoria: '90', pedagogica: '—', manejo: '70', total: '160' },
+    { cat: 'B1', tipo: 'Automóviles', teoria: '90', pedagogica: '—', manejo: '60', total: '150' },
     { cat: 'C1', tipo: 'Servicio Público', teoria: '90', pedagogica: '—', manejo: '60', total: '150' },
+    { cat: 'C2', tipo: 'Camiones', teoria: '90', pedagogica: '—', manejo: '70', total: '160' },
+    
   ];
 
   constructor() {

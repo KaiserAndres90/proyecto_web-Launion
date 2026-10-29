@@ -45,20 +45,24 @@ export class LoginComponent {
 
     this.loginService.login(credential).subscribe({
       next: (response) => {
-        console.log('response:', response);
+        console.log(response);
 
-        if (response.resultado !== 'bien' || !response.data) {
+        const loginFueExitoso = response.success === true || response.resultado === 'bien';
+        const token = response.token ?? response.data;
+
+        if (!loginFueExitoso || typeof token !== 'string' || !token) {
           this.loginError = 'No fue posible iniciar sesión.';
           this.isSubmitting = false;
           this.changeDetector.markForCheck();
           return;
         }
-
-        const token = response.data;
         localStorage.setItem('token', token);
 
         const decoded = this.loginService.decodeToken(token);
         console.log('Token decodificado:', decoded);
+
+        const rol = decoded?.rol ?? response.usuario?.rol;
+        console.log('Rol del usuario:', rol);
 
         const rolesAdministrativos = ['admin', 'gerente'];
         const rolesAuxiliares = [
@@ -68,14 +72,14 @@ export class LoginComponent {
           'aux_documentacion',
         ];
 
-        if (rolesAdministrativos.includes(decoded?.rol)) {
+        if (rolesAdministrativos.includes(rol)) {
           void this.router.navigateByUrl('/admin/inicio');
-        } else if (rolesAuxiliares.includes(decoded?.rol)) {
+        } else if (rolesAuxiliares.includes(rol)) {
           void this.router.navigateByUrl('/auxiliar/inicio');
         } else {
           localStorage.removeItem('token');
           this.loginError = 'El usuario no tiene un rol autorizado para ingresar al sistema.';
-          console.warn('Rol sin acceso:', decoded?.rol);
+          console.warn('Rol sin acceso:', rol);
         }
 
         this.isSubmitting = false;
@@ -89,7 +93,10 @@ export class LoginComponent {
         } else if (error.status === 401) {
           this.loginError = 'Correo o contraseña incorrectos.';
         } else {
-          this.loginError = error.error?.message || 'Ocurrió un error al iniciar sesión.';
+          const backendMessage = error.error?.message
+            ?? error.error?.error
+            ?? error.message;
+          this.loginError = backendMessage || 'Ocurrió un error al iniciar sesión.';
         }
 
         this.isSubmitting = false;
