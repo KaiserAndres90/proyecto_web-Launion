@@ -1,11 +1,19 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
+interface DescuentoMulta {
+  readonly etiqueta: string;
+  readonly detalle: string;
+}
+
 interface Tramite {
   readonly id: string;
   readonly titulo: string;
   readonly descripcion: string;
   readonly icono: string;
+  readonly imagen: string;
+  readonly imagenAlt: string;
   readonly pasos: readonly string[];
+  readonly descuentos: readonly DescuentoMulta[];
   readonly enlace: string;
   readonly textoEnlace: string;
 }
@@ -21,45 +29,45 @@ export class TramitesComponent {
   protected readonly tramites = signal<readonly Tramite[]>([
     {
       id: 'multas',
-      titulo: 'Multas de tránsito',
-      descripcion: 'Consulta tus comparendos, verifica su estado y realiza los pagos o acuerdos autorizados por las entidades competentes.',
+      titulo: 'Descuentos disponibles en Multas',
+      descripcion:
+        'Si tienes comparendos pendientes, puedes acceder a los siguientes descuentos según el tiempo en que realices el curso:',
       icono: 'bi-receipt',
-      pasos: [
-        'Ingresa al portal oficial del SIMIT con tu tipo y número de documento.',
-        'Consulta los comparendos asociados, las fechas y el organismo de tránsito.',
-        'Revisa el descuento disponible por pronto pago o acuerdo de pago según el caso.',
-        'Realiza el pago por el canal oficial y conserva el comprobante.',
+      imagen: '/img/multas.jpg',
+      imagenAlt: 'Multa Soluciones, aliado para gestionar infracciones de tránsito',
+      pasos: [],
+      descuentos: [
+        {
+          etiqueta: '50% de descuento:',
+          detalle:
+            'Si realizas el curso dentro de los 5 días hábiles siguientes a la imposición del comparendo físico.',
+        },
+        {
+          etiqueta: '25% de descuento:',
+          detalle:
+            'Si realizas el curso entre el 6.º y el 20.º día hábil posterior al comparendo.',
+        },
       ],
       enlace: 'https://www.fcm.org.co/simit/#/consulta',
-      textoEnlace: 'Consultar y pagar aquí',
+      textoEnlace: 'Consultar aqui',
     },
     {
       id: 'aptitud',
       titulo: 'Certificado de aptitud física y coordinación motriz',
-      descripcion: 'Antes del proceso de licencia, realiza la evaluación en un centro médico autorizado por el organismo nacional de tránsito.',
+      descripcion:
+        'Antes del proceso de licencia, realiza la evaluación en un centro médico autorizado por el organismo nacional de tránsito.',
       icono: 'bi-heart-pulse',
+      imagen: '/img/certificado-fisico.jpg',
+      imagenAlt: 'Valorar S.A.S., centro de reconocimiento de conductores',
       pasos: [
-        'Solicita una cita en un centro médico autorizado y lleva tu documento de identidad.',
+        'Solicita una cita en nuestro aliado Valorar S.A.S. centro de reconocimiento de conductores autorizado y lleva tu documento de identidad.',
         'Realiza la evaluación de aptitud física y mental y coordinación motriz.',
         'Confirma que el profesional registre el certificado en el RUNT.',
         'Verifica el resultado desde la plataforma oficial antes de iniciar tu trámite.',
       ],
+      descuentos: [],
       enlace: 'https://www.runt.gov.co/centros-de-reconocimiento',
-      textoEnlace: 'Buscar centro autorizado',
-    },
-    {
-      id: 'runt',
-      titulo: 'Registro en el RUNT',
-      descripcion: 'El RUNT centraliza la información nacional relacionada con conductores, vehículos, licencias, seguros y trámites de tránsito.',
-      icono: 'bi-folder-check',
-      pasos: [
-        'Ingresa al portal oficial del RUNT y selecciona la opción Ciudadano.',
-        'Consulta o crea tu registro con tu documento de identidad.',
-        'Mantén actualizados tus datos personales y el estado de tu licencia.',
-        'Antes de desplazarte, verifica las sedes y documentos requeridos para cada servicio.',
-      ],
-      enlace: 'https://www.runt.gov.co/',
-      textoEnlace: 'Ingresar al RUNT',
+      textoEnlace: 'Agendar cita aqui',
     },
   ]);
 }

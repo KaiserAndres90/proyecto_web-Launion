@@ -1,0 +1,63 @@
+@if (showButton) {
+  <div class="whatsapp-container">
+    
+    <!-- Ventana del Chat -->
+    @if (isOpen) {
+      <div class="chat-window shadow-lg rounded-4 animate__animated animate__fadeInUp">
+        
+        <!-- Encabezado del Chat -->
+        <div class="chat-header bg-success text-white p-3 rounded-top-4 d-flex justify-content-between align-items-center">
+          <h6 class="mb-0"><i class="bi bi-robot me-2"></i>Asistente Virtual</h6>
+          <button class="btn-close btn-close-white" (click)="toggleChat()"></button>
+        </div>
+        
+        <!-- Cuerpo del Chat (Mensajes) -->
+        <div class="chat-body p-3 bg-light" style="height: 250px; overflow-y: auto;" id="chatBody">
+          <!-- Historial de mensajes -->
+          @for (msg of mensajes; track $index) {
+            <div class="d-flex mb-2" [class.justify-content-end]="msg.emisor === 'usuario'">
+              <p class="p-2 rounded shadow-sm small mb-0" 
+                 [class.bg-white]="msg.emisor === 'bot'"
+                 [class.bg-success]="msg.emisor === 'usuario'"
+                 [class.text-white]="msg.emisor === 'usuario'">
+                {{ msg.texto }}
+              </p>
+            </div>
+          }
+
+          <!-- 👇 INDICADOR DE "ESCRIBIENDO..." (Punto 3) -->
+          @if (cargando) {
+            <div class="d-flex mb-2">
+              <p class="p-2 rounded shadow-sm small mb-0 bg-white text-muted fst-italic d-flex align-items-center gap-2">
+                Escribiendo...
+                <span class="spinner-grow spinner-grow-sm text-success" role="status" aria-hidden="true"></span>
+              </p>
+            </div>
+          }
+        </div>
+
+        <!-- Input para escribir y botón de WhatsApp -->
+        <div class="p-2 bg-white border-top rounded-bottom-4">
+          <div class="input-group mb-2">
+            <!-- Deshabilitamos el input mientras la IA está pensando -->
+            <input type="text" class="form-control form-control-sm" placeholder="Escribe tu duda..." 
+                   [(ngModel)]="textoUsuario" (keyup.enter)="enviarMensaje()" [disabled]="cargando">
+            <button class="btn btn-success btn-sm" (click)="enviarMensaje()" [disabled]="cargando">
+              <i class="bi bi-send"></i>
+            </button>
+          </div>
+          <button (click)="abrirWhatsApp()" class="btn btn-outline-success btn-sm w-100">
+            <i class="bi bi-whatsapp me-1"></i> Hablar con un asesor real
+          </button>
+        </div>
+        
+      </div>
+    }
+
+    <!-- Botón Flotante -->
+    <button class="whatsapp-btn shadow-lg animate__animated animate__bounceIn" (click)="toggleChat()">
+      <i class="bi" [class.bi-whatsapp]="!isOpen" [class.bi-x-lg]="isOpen"></i>
+    </button>
+    
+  </div>
+}

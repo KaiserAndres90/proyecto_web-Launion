@@ -1,0 +1,36 @@
+.whatsapp-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.whatsapp-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #25d366; /* Verde WhatsApp */
+  color: white;
+  border: none;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+}
+
+.chat-window {
+  width: 320px;
+  margin-bottom: 15px;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+}

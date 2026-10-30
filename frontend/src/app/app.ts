@@ -5,9 +5,16 @@ import { filter } from 'rxjs';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { BackgroundComponent } from './shared/background/background.component';
+import { WhatsappButtonComponent } from './shared/whatsapp-button/whatsapp-button.component'; // 👈 IMPORTANTE
 
 @Component({
-  imports: [BackgroundComponent, NavbarComponent, FooterComponent, RouterOutlet],
+  imports: [
+    BackgroundComponent, 
+    NavbarComponent, 
+    FooterComponent, 
+    RouterOutlet, 
+    WhatsappButtonComponent // 👈 IMPORTANTE
+  ],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

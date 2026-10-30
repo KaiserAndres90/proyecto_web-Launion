@@ -1,8 +1,14 @@
 <app-background />
+
 @if (showNavbar()) {
   <app-navbar />
 }
+
 <router-outlet />
+
 @if (showFooter()) {
   <app-footer />
 }
+
+<!-- Botón de WhatsApp Flotante (Global) -->
+<app-whatsapp-button></app-whatsapp-button>
