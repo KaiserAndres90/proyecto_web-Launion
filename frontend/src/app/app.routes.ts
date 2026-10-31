@@ -16,6 +16,10 @@ import { NotFoundComponent } from './features/not-found/not-found.component';
 import { SolicitudComponent } from './features/public/solicitud/solicitud.component';
 import { TramitesComponent } from './features/public/tramites/tramites.component';
 
+// 👇 Imports de Sedes (Verifica que estos nombres coincidan con tus archivos reales)
+import { Sedes } from './features/public/sedes/sedes';
+import { SedeDetalleComponent } from './features/public/sede-detalle/sede-detalle';
+
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'inicio' },
   { path: 'inicio', component: InicioComponent },
@@ -24,6 +28,11 @@ export const routes: Routes = [
   { path: 'tramites', component: TramitesComponent },
   { path: 'contacto', component: ContactoComponent },
   { path: 'solicitud', component: SolicitudComponent },
+
+  // 👇 Rutas de Sedes
+  { path: 'sedes', component: Sedes },
+  { path: 'sedes/:id', component: SedeDetalleComponent },
+
   { path: 'admin/login', component: LoginComponent },
   { path: 'admin/recover', component: Recover },
   { path: 'auxiliar', redirectTo: 'auxiliar/inicio', pathMatch: 'full' },

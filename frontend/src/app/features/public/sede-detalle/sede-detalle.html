@@ -1,0 +1,82 @@
+<section class="py-5 bg-light" *ngIf="sedeInfo; else noEncontrada">
+  <div class="container">
+    
+    <div class="mb-4">
+      <a routerLink="/sedes" class="text-decoration-none text-success fw-bold">
+        <i class="bi bi-arrow-left"></i> Volver a todas las sedes
+      </a>
+    </div>
+
+    <div class="row g-5 align-items-center">
+      <!-- Info de la sede -->
+      <div class="col-lg-5">
+        <h1 class="display-5 fw-bolder text-dark mb-4">{{ sedeInfo.nombre }}</h1>
+        <p class="lead text-secondary mb-4">Visítanos en nuestra sede y recibe atención personalizada de nuestros asesores.</p>
+        
+        <ul class="list-group list-group-flush mb-4">
+          <li class="list-group-item bg-transparent px-0 py-3 border-0">
+            <div class="d-flex">
+              <i class="bi bi-geo-alt-fill text-success fs-4 me-3"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Dirección</h6>
+                <p class="text-muted mb-0">{{ sedeInfo.direccion }}</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item bg-transparent px-0 py-3 border-0">
+            <div class="d-flex">
+              <i class="bi bi-telephone-fill text-success fs-4 me-3"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Teléfono de contacto</h6>
+                <p class="text-muted mb-0">{{ sedeInfo.telefono }}</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item bg-transparent px-0 py-3 border-0">
+            <div class="d-flex">
+              <i class="bi bi-clock-fill text-success fs-4 me-3"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Horario de Atención</h6>
+                <p class="text-muted mb-0">{{ sedeInfo.horario }}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <a routerLink="/solicitud" class="btn btn-success btn-lg w-100 rounded-pill shadow-sm">
+          Solicitar Información <i class="bi bi-arrow-up-right ms-2"></i>
+        </a>
+      </div>
+
+      <!-- Mapa -->
+      <div class="col-lg-7">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+          <iframe 
+            [src]="sedeInfo.mapaIframe" 
+            width="100%" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa de la sede">
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Plantilla en caso de que el ID de la URL no exista -->
+<ng-template #noEncontrada>
+  <div class="container py-5 text-center" style="min-height: 60vh;">
+    <i class="bi bi-exclamation-triangle display-1 text-warning"></i>
+    <h2 class="mt-3">Sede no encontrada</h2>
+    <p class="text-muted">La sede que buscas no está en nuestro sistema.</p>
+    <a routerLink="/sedes" class="btn btn-success mt-3">Volver a las sedes</a>
+  </div>
+</ng-template>
+<li class="nav-item">
+  <a class="nav-link" routerLink="/sedes" routerLinkActive="active">Sedes</a>
+</li>

@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
 const connectDB = async () => {
-  const { DATABASE } = process.env;
+  const { MONGODB } = process.env;
 
-  if (!DATABASE) {
-    throw new Error('La variable de entorno DATABASE es obligatoria');
+  if (!MONGODB) {
+    throw new Error('La variable de entorno MONGODB es obligatoria');
   }
 
-  const connection = await mongoose.connect(DATABASE);
+  const connection = await mongoose.connect(MONGODB);
   console.info(`MongoDB conectado: ${connection.connection.host}`);
 
   return connection;
