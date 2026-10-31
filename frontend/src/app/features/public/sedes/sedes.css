@@ -1,0 +1,79 @@
+:host {
+  display: block;
+}
+
+/* --- ESTILOS DE LAS TARJETAS DE SEDES --- */
+
+.sede-card {
+  border: 1px solid #e7e9e1;
+  background-color: #ffffff;
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+/* Efecto Hover muy similar al del Navbar */
+.sede-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 10px 25px rgb(165 195 0 / 15%) !important;
+  border-color: rgba(165, 195, 0, 0.4);
+}
+
+/* Cabecera visual oscura con el resplandor verde */
+.sede-card__header {
+  background-color: var(--color-charcoal); /* Usa el gris oscuro de tu marca */
+  position: relative;
+  overflow: hidden;
+}
+
+.sede-card__header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(165, 195, 0, 0.4) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* Color del ícono principal */
+.sede-card__icon {
+  color: var(--color-lime);
+  position: relative;
+  z-index: 1;
+  transition: transform 220ms ease;
+}
+
+/* El ícono crece un poco cuando pasa el mouse por la tarjeta */
+.sede-card:hover .sede-card__icon {
+  transform: scale(1.15);
+}
+
+/* Botón de la tarjeta */
+.sede-btn {
+  background-color: var(--color-lime);
+  color: var(--color-charcoal);
+  font-weight: 700;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.sede-btn:hover {
+  background-color: #b8d51a; /* Un verde un poco más claro */
+  color: var(--color-charcoal);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgb(165 195 0 / 30%);
+}
+
+/* Accesibilidad (Respetar a los usuarios que no quieren movimiento) */
+@media (prefers-reduced-motion: reduce) {
+  .sede-card,
+  .sede-card__icon,
+  .sede-btn {
+    transition: none;
+  }
+  
+  .sede-card:hover,
+  .sede-card:hover .sede-card__icon,
+  .sede-btn:hover {
+    transform: none;
+  }
+}

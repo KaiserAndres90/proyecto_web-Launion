@@ -17,7 +17,7 @@ import { SolicitudComponent } from './features/public/solicitud/solicitud.compon
 import { TramitesComponent } from './features/public/tramites/tramites.component';
 
 // 👇 Imports de Sedes (Verifica que estos nombres coincidan con tus archivos reales)
-import { Sedes } from './features/public/sedes/sedes';
+import { SedesComponent } from './features/public/sedes/sedes';
 import { SedeDetalleComponent } from './features/public/sede-detalle/sede-detalle';
 
 export const routes: Routes = [
@@ -30,7 +30,7 @@ export const routes: Routes = [
   { path: 'solicitud', component: SolicitudComponent },
 
   // 👇 Rutas de Sedes
-  { path: 'sedes', component: Sedes },
+  { path: 'sedes', component: SedesComponent },
   { path: 'sedes/:id', component: SedeDetalleComponent },
 
   { path: 'admin/login', component: LoginComponent },
