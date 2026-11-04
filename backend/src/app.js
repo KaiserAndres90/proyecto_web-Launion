@@ -34,6 +34,8 @@ app.use('/api/v1/servicios', servicioRoutes);
 app.use('/api/v1/novedades', novedadRoutes);
 app.use('/api/v1/solicitudes', solicitudRoutes);
 app.use('/api/solicitudes', solicitudRoutes);
+app.use('/api/cursos', cursoRoutes);
+app.use('/api/horarios', horarioRoutes);
 app.use('/api/chat', chatRoutes); 
 
 // Middlewares de manejo de errores (siempre al final)

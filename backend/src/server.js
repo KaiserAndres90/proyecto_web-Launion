@@ -43,15 +43,19 @@ const startServer = async () => {
     throw new Error('PORT debe ser un número válido entre 1 y 65535');
   }
 
-  await connectDB();
-  if (isShuttingDown) {
-    await mongoose.disconnect();
-    return;
-  }
-
   server = app.listen(PORT, () => {
     console.info(`Servidor escuchando en el puerto ${PORT}`);
   });
+
+  try {
+    await connectDB();
+  } catch (error) {
+    console.error('MongoDB no disponible; el chat local seguirá funcionando:', error.message);
+  }
+
+  if (isShuttingDown) {
+    await mongoose.disconnect();
+  }
 };
 
 process.on('SIGTERM', () => shutdown('SIGTERM'));

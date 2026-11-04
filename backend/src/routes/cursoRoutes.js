@@ -10,6 +10,7 @@ import {
 import { proteger } from '../middlewares/authMiddleware.js';
 import { autorizarRoles } from '../middlewares/roleMiddleware.js';
 import validateRequest from '../middlewares/validateRequest.js';
+import { subirImagenCurso } from '../middlewares/multer.js';
 
 const router = Router();
 const administrar = [proteger, autorizarRoles('admin', 'gerente')];
@@ -60,11 +61,12 @@ const camposCursoOpcionales = [
 
 router.get('/', listarCursos);
 router.get('/:id', idValido, validateRequest, obtenerCurso);
-router.post('/', administrar, camposCurso, validateRequest, crearCurso);
+router.post('/', administrar, subirImagenCurso, camposCurso, validateRequest, crearCurso);
 router.put(
   '/:id',
   administrar,
   idValido,
+  subirImagenCurso,
   camposCursoOpcionales,
   validateRequest,
   actualizarCurso

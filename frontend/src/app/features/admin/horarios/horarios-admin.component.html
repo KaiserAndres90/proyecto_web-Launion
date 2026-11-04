@@ -1,0 +1,97 @@
+<section class="container-fluid px-3 px-lg-4 py-4" aria-labelledby="schedules-admin-title">
+  <div class="d-flex flex-column flex-sm-row align-items-sm-end justify-content-between gap-3 mb-4">
+    <div>
+      <p class="eyebrow">Administración</p>
+      <h1 id="schedules-admin-title" class="h2 fw-bold mb-2">Administración de Horarios</h1>
+      <p class="text-secondary mb-0">Gestiona los horarios administrativos, teóricos y prácticos.</p>
+    </div>
+    <button class="btn btn-success" type="button" (click)="prepararCrear()">
+      <i class="bi bi-plus-lg me-1" aria-hidden="true"></i> Nuevo horario
+    </button>
+  </div>
+
+  @if (feedback) {
+    <div class="alert alert-danger" role="alert">{{ feedback }}</div>
+  }
+
+  @if (mostrarFormulario()) {
+    <div class="mt-3 card p-3 shadow-sm mb-4">
+      <form (ngSubmit)="modo() === 'crear' ? crearHorario() : actualizarHorario()">
+        <h2 class="h5 fw-bold mb-3">{{ modo() === 'crear' ? 'Nuevo horario' : 'Editar horario' }}</h2>
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="horario-tipo">Tipo de horario</label>
+            <select class="form-select" id="horario-tipo" name="tipo" [(ngModel)]="horarioForm.tipo" required>
+              <option value="administrativo">Administrativo</option>
+              <option value="teoria">Teoría</option>
+              <option value="practica">Práctica</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-3">
+            <label class="form-label" for="horario-inicio">Hora de inicio</label>
+            <input class="form-control" id="horario-inicio" name="horaInicio" type="time" [(ngModel)]="horarioForm.horaInicio" required>
+          </div>
+          <div class="col-12 col-md-3">
+            <label class="form-label" for="horario-fin">Hora de finalización</label>
+            <input class="form-control" id="horario-fin" name="horaFin" type="time" [(ngModel)]="horarioForm.horaFin" required>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="form-label">Días</label>
+            <div class="d-flex flex-wrap gap-2">
+              @for (dia of diasDisponibles; track dia) {
+                <label class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [checked]="diaSeleccionado(dia)" (change)="toggleDia(dia, $event)">
+                  <span class="text-capitalize">{{ dia }}</span>
+                </label>
+              }
+            </div>
+          </div>
+          <div class="col-12 col-md-3">
+            <label class="form-label" for="horario-cupo">Cupo máximo</label>
+            <input class="form-control" id="horario-cupo" name="cupoMaximo" type="number" min="1" [(ngModel)]="horarioForm.cupoMaximo" required>
+          </div>
+          <div class="col-12 col-md-3">
+            <label class="form-label" for="horario-ocupados">Cupos ocupados</label>
+            <input class="form-control" id="horario-ocupados" name="cuposOcupados" type="number" min="0" [(ngModel)]="horarioForm.cuposOcupados">
+          </div>
+          <div class="col-12 d-flex gap-2">
+            <button class="btn btn-success" type="submit">{{ modo() === 'crear' ? 'Crear' : 'Actualizar' }}</button>
+            <button class="btn btn-outline-secondary" type="button" (click)="cancelarFormulario()">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  }
+
+  @if (horarios().length === 0) {
+    <p class="table table-striped mt-4 text-center text-secondary border bg-white p-4">No hay horarios registrados.</p>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-striped mt-4 align-middle">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Días</th>
+            <th>Horario</th>
+            <th>Cupos</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (horario of horarios(); track horario._id) {
+            <tr>
+              <td>{{ nombreTipo(horario) }}</td>
+              <td>{{ horario.dias.join(', ') }}</td>
+              <td>{{ horario.horaInicio }} - {{ horario.horaFin }}</td>
+              <td>{{ horario.cuposOcupados ?? 0 }} / {{ horario.cupoMaximo }}</td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-primary me-2" type="button" (click)="seleccionarParaEditar(horario)">Editar</button>
+                <button class="btn btn-sm btn-outline-danger" type="button" (click)="eliminarHorario(horario._id!)">Eliminar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

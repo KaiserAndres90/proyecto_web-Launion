@@ -1,88 +1,145 @@
-import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-
-interface Course {
-  id: number;
-  name: string;
-  price: number;
-  schedules: string[];
-}
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Curso } from '../../../interfaces/cursos';
+import { CursosService } from '../../../services/cursos-service';
 
 @Component({
   selector: 'app-admin-cursos',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './cursos.component.html',
 })
-export class CursosComponent {
-  protected courses: Course[] = [
-    { id: 1, name: 'Curso A2 - Motos', price: 850000, schedules: ['Lun - Vie · 7:00 AM', 'Sábados · 8:00 AM'] },
-    { id: 2, name: 'Curso B1 - Automóviles', price: 1250000, schedules: ['Lun - Vie · 9:00 AM', 'Sábados · 1:00 PM'] },
-    { id: 3, name: 'Curso de Refuerzo', price: 180000, schedules: ['Lun - Vie · 2:00 PM', 'Sábados · 10:00 AM'] },
-  ];
+export class CursosComponent implements OnInit {
+  private readonly cursosService = inject(CursosService);
 
-  protected editorOpen = false;
-  protected editingCourseId: number | null = null;
-  protected nextId = 4;
+  readonly cursos = signal<Curso[]>([]);
+  readonly mostrarFormulario = signal(false);
+  readonly modo = signal<'crear' | 'editar'>('crear');
+  readonly selectedFile = signal<File | null>(null);
+  readonly imagenBaseURL = 'http://localhost:4000/uploads/';
+
   protected feedback = '';
-  protected draft = this.emptyDraft();
+  cursoForm: Curso = this.resetCurso();
 
-  protected openNewCourse(): void {
-    this.editingCourseId = null;
-    this.draft = this.emptyDraft();
-    this.feedback = '';
-    this.editorOpen = true;
+  ngOnInit(): void {
+    this.obtenerCursos();
   }
 
-  protected editCourse(course: Course): void {
-    this.editingCourseId = course.id;
-    this.draft = {
-      name: course.name,
-      price: course.price,
-      schedule: course.schedules.join(', '),
+  obtenerCursos(): void {
+    this.cursosService.getAll().subscribe({
+      next: (cursos) => this.cursos.set(cursos),
+      error: (error) => {
+        console.error('Error al obtener cursos:', error);
+        this.feedback = 'No fue posible cargar los cursos.';
+      },
+    });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.selectedFile.set(input.files?.[0] ?? null);
+  }
+
+  resetCurso(): Curso {
+    return {
+      nombre: '',
+      descripcion: '',
+      categoria: 'B1',
+      duracionHoras: 1,
+      precio: 0,
+      imagen: '',
     };
-    this.feedback = '';
-    this.editorOpen = true;
   }
 
-  protected saveCourse(form: NgForm): void {
-    if (form.invalid) {
-      form.control.markAllAsTouched();
+  prepararCrear(): void {
+    this.modo.set('crear');
+    this.cursoForm = this.resetCurso();
+    this.selectedFile.set(null);
+    this.feedback = '';
+    this.mostrarFormulario.set(true);
+  }
+
+  seleccionarParaEditar(curso: Curso): void {
+    this.modo.set('editar');
+    this.cursoForm = { ...curso };
+    this.selectedFile.set(null);
+    this.feedback = '';
+    this.mostrarFormulario.set(true);
+  }
+
+  cancelarFormulario(): void {
+    this.mostrarFormulario.set(false);
+    this.cursoForm = this.resetCurso();
+    this.selectedFile.set(null);
+  }
+
+  crearCurso(): void {
+    const file = this.selectedFile();
+    if (!file) {
+      alert('Por favor selecciona una imagen');
       return;
     }
 
-    const updated: Course = {
-      id: this.editingCourseId ?? this.nextId++,
-      name: this.draft.name.trim(),
-      price: Number(this.draft.price),
-      schedules: this.draft.schedule
-        .split(',')
-        .map((schedule) => schedule.trim())
-        .filter(Boolean),
-    };
+    const formData = new FormData();
+    formData.append('nombre', this.cursoForm.nombre);
+    formData.append('descripcion', this.cursoForm.descripcion);
+    formData.append('categoria', this.cursoForm.categoria);
+    formData.append('duracionHoras', String(this.cursoForm.duracionHoras));
+    formData.append('precio', String(this.cursoForm.precio));
+    formData.append('imagen', file);
 
-    if (this.editingCourseId === null) {
-      this.courses = [...this.courses, updated];
-      this.feedback = 'Curso agregado a esta vista de demostración.';
-    } else {
-      this.courses = this.courses.map((course) =>
-        course.id === this.editingCourseId ? updated : course,
-      );
-      this.feedback = 'Curso actualizado en esta vista de demostración.';
-    }
-
-    this.editorOpen = false;
+    this.cursosService.crear(formData).subscribe({
+      next: () => {
+        alert('Curso creado correctamente');
+        this.cancelarFormulario();
+        this.obtenerCursos();
+      },
+      error: (error) => {
+        console.error('Error al crear el curso:', error);
+        alert(error.error?.message || 'Error al crear el curso');
+      },
+    });
   }
 
-  protected deleteCourse(course: Course): void {
-    this.courses = this.courses.filter((item) => item.id !== course.id);
-    this.feedback = `${course.name} se quitó de esta vista de demostración.`;
-    if (this.editingCourseId === course.id) {
-      this.editorOpen = false;
+  actualizarCurso(): void {
+    if (!this.cursoForm._id) {
+      alert('El curso no tiene ID');
+      return;
     }
+
+    const formData = new FormData();
+    formData.append('nombre', this.cursoForm.nombre);
+    formData.append('descripcion', this.cursoForm.descripcion);
+    formData.append('categoria', this.cursoForm.categoria);
+    formData.append('duracionHoras', String(this.cursoForm.duracionHoras));
+    formData.append('precio', String(this.cursoForm.precio));
+
+    const file = this.selectedFile();
+    if (file) {
+      formData.append('imagen', file);
+    }
+
+    this.cursosService.actualizar(this.cursoForm._id, formData).subscribe({
+      next: () => {
+        alert('Curso actualizado correctamente');
+        this.cancelarFormulario();
+        this.obtenerCursos();
+      },
+      error: (error) => {
+        console.error('Error al actualizar el curso:', error);
+        alert(error.error?.message || 'Error al actualizar el curso');
+      },
+    });
   }
 
-  protected closeEditor(): void {
-    this.editorOpen = false;
+  eliminarCurso(id: string): void {
+    if (!confirm('¿Está seguro de eliminar este curso?')) return;
+
+    this.cursosService.eliminar(id).subscribe({
+      next: () => this.obtenerCursos(),
+      error: (error) => console.error('Error al eliminar el curso:', error),
+    });
   }
 
   protected formatPrice(price: number): string {
@@ -93,7 +150,4 @@ export class CursosComponent {
     }).format(price);
   }
 
-  private emptyDraft(): { name: string; price: number | null; schedule: string } {
-    return { name: '', price: null, schedule: '' };
-  }
 }

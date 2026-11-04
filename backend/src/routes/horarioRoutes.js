@@ -25,14 +25,19 @@ const horasValidas = [
   body('horaFin').matches(/^(?:[01]\d|2[0-3]):[0-5]\d$/).withMessage('La hora de fin debe tener formato HH:mm'),
 ];
 const camposHorario = [
-  body('curso').isMongoId().withMessage('El curso no es válido'),
+  body('tipo')
+    .isIn(['administrativo', 'teoria', 'practica'])
+    .withMessage('El tipo de horario no es válido'),
   diasValidos,
   validarDias,
   ...horasValidas,
-  body('instructor').isMongoId().withMessage('El instructor no es válido'),
   body('cupoMaximo').isInt({ min: 1 }).withMessage('El cupo máximo debe ser al menos 1').toInt(),
 ];
 const camposHorarioOpcionales = [
+  body('tipo')
+    .optional()
+    .isIn(['administrativo', 'teoria', 'practica'])
+    .withMessage('El tipo de horario no es válido'),
   body('curso').optional().isMongoId().withMessage('El curso no es válido'),
   body('dias').optional().isArray({ min: 1 }).withMessage('Debe indicar al menos un día'),
   body('dias.*')

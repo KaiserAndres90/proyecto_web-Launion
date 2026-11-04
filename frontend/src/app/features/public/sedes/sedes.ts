@@ -12,20 +12,13 @@ import { RouterLink } from '@angular/router';
 export class SedesComponent {
   sedes = [
     {
-      id: 'pasto',
-      nombre: 'Sede Principal - Pasto',
-      direccion: 'Calle 18 # 20-45, Centro',
-      telefono: '300 341 2175',
-      descripcion: 'Nuestra sede principal equipada con la mejor tecnología y flota de vehículos.',
-      icono: 'bi-building'
-    },
-    {
       id: 'ipiales',
       nombre: 'Sede Ipiales',
       direccion: 'Carrera 5 # 12-30, Centro',
       telefono: '315 000 0000',
       descripcion: 'Atención personalizada y formación de calidad para los conductores de la frontera.',
-      icono: 'bi-geo-alt'
+      imagen: 'img/sede-ipiales.jpe',
+      alt: 'Sede Ipiales'
     },
     {
       id: 'la-union',
@@ -33,7 +26,16 @@ export class SedesComponent {
       direccion: 'Calle 3 # 4-12, Barrio Centro',
       telefono: '320 000 0000',
       descripcion: 'Formación vial de excelencia para el norte del departamento de Nariño.',
-      icono: 'bi-signpost-split'
+      imagen: 'img/sede-union.jpe',
+      alt: 'Sede La Unión'
     }
   ];
+
+  usarImagenFallback(event: Event): void {
+    const imagen = event.target as HTMLImageElement;
+
+    if (!imagen.src.endsWith('/hero-image.jpg')) {
+      imagen.src = 'hero-image.jpg';
+    }
+  }
 }

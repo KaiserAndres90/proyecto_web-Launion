@@ -37,7 +37,10 @@ export class AppComponent {
     const normalizedUrl = url.split('?')[0];
     const isAdminRoute = normalizedUrl.startsWith('/admin');
     const knownPublicRoutes = ['/inicio', '/servicios', '/horarios', '/tramites', '/contacto', '/solicitud', '/auxiliar', '/auxiliar/inicio'];
-    const isKnownRoute = normalizedUrl === '/' || knownPublicRoutes.includes(normalizedUrl);
+    const isKnownRoute =
+      normalizedUrl === '/' ||
+      knownPublicRoutes.includes(normalizedUrl) ||
+      normalizedUrl.startsWith('/sedes');
     const isNotFoundRoute = !isAdminRoute && !isKnownRoute;
 
     this.showNavbar.set(!isAdminRoute && !isNotFoundRoute);

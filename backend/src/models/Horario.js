@@ -12,10 +12,15 @@ const DIAS_SEMANA = [
 
 const horarioSchema = new mongoose.Schema(
   {
+    tipo: {
+      type: String,
+      enum: ['administrativo', 'teoria', 'practica'],
+      required: [true, 'El tipo de horario es obligatorio'],
+    },
     curso: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Curso',
-      required: [true, 'El curso es obligatorio'],
+      required: false,
     },
     dias: {
       type: [
@@ -43,7 +48,7 @@ const horarioSchema = new mongoose.Schema(
     instructor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Usuario',
-      required: [true, 'El instructor es obligatorio'],
+      required: false,
     },
     cupoMaximo: {
       type: Number,
@@ -95,7 +100,6 @@ horarioSchema.virtual('cuposDisponibles').get(function () {
   return Math.max(this.cupoMaximo - this.cuposOcupados, 0);
 });
 
-horarioSchema.index({ curso: 1, activo: 1 });
-horarioSchema.index({ instructor: 1, dias: 1 });
+horarioSchema.index({ tipo: 1, activo: 1 });
 
 export default mongoose.model('Horario', horarioSchema);

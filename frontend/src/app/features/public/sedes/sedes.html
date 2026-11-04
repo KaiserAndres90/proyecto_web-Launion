@@ -1,4 +1,4 @@
-<section class="py-5 bg-light" style="min-height: 80vh;">
+<section class="sedes-section py-5 bg-light">
   <div class="container">
     
     <!-- Encabezado -->
@@ -14,6 +14,13 @@
       </div>
     </div>
 
+    <div class="mb-4 animate__animated animate__fadeInUp">
+      <a routerLink="/inicio" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>
+        Volver al Inicio
+      </a>
+    </div>
+
     <!-- Grid de Tarjetas -->
     <div class="row g-4 justify-content-center">
       <div class="col-12 col-md-6 col-lg-4" *ngFor="let sede of sedes">
@@ -21,8 +28,14 @@
         <!-- Aplicamos las clases personalizadas aquí -->
         <div class="card h-100 border-0 shadow-sm rounded-4 sede-card">
           
-          <div class="card-header text-white text-center py-5 rounded-top-4 border-0 sede-card__header">
-            <i class="bi {{ sede.icono }} display-1 sede-card__icon"></i>
+          <div class="sede-card__header rounded-top-4">
+            <img
+              class="sede-card__image"
+              [src]="sede.imagen"
+              [alt]="sede.alt"
+              loading="lazy"
+              (error)="usarImagenFallback($event)"
+            >
           </div>
 
           <div class="card-body p-4 text-center d-flex flex-column">

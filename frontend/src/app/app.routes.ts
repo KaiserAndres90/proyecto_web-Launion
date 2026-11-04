@@ -8,6 +8,7 @@ import { LoginComponent } from './features/admin/login/login.component';
 import { Recover } from './features/admin/recover/recover.component';
 import { ReportesComponent } from './features/admin/reportes/reportes.component';
 import { SolicitudesComponent } from './features/admin/solicitudes/solicitudes.component';
+import { HorariosAdminComponent } from './features/admin/horarios/horarios-admin.component';
 import { ContactoComponent } from './features/public/contacto/contacto.component';
 import { HorariosComponent } from './features/public/horarios/horarios.component';
 import { InicioComponent } from './features/public/inicio/inicio.component';
@@ -50,6 +51,7 @@ export const routes: Routes = [
       { path: 'inicio', component: DashboardHomeComponent },
       { path: 'solicitudes', component: SolicitudesComponent },
       { path: 'cursos', component: CursosComponent },
+      { path: 'horarios', component: HorariosAdminComponent },
       { path: 'reportes', component: ReportesComponent },
     ],
   },

@@ -8,8 +8,8 @@ const directorioUploads = fileURLToPath(
   new URL('../../uploads/', import.meta.url)
 );
 
-const extensionesPermitidas = new Set(['.pdf', '.jpg', '.jpeg']);
-const tiposMimePermitidos = new Set(['application/pdf', 'image/jpeg']);
+const extensionesPermitidas = new Set(['.pdf', '.jpg', '.jpeg', '.png']);
+const tiposMimePermitidos = new Set(['application/pdf', 'image/jpeg', 'image/png']);
 
 const storage = multer.diskStorage({
   destination(_req, _file, callback) {
@@ -49,5 +49,6 @@ const upload = multer({
 
 export const subirDocumento = upload.single('documento');
 export const subirDocumentos = upload.array('documentos', 5);
+export const subirImagenCurso = upload.single('imagen');
 
 export default upload;

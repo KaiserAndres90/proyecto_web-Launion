@@ -1,36 +1,73 @@
-import { GoogleGenAI } from '@google/genai';
+const WHATSAPP_URL = 'https://wa.me/573003412175';
 
-// Inicializa la IA con tu clave secreta (la que guardaste en .env)
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const normalizar = (texto = '') =>
+  String(texto)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[¿?¡!.,]/g, '')
+    .trim();
 
-export const chatIA = async (req, res) => {
+const obtenerRespuesta = (mensaje) => {
+  const texto = normalizar(mensaje);
+
+  if (!texto) {
+    return 'Escribe tu pregunta y te ayudaré con cursos, horarios, requisitos o precios.';
+  }
+
+  if (/^hola\b|^buen[oa]s?|^saludos?\b/.test(texto)) {
+    return '¡Hola! Soy el asistente virtual de CEA Conductores La Unión. ¿Qué información necesitas sobre nuestros cursos?';
+  }
+
+  if (/horario|hora|cuando|dia|dias/.test(texto)) {
+    return 'Nuestros horarios dependen del curso y de los cupos disponibles. Escríbenos por WhatsApp para consultar el horario más cercano.';
+  }
+
+  if (/requisito|documento|papel|que debo llevar|que necesito/.test(texto)) {
+    return 'Los requisitos pueden variar según el tipo de licencia o curso. En general se solicita documento de identidad y documentos vigentes según el curso. Confirma tu caso por WhatsApp.';
+  }
+
+  if (/precio|costo|valor|cuanto cuesta|cuanto vale|tarifa/.test(texto)) {
+    return 'El valor depende de la categoría y del curso seleccionado. Para darte el precio actualizado, escríbenos por WhatsApp.';
+  }
+
+  if (/matricula|inscripcion|inscrib|como me inscribo|reservar|cupos?/.test(texto)) {
+    return 'Para matricularte o reservar un cupo necesitamos confirmar el curso, horario y disponibilidad. Escríbenos por WhatsApp para continuar con la inscripción.';
+  }
+
+  if (/direccion|ubicacion|donde estan|como llego|ciudad|pasto/.test(texto)) {
+    return 'Estamos en Pasto. Para indicarte nuestra ubicación exacta y cómo llegar, puedes comunicarte por WhatsApp.';
+  }
+
+  if (/whatsapp|asesor|asesora|persona|humano|contacto/.test(texto)) {
+    return `Puedes hablar directamente con un asesor real aquí: ${WHATSAPP_URL}`;
+  }
+
+  if (/\b(a1|a2|b1|b2|c1|c2|c3)\b/.test(texto) || /curso|licencia|conducir/.test(texto)) {
+    return 'Trabajamos con diferentes cursos y categorías de conducción. Indícame si buscas una categoría como A2, B1, C1 o C2 y te orientaré sobre requisitos y disponibilidad.';
+  }
+
+  return `Entiendo tu consulta. Para darte una respuesta exacta sobre cursos, precios, requisitos o horarios, puedes escribirnos por WhatsApp: ${WHATSAPP_URL}`;
+};
+
+export const chatIA = (req, res) => {
   try {
-    const { mensaje, historial } = req.body;
+    const mensaje = typeof req?.body?.mensaje === 'string'
+      ? req.body.mensaje.trim()
+      : '';
 
-    // Instrucción de sistema: Le dice a la IA cómo comportarse
-    const promptSistema = `Eres el asistente virtual del CEA Conductores La Unión en Pasto, . 
-    Ayudas a los usuarios a resolver dudas sobre cursos (A2, B1, C1, C2), horarios, requisitos y precios.
-    Sé amable, conciso y responde siempre en español. Si te preguntan algo que no sabes, sugiere contactar por WhatsApp.`;
+    const respuesta = obtenerRespuesta(mensaje);
 
-    // Construimos el historial de conversación para que la IA tenga memoria
-    let contents = [
-      { role: 'user', parts: [{ text: promptSistema }] },
-      ...historial.map(msg => ({
-        role: msg.emisor === 'usuario' ? 'user' : 'model',
-        parts: [{ text: msg.texto }]
-      })),
-      { role: 'user', parts: [{ text: mensaje }] }
-    ];
-
-    // Llamada a la API de Gemini
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-lite', // Modelo rápido y gratuito
-      contents: contents,
+    return res.status(200).json({
+      respuesta,
+      success: true
     });
-
-    res.json({ respuesta: response.text });
   } catch (error) {
-    console.error('Error en Chat IA:', error);
-    res.status(500).json({ error: 'Error al procesar el mensaje' });
+    console.error('Error local en el chat:', error);
+
+    return res.status(200).json({
+      respuesta: `Ocurrió un inconveniente. Puedes hablar con un asesor por WhatsApp: ${WHATSAPP_URL}`,
+      success: false
+    });
   }
 };

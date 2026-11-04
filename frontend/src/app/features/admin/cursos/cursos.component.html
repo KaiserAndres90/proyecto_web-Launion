@@ -3,70 +3,110 @@
     <div>
       <p class="eyebrow">Administración</p>
       <h1 id="courses-admin-title" class="h2 fw-bold mb-2">Administración de Cursos</h1>
-      <p class="text-secondary mb-0">Consulta precios y horarios de la oferta formativa.</p>
+      <p class="text-secondary mb-0">Gestiona los cursos disponibles en el sistema.</p>
     </div>
-    <button class="btn btn-success" type="button" (click)="openNewCourse()">
-      <i class="bi bi-plus-lg me-1" aria-hidden="true"></i> Nuevo Curso
+    <button class="btn btn-success" type="button" (click)="prepararCrear()">
+      <i class="bi bi-plus-lg me-1" aria-hidden="true"></i> Nuevo producto
     </button>
   </div>
 
   @if (feedback) {
-    <div class="alert alert-success" role="status">{{ feedback }}</div>
+    <div class="alert alert-danger" role="alert">{{ feedback }}</div>
   }
 
-  @if (editorOpen) {
-    <form #courseForm="ngForm" class="card border-success-subtle shadow-sm mb-4" (ngSubmit)="saveCourse(courseForm)">
-      <div class="card-body">
-        <h2 class="h5 fw-bold mb-3">{{ editingCourseId === null ? 'Nuevo curso' : 'Editar curso' }}</h2>
+  @if (mostrarFormulario()) {
+    <div class="mt-3 card p-3 shadow-sm mb-4">
+      <form enctype="multipart/form-data" (ngSubmit)="modo() === 'crear' ? crearCurso() : actualizarCurso()">
+        <h2 class="h5 fw-bold mb-3">{{ modo() === 'crear' ? 'Nuevo curso' : 'Editar curso' }}</h2>
+
         <div class="row g-3">
           <div class="col-12 col-md-6">
-            <label class="form-label" for="course-name">Nombre del curso</label>
-            <input class="form-control" id="course-name" name="name" [(ngModel)]="draft.name" required />
+            <label class="form-label" for="curso-nombre">Modelo</label>
+            <input class="form-control" id="curso-nombre" name="nombre" [(ngModel)]="cursoForm.nombre" required>
           </div>
+
           <div class="col-12 col-md-6">
-            <label class="form-label" for="course-price">Precio (COP)</label>
-            <input class="form-control" id="course-price" name="price" type="number" min="1" [(ngModel)]="draft.price" required />
+            <label class="form-label" for="curso-categoria">Categoría</label>
+            <select class="form-select" id="curso-categoria" name="categoria" [(ngModel)]="cursoForm.categoria" required>
+              <option value="A1">A1</option>
+              <option value="A2">A2</option>
+              <option value="B1">B1</option>
+              <option value="B2">B2</option>
+              <option value="B3">B3</option>
+              <option value="C1">C1</option>
+              <option value="C2">C2</option>
+              <option value="C3">C3</option>
+            </select>
           </div>
+
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="curso-precio">Precio</label>
+            <input class="form-control" id="curso-precio" name="precio" type="number" min="0" [(ngModel)]="cursoForm.precio" required>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="curso-duracion">Duración (horas)</label>
+            <input class="form-control" id="curso-duracion" name="duracionHoras" type="number" min="1" [(ngModel)]="cursoForm.duracionHoras" required>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="curso-imagen">Imagen</label>
+            <input class="form-control" id="curso-imagen" name="imagen" type="file" accept="image/jpeg,image/png" (change)="onFileSelected($event)">
+          </div>
+
           <div class="col-12">
-            <label class="form-label" for="course-schedule">Horarios disponibles (separados por coma)</label>
-            <input class="form-control" id="course-schedule" name="schedule" [(ngModel)]="draft.schedule" placeholder="Lun - Vie · 7:00 AM, Sábados · 8:00 AM" required />
+            <label class="form-label" for="curso-descripcion">Descripción</label>
+            <textarea class="form-control" id="curso-descripcion" name="descripcion" rows="3" [(ngModel)]="cursoForm.descripcion" required></textarea>
           </div>
-          <div class="col-12 d-flex flex-wrap gap-2">
-            <button class="btn btn-success" type="submit">Guardar curso</button>
-            <button class="btn btn-outline-secondary" type="button" (click)="closeEditor()">Cancelar</button>
+
+          <div class="col-12 d-flex gap-2">
+            <button class="btn btn-success" type="submit">{{ modo() === 'crear' ? 'Crear' : 'Actualizar' }}</button>
+            <button class="btn btn-outline-secondary" type="button" (click)="cancelarFormulario()">Cancelar</button>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   }
 
-  <div class="row g-4">
-    @for (course of courses; track course.id) {
-      <div class="col-12 col-md-6 col-xl-4">
-        <article class="card admin-course-card h-100 shadow-sm">
-          <div class="card-body d-flex flex-column p-4">
-            <span class="admin-shortcut__icon mb-3"><i class="bi bi-journal-bookmark" aria-hidden="true"></i></span>
-            <h2 class="card-title h5 fw-bold">{{ course.name }}</h2>
-            <p class="h3 fw-bold text-success">{{ formatPrice(course.price) }}</p>
-            <h3 class="h6 fw-bold text-secondary">Horarios disponibles</h3>
-            <ul class="list-group list-group-flush mb-4">
-              @for (schedule of course.schedules; track schedule) {
-                <li class="list-group-item px-0"><i class="bi bi-clock me-2 text-success" aria-hidden="true"></i>{{ schedule }}</li>
-              }
-            </ul>
-            <div class="d-flex gap-2 mt-auto">
-              <button class="btn btn-outline-secondary flex-fill" type="button" (click)="editCourse(course)">Editar</button>
-              <button class="btn btn-outline-danger flex-fill" type="button" (click)="deleteCourse(course)">Eliminar</button>
-            </div>
-          </div>
-        </article>
-      </div>
-    } @empty {
-      <div class="col-12">
-        <p class="rounded border border-dashed bg-white p-5 text-center text-secondary">No hay cursos registrados en esta vista.</p>
-      </div>
-    }
-  </div>
-
-  <p class="mt-4 small text-secondary">Los cambios se conservan solo en esta sesión de demostración; no se guardan en el backend.</p>
+  @if (cursos().length === 0) {
+    <p class="table table-striped mt-4 align-middle text-center text-secondary border bg-white p-4">No hay cursos registrados.</p>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-striped mt-4 align-middle">
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Categoría</th>
+            <th>Duración</th>
+            <th>Precio</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (curso of cursos(); track curso._id) {
+            <tr>
+              <td>
+                @if (curso.imagen) {
+                  <img [src]="imagenBaseURL + curso.imagen" alt="Imagen del curso" width="90" height="60" class="rounded object-fit-cover">
+                } @else {
+                  <span class="text-secondary">Sin imagen</span>
+                }
+              </td>
+              <td>{{ curso.nombre }}</td>
+              <td>{{ curso.descripcion }}</td>
+              <td>{{ curso.categoria }}</td>
+              <td>{{ curso.duracionHoras }} horas</td>
+              <td>{{ formatPrice(curso.precio) }}</td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-primary me-2" type="button" (click)="seleccionarParaEditar(curso)">Editar</button>
+                <button class="btn btn-sm btn-outline-danger" type="button" (click)="eliminarCurso(curso._id!)">Eliminar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </section>
