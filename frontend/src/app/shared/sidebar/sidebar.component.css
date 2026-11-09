@@ -3,8 +3,7 @@
 .sidebar__brand-row { min-height: 42px; }
 .sidebar__brand { color: #ffffff; font-size: 0.95rem; font-weight: 700; white-space: nowrap; }
 .sidebar__brand strong { color: #8CC63F; }
-.sidebar__brand-mark { width: 42px; height: 42px; flex: 0 0 42px; }
-.sidebar__brand-mark svg { width: 100%; height: 100%; }
+.sidebar__brand-mark { width: 42px; height: 42px; flex: 0 0 42px; display: block; border-radius: 50%; object-fit: cover; background: #fff; }
 .sidebar__collapse-btn { width: 36px; height: 36px; padding: 0; color: #dfe2d8; }
 .sidebar__collapse-btn:hover { color: #8CC63F; }
 .sidebar__label { color: #aeb3a5; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
