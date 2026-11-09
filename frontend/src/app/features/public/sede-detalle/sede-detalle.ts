@@ -23,7 +23,7 @@ export class SedeDetalleComponent implements OnInit {
     },
     'ipiales': {
       nombre: 'Sede Ipiales',
-      direccion: 'Carrera 5 # 12-30, Centro',
+      direccion: 'Carrera 1 #1A-53, Barrio Centenario',
       telefono: '315 000 0000',
       horario: 'Lunes a Viernes: 8:00 AM - 12:00 PM y 2:00 PM - 6:00 PM',
       mapaIframe: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15949.49199552389!2d-77.6468076!3d0.8276891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e2a36f6d1e36f33%3A0x9532c9c9c5c5c5c5!2sIpiales%2C%20Nari%C3%B1o!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco'
