@@ -1,32 +1,66 @@
 <div class="auxiliar-layout">
-  <aside class="auxiliar-sidebar">
-    <a class="auxiliar-brand" routerLink="/inicio">CEA <strong>La Unión</strong></a>
-    <p class="auxiliar-label">Panel de auxiliar</p>
-
-    <nav class="auxiliar-nav" aria-label="Opciones del auxiliar">
-      <a *ngFor="let option of menuOptions" href="#" class="auxiliar-nav__link">
-        <span>{{ option.label }}</span>
-      </a>
-    </nav>
-
-    <button type="button" class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
-  </aside>
+  <app-sidebar
+    class="auxiliar-sidebar"
+    heading="Panel de auxiliar"
+    [items]="sidebarItems"
+    (logoutRequested)="logout()"
+  />
 
   <main class="auxiliar-main">
     <header class="auxiliar-header">
       <div>
         <p>Área asignada</p>
-        <h1>{{ role }}</h1>
+        <h1>{{ role || 'Auxiliar' }}</h1>
       </div>
       <a routerLink="/">Ver sitio público</a>
     </header>
 
-    <section class="auxiliar-grid">
-      <article *ngFor="let option of menuOptions" class="auxiliar-card">
-        <h2>{{ option.label }}</h2>
-        <p>{{ option.placeholder }}</p>
-        <button type="button" class="btn btn-success" disabled>Sección disponible próximamente</button>
-      </article>
+    @if (role === 'aux_atencion') {
+      <section class="card border-0 shadow-sm mb-4" aria-labelledby="solicitudes-title">
+        <div class="card-body">
+          <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3">
+            <div>
+              <h2 id="solicitudes-title" class="h5 mb-1">Bandeja de solicitudes</h2>
+              <p class="text-secondary small mb-0">Solicitudes recibidas desde el sitio web</p>
+            </div>
+            <div class="input-group search-control">
+              <span class="input-group-text"><i class="bi bi-search" aria-hidden="true"></i></span>
+              <input class="form-control" type="search" aria-label="Buscar solicitudes"
+                     placeholder="Buscar por nombre, curso o estado"
+                     [value]="searchTerm" (input)="actualizarBusqueda($event)">
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr><th scope="col">Solicitante</th><th scope="col">Curso</th><th scope="col">Fecha</th><th scope="col">Estado</th></tr>
+              </thead>
+              <tbody>
+                @for (solicitud of solicitudesFiltradas; track solicitud.nombre) {
+                  <tr>
+                    <td class="fw-semibold">{{ solicitud.nombre }}</td>
+                    <td>{{ solicitud.curso }}</td>
+                    <td>{{ solicitud.fecha }}</td>
+                    <td><span class="badge rounded-pill" [class]="claseEstado(solicitud.estado)">{{ solicitud.estado }}</span></td>
+                  </tr>
+                } @empty {
+                  <tr><td class="text-center text-secondary py-4" colspan="4">No se encontraron solicitudes.</td></tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    }
+
+    <section class="auxiliar-grid" aria-label="Secciones de atención asignadas">
+      @for (option of menuOptions; track option.label) {
+        <article class="auxiliar-card">
+          <h2>{{ option.label }}</h2>
+          <p>{{ option.placeholder }}</p>
+          <button type="button" class="btn btn-success" disabled>Sección disponible próximamente</button>
+        </article>
+      }
     </section>
   </main>
 </div>

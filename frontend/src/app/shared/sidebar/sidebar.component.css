@@ -1,0 +1,27 @@
+:host { display: block; min-width: 0; }
+.sidebar { gap: 2px; padding: 22px 16px 18px; background: #333333; color: #ffffff; }
+.sidebar__brand-row { min-height: 42px; }
+.sidebar__brand { color: #ffffff; font-size: 0.95rem; font-weight: 700; white-space: nowrap; }
+.sidebar__brand strong { color: #8CC63F; }
+.sidebar__brand-mark { width: 42px; height: 42px; flex: 0 0 42px; }
+.sidebar__brand-mark svg { width: 100%; height: 100%; }
+.sidebar__collapse-btn { width: 36px; height: 36px; padding: 0; color: #dfe2d8; }
+.sidebar__collapse-btn:hover { color: #8CC63F; }
+.sidebar__label { color: #aeb3a5; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+.sidebar__nav { gap: 6px; }
+.sidebar__link { gap: 13px; min-height: 46px; border-radius: 8px; padding: 10px 12px; color: #e6e8e2; font-size: 0.88rem; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s ease, color 0.2s ease; }
+.sidebar__link i { width: 22px; color: #cdd0c7; font-size: 1.05rem; text-align: center; }
+.sidebar__link:hover, .sidebar__link:focus-visible { background: rgb(255 255 255 / 8%); color: #ffffff; outline: none; }
+.sidebar__link--active { background: rgb(140 198 63 / 18%); color: #ffffff; font-weight: 700; box-shadow: inset 4px 0 0 #8CC63F; }
+.sidebar__link--active i { color: #8CC63F; }
+.sidebar__exit { display: flex; align-items: center; gap: 13px; width: 100%; border: 0; border-top: 1px solid rgb(255 255 255 / 10%); background: transparent; padding: 16px 12px 0; color: #e6e8e2; text-align: left; white-space: nowrap; }
+.sidebar__exit i { width: 22px; }
+.sidebar__exit:hover { color: #8CC63F; }
+.sidebar--collapsed .sidebar__brand-text,
+.sidebar--collapsed .sidebar__label,
+.sidebar--collapsed .sidebar__link span,
+.sidebar--collapsed .sidebar__exit span { display: none; }
+.sidebar--collapsed .sidebar__link,
+.sidebar--collapsed .sidebar__exit { justify-content: center; }
+.sidebar--collapsed .sidebar__collapse-btn { position: absolute; top: 20px; right: -18px; border-radius: 50%; background: #ffffff; box-shadow: 0 4px 14px rgb(51 51 51 / 18%); color: #333333; }
+@media (max-width: 991.98px) { .sidebar__collapse-btn { display: none; } }

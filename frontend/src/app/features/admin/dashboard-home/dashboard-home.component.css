@@ -4,16 +4,10 @@
 .dashboard-home h1 { color: #333333; font-family: var(--font-heading); font-size: clamp(1.7rem, 3vw, 2.35rem); }
 .dashboard-action-btn { border-radius: 8px; background: #a5c300; color: #333333; font-weight: 800; padding: 10px 16px; box-shadow: 0 6px 16px rgb(165 195 0 / 18%); }
 .dashboard-action-btn:hover { background: #91ad00; color: #333333; }
-.kpi-card, .chart-card, .activity-card { border-radius: 12px; background: rgb(255 255 255 / 92%); box-shadow: 0 10px 30px rgb(51 51 51 / 7%) !important; }
-.kpi-card { border-left: 3px solid transparent !important; }
-.kpi-card__title { color: #737a68; font-size: 0.78rem; font-weight: 700; }
-.kpi-card__value { color: #333333; font-family: var(--font-heading); font-size: 1.75rem; }
-.kpi-card__detail { color: #899080; font-size: 0.76rem; }
-.kpi-card__icon { display: grid; width: 44px; height: 44px; border-radius: 10px; place-items: center; }
-.kpi-card__icon--lime { background: #edf4c8; color: #718900; }
-.kpi-card__icon--yellow { background: #fffbd0; color: #777100; }
-.kpi-card__icon--dark { background: #e7e8e4; color: #333333; }
-.kpi-card__icon--red { background: #ffe7df; color: #b55b42; }
+.chart-card, .activity-card { border-radius: 12px; background: rgb(255 255 255 / 92%); box-shadow: 0 10px 30px rgb(51 51 51 / 7%) !important; }
+.kpi-card { border-radius: 12px; }
+.kpi-card__label { letter-spacing: 0.04em; }
+.kpi-card__icon { width: 52px; height: 52px; flex: 0 0 52px; }
 .chart-period { background: #f0f3e7; color: #657900; font-weight: 700; }
 .chart-placeholder { position: relative; height: 260px; border-bottom: 1px solid #e8ebe3; }
 .chart-grid-line { position: absolute; left: 0; right: 0; height: 1px; background: #edf0e8; }

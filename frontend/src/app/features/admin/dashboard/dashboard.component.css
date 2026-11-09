@@ -1,27 +1,12 @@
 :host { display: block; min-height: 100vh; }
 .admin-layout { min-height: 100vh; background: #f4f6ef; }
 .admin-sidebar {
-  z-index: 1030; width: 255px; height: 100vh; padding: 22px 16px 18px;
-  background: #333333; box-shadow: 8px 0 24px rgb(51 51 51 / 10%);
+  display: block;
+  z-index: 1030; width: 255px; height: 100vh;
+  position: fixed; top: 0; left: 0; background: #333333; box-shadow: 8px 0 24px rgb(51 51 51 / 10%);
   transition: width 0.25s ease, transform 0.25s ease;
 }
 .admin-main { width: calc(100% - 255px); margin-left: 255px; min-width: 0; transition: margin 0.25s ease, width 0.25s ease; }
-.admin-brand { color: #ffffff; font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; white-space: nowrap; }
-.admin-brand strong { color: #f1e600; }
-.admin-brand__mark { width: 42px; height: 42px; flex: 0 0 42px; }
-.admin-brand__mark svg { width: 100%; height: 100%; }
-.sidebar-collapse-btn { width: 36px; height: 36px; color: #dfe2d8; padding: 0; }
-.sidebar-collapse-btn:hover { color: #a5c300; }
-.admin-sidebar__label { color: #aeb3a5; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
-.admin-nav { gap: 6px; }
-.admin-nav__link { gap: 13px; min-height: 46px; border-radius: 8px; color: #e6e8e2; font-size: 0.88rem; text-decoration: none; padding: 10px 12px; white-space: nowrap; }
-.admin-nav__link i { width: 22px; color: #cdd0c7; font-size: 1.05rem; text-align: center; }
-.admin-nav__link:hover { background: rgb(255 255 255 / 8%); color: #ffffff; }
-.admin-nav__link--active { background: rgb(165 195 0 / 14%); color: #ffffff; box-shadow: inset 3px 0 #a5c300; }
-.admin-nav__link--active i { color: #a5c300; }
-.admin-sidebar__exit { gap: 13px; width: 100%; border-top: 1px solid rgb(255 255 255 / 10%); border-radius: 0; color: #e6e8e2; padding: 16px 12px 0; white-space: nowrap; }
-.admin-sidebar__exit i { width: 22px; }
-.admin-sidebar__exit:hover { color: #f1e600; }
 .admin-topbar {
   z-index: 1020; height: 72px; padding: 0 32px;
   border-bottom: 1px solid rgb(51 51 51 / 8%); background: rgb(255 255 255 / 78%);
@@ -33,13 +18,6 @@
 .admin-logout-btn:hover { border-color: #a5c300; background: #f2f6d9; color: #526500; }
 .admin-layout--collapsed .admin-sidebar { width: 78px; }
 .admin-layout--collapsed .admin-main { width: calc(100% - 78px); margin-left: 78px; }
-.admin-layout--collapsed .admin-brand__text,
-.admin-layout--collapsed .admin-sidebar__label,
-.admin-layout--collapsed .admin-nav__link span,
-.admin-layout--collapsed .admin-sidebar__exit span { display: none; }
-.admin-layout--collapsed .admin-nav__link,
-.admin-layout--collapsed .admin-sidebar__exit { justify-content: center; }
-.admin-layout--collapsed .sidebar-collapse-btn { position: absolute; right: -18px; top: 20px; border-radius: 50%; background: #ffffff; box-shadow: 0 4px 14px rgb(51 51 51 / 18%); color: #333333; }
 @media (max-width: 991.98px) {
   .admin-sidebar { width: 255px; transform: translateX(0); }
   .admin-main { width: calc(100% - 255px); margin-left: 255px; }

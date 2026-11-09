@@ -1,0 +1,36 @@
+<aside class="sidebar d-flex flex-column h-100" [class.sidebar--collapsed]="collapsed" [attr.aria-label]="heading">
+  <div class="sidebar__brand-row d-flex align-items-center justify-content-between mb-3">
+    <a class="sidebar__brand d-flex align-items-center text-decoration-none" [routerLink]="homeRoute" aria-label="CEA Conductores La Unión, inicio">
+      <span class="sidebar__brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="24" fill="#8CC63F"/>
+          <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#333333" stroke-width="10" stroke-linecap="round"/>
+          <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#F1E600" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/>
+        </svg>
+      </span>
+      <span class="sidebar__brand-text ms-2">CEA <strong>La Unión</strong></span>
+    </a>
+    @if (collapseEnabled) {
+      <button class="btn sidebar__collapse-btn" type="button" (click)="toggleRequested.emit()" [attr.aria-label]="collapsed ? 'Expandir menú lateral' : 'Colapsar menú lateral'">
+        <i class="bi" [class.bi-chevron-left]="!collapsed" [class.bi-chevron-right]="collapsed" aria-hidden="true"></i>
+      </button>
+    }
+  </div>
+
+  <p class="sidebar__label px-2 mb-2">{{ heading }}</p>
+  <nav class="sidebar__nav d-grid" [attr.aria-label]="'Secciones de ' + heading">
+    @for (item of items; track item.route) {
+      <a class="sidebar__link d-flex align-items-center"
+         [routerLink]="item.route"
+         routerLinkActive="sidebar__link--active"
+         [routerLinkActiveOptions]="{ exact: true }"
+         ariaCurrentWhenActive="page"
+         [title]="item.label">
+        <i class="bi" [class]="item.icon" aria-hidden="true"></i><span>{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+  <button class="sidebar__exit mt-auto" type="button" (click)="logoutRequested.emit()">
+    <i class="bi bi-box-arrow-right" aria-hidden="true"></i><span>Cerrar sesión</span>
+  </button>
+</aside>

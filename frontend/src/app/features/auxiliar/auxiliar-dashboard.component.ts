@@ -1,16 +1,23 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { SidebarComponent, SidebarItem } from '../../shared/sidebar/sidebar.component';
 
 interface MenuOption {
   label: string;
   placeholder: string;
 }
 
+interface SolicitudAuxiliar {
+  nombre: string;
+  curso: string;
+  fecha: string;
+  estado: 'Recibida' | 'En revisión' | 'Aprobada';
+}
+
 @Component({
   selector: 'app-auxiliar-dashboard',
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink, SidebarComponent],
   templateUrl: './auxiliar-dashboard.component.html',
   styleUrl: './auxiliar-dashboard.component.css',
 })
@@ -19,6 +26,16 @@ export class AuxiliarDashboardComponent {
 
   readonly role: string | null;
   readonly menuOptions: MenuOption[];
+  readonly sidebarItems: readonly SidebarItem[] = [
+    { label: 'Inicio', route: '/auxiliar/inicio', icon: 'bi-grid-1x2-fill' },
+  ];
+  readonly solicitudes: readonly SolicitudAuxiliar[] = [
+    { nombre: 'Camila Rosero', curso: 'Automóvil', fecha: '2026-10-28', estado: 'Recibida' },
+    { nombre: 'Laura Martínez', curso: 'Motocicleta', fecha: '2026-10-27', estado: 'En revisión' },
+    { nombre: 'Andrés Pantoja', curso: 'Automóvil', fecha: '2026-10-26', estado: 'Aprobada' },
+    { nombre: 'Daniela Gómez', curso: 'Motocicleta', fecha: '2026-10-25', estado: 'Recibida' },
+  ];
+  searchTerm = '';
 
   constructor() {
     this.role = this.getRole();
@@ -45,6 +62,30 @@ export class AuxiliarDashboardComponent {
   logout(): void {
     localStorage.removeItem('token');
     void this.router.navigate(['/admin/login']);
+  }
+
+  get solicitudesFiltradas(): readonly SolicitudAuxiliar[] {
+    const termino = this.searchTerm.trim().toLocaleLowerCase();
+    if (!termino) return this.solicitudes;
+
+    return this.solicitudes.filter(({ nombre, curso, estado }) =>
+      `${nombre} ${curso} ${estado}`.toLocaleLowerCase().includes(termino),
+    );
+  }
+
+  actualizarBusqueda(event: Event): void {
+    this.searchTerm = (event.target as HTMLInputElement).value;
+  }
+
+  claseEstado(estado: SolicitudAuxiliar['estado']): string {
+    switch (estado) {
+      case 'Recibida':
+        return 'text-bg-primary';
+      case 'En revisión':
+        return 'text-bg-warning';
+      case 'Aprobada':
+        return 'text-bg-success';
+    }
   }
 
   private getRole(): string | null {

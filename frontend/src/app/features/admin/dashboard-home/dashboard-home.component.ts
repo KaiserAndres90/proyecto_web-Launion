@@ -6,12 +6,9 @@ export interface KpiResumen {
   valor: string;
   detalle: string;
   icono: string;
-  color: 'lime' | 'yellow' | 'dark' | 'red';
-}
-
-export interface IngresoMensual {
-  mes: string;
-  valor: number;
+  fondo: string;
+  texto: string;
+  iconoFondo: string;
 }
 
 @Component({
@@ -22,7 +19,6 @@ export interface IngresoMensual {
 })
 export class DashboardHomeComponent {
   readonly kpis = signal<KpiResumen[]>([]);
-  readonly ingresosMensuales = signal<IngresoMensual[]>([]);
 
   constructor() {
     this.cargarDashboard();
@@ -30,15 +26,9 @@ export class DashboardHomeComponent {
 
   cargarDashboard(): void {
     this.kpis.set([
-      { titulo: 'Estudiantes', valor: '248', detalle: '+12 este mes', icono: 'bi-mortarboard-fill', color: 'lime' },
-      { titulo: 'Solicitudes pendientes', valor: '18', detalle: '7 requieren atención', icono: 'bi-inbox-fill', color: 'yellow' },
-      { titulo: 'Cursos activos', valor: '9', detalle: '3 categorías disponibles', icono: 'bi-journal-bookmark-fill', color: 'dark' },
-      { titulo: 'Ingresos estimados', valor: '$42.8M', detalle: 'Proyección mensual', icono: 'bi-cash-stack', color: 'red' },
-    ]);
-
-    this.ingresosMensuales.set([
-      { mes: 'Ene', valor: 58 }, { mes: 'Feb', valor: 67 }, { mes: 'Mar', valor: 54 },
-      { mes: 'Abr', valor: 72 }, { mes: 'May', valor: 88 }, { mes: 'Jun', valor: 78 },
+      { titulo: 'Solicitudes Nuevas', valor: '18', detalle: '7 requieren atención', icono: 'bi-inbox-fill', fondo: 'bg-warning-subtle', texto: 'text-warning-emphasis', iconoFondo: 'bg-warning text-dark' },
+      { titulo: 'Cursos Activos', valor: '9', detalle: '3 categorías disponibles', icono: 'bi-journal-bookmark-fill', fondo: 'bg-success-subtle', texto: 'text-success-emphasis', iconoFondo: 'bg-success text-white' },
+      { titulo: 'Estudiantes Matriculados', valor: '248', detalle: '+12 este mes', icono: 'bi-mortarboard-fill', fondo: 'bg-secondary-subtle', texto: 'text-secondary-emphasis', iconoFondo: 'bg-dark text-white' },
     ]);
   }
 }

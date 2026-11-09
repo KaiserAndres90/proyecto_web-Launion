@@ -10,18 +10,19 @@
     </a>
   </div>
 
+  <h2 class="h5 mb-3">Indicadores clave</h2>
   <div class="row g-3 mb-4">
     @for (kpi of kpis(); track kpi.titulo) {
-      <div class="col-12 col-sm-6 col-xl-3">
-        <article class="kpi-card card h-100 border-0">
-          <div class="card-body d-flex align-items-start justify-content-between">
+      <div class="col-12 col-md-4">
+        <article class="card h-100 border-0 shadow-sm kpi-card" [class]="kpi.fondo">
+          <div class="card-body d-flex align-items-start justify-content-between gap-3">
             <div>
-              <p class="kpi-card__title mb-2">{{ kpi.titulo }}</p>
-              <h2 class="kpi-card__value mb-1">{{ kpi.valor }}</h2>
-              <p class="kpi-card__detail mb-0">{{ kpi.detalle }}</p>
+              <p class="small fw-semibold text-uppercase mb-2 kpi-card__label" [class]="kpi.texto">{{ kpi.titulo }}</p>
+              <h3 class="display-6 fw-bold mb-1 text-dark">{{ kpi.valor }}</h3>
+              <p class="small mb-0 text-body-secondary">{{ kpi.detalle }}</p>
             </div>
-            <span class="kpi-card__icon" [class]="'kpi-card__icon kpi-card__icon--' + kpi.color" aria-hidden="true">
-              <i class="bi" [class]="'bi ' + kpi.icono"></i>
+            <span class="kpi-card__icon rounded-3 d-inline-flex align-items-center justify-content-center shadow-sm" [class]="kpi.iconoFondo" aria-hidden="true">
+              <i class="bi fs-4" [class]="kpi.icono"></i>
             </span>
           </div>
         </article>
