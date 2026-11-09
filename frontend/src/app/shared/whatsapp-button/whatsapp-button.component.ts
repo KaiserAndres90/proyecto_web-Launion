@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { timeout } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, finalize } from 'rxjs/operators';
 
 interface MensajeChat {
   emisor: 'bot' | 'usuario';
@@ -74,26 +74,34 @@ export class WhatsappButtonComponent {
     this.cdr.markForCheck();
 
     // 2. Enviar al backend local
+    if (this.timeoutCarga) clearTimeout(this.timeoutCarga);
+
     this.http.post<RespuestaChat>(this.chatUrl, {
       mensaje: mensajeUsuario
     }).pipe(
-      timeout(8000)
+      timeout(8000),
+      finalize(() => {
+        if (this.timeoutCarga) {
+          clearTimeout(this.timeoutCarga);
+          this.timeoutCarga = undefined;
+        }
+        if (this.cargando) {
+          this.cargando = false;
+          this.cdr.detectChanges();
+        }
+      })
     ).subscribe({
       next: (res) => {
-        if (this.timeoutCarga) clearTimeout(this.timeoutCarga);
         const respuesta = typeof res?.respuesta === 'string' && res.respuesta.trim()
           ? res.respuesta
           : 'No recibí una respuesta válida. Escríbenos por WhatsApp para atenderte.';
         this.mensajes.push({ emisor: 'bot', texto: respuesta });
-        this.cargando = false;
         this.scrollToBottom();
         this.cdr.detectChanges();
       },
       error: (err) => {
-        if (this.timeoutCarga) clearTimeout(this.timeoutCarga);
         console.error('Error al comunicarse con el chat:', err);
         this.mensajes.push({ emisor: 'bot', texto: 'Lo siento, en este momento no puedo responder. Por favor contáctanos por WhatsApp.' });
-        this.cargando = false;
         this.scrollToBottom();
         this.cdr.detectChanges();
       }
@@ -101,11 +109,11 @@ export class WhatsappButtonComponent {
 
     this.timeoutCarga = setTimeout(() => {
       if (!this.cargando) return;
-      this.cargando = false;
       this.mensajes.push({
         emisor: 'bot',
         texto: 'La respuesta tardó demasiado. Por favor intenta de nuevo o contáctanos por WhatsApp.'
       });
+      this.cargando = false;
       this.scrollToBottom();
       this.cdr.detectChanges();
     }, 9000);

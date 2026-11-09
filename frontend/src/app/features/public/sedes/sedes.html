@@ -28,6 +28,8 @@
               [src]="sede.imagen"
               [alt]="sede.alt"
               loading="lazy"
+              decoding="async"
+              fetchpriority="low"
               (error)="usarImagenFallback($event)"
             >
           </div>
@@ -42,7 +44,7 @@
             </ul>
 
             <a [routerLink]="['/sedes', sede.id]" class="btn w-100 mt-auto rounded-pill sede-btn">
-              Ver detalles y mapa <i class="bi bi-arrow-right ms-1"></i>
+              Ver detalles <i class="bi bi-arrow-right ms-1"></i>
             </a>
           </div>
         </div>

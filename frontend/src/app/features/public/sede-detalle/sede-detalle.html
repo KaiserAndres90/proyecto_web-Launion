@@ -48,25 +48,49 @@
         </a>
       </div>
 
-      <!-- Mapa -->
+      <!-- Foto -->
       <div class="col-lg-7">
-        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-          <iframe 
-            [src]="sedeInfo.mapaIframe" 
-            width="100%" 
-            height="450" 
-            style="border:0;" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Mapa de la sede">
-          </iframe>
+        <div *ngIf="sedeInfo.imagen; else sinFoto" class="card border-0 shadow-lg rounded-4 overflow-hidden">
+          <button type="button" class="sede-detalle__foto-btn p-0 border-0 bg-transparent" (click)="abrirFoto()" aria-label="Ver foto completa">
+            <img
+              [src]="sedeInfo.imagen"
+              [alt]="sedeInfo.imagenAlt || sedeInfo.nombre"
+              class="img-fluid sede-detalle__foto"
+              loading="lazy"
+              decoding="async"
+              (error)="usarImagenFallback($event)">
+            <span class="sede-detalle__zoom-hint"><i class="bi bi-arrows-fullscreen me-1" aria-hidden="true"></i>Ver foto completa</span>
+          </button>
         </div>
+        <ng-template #sinFoto>
+          <div class="card border-0 shadow-sm rounded-4 p-5 text-center text-muted">
+            <i class="bi bi-image fs-1 mb-2" aria-hidden="true"></i>
+            <p class="mb-0">Foto de la sede no disponible.</p>
+          </div>
+        </ng-template>
       </div>
     </div>
 
   </div>
 </section>
+
+<!-- Lightbox: foto completa -->
+<div
+  *ngIf="fotoAmpliada && sedeInfo?.imagen"
+  class="sede-lightbox"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="'Foto de ' + (sedeInfo?.nombre || 'la sede')"
+  (click)="cerrarFoto()">
+  <button type="button" class="sede-lightbox__close btn btn-light rounded-circle" (click)="cerrarFoto(); $event.stopPropagation()" aria-label="Cerrar">
+    <i class="bi bi-x-lg" aria-hidden="true"></i>
+  </button>
+  <img
+    [src]="sedeInfo.imagen"
+    [alt]="sedeInfo.imagenAlt || sedeInfo.nombre"
+    class="sede-lightbox__img"
+    (click)="$event.stopPropagation()">
+</div>
 
 <!-- Plantilla en caso de que el ID de la URL no exista -->
 <ng-template #noEncontrada>
@@ -77,6 +101,3 @@
     <a routerLink="/sedes" class="btn btn-success mt-3">Volver a las sedes</a>
   </div>
 </ng-template>
-<li class="nav-item">
-  <a class="nav-link" routerLink="/sedes" routerLinkActive="active">Sedes</a>
-</li>

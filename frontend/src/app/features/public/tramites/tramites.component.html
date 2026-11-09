@@ -65,16 +65,26 @@
                 </ol>
               }
 
-              <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3">
-                <a
-                  class="btn btn-success btn-lg tramites-cta"
-                  [href]="tramite.enlace"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  [attr.aria-label]="tramite.textoEnlace + ' (abre en una nueva pestaña)'">
-                  {{ tramite.textoEnlace }}
-                  <i class="bi bi-box-arrow-up-right ms-2" aria-hidden="true"></i>
-                </a>
+              <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 flex-wrap">
+                @if (tramite.enlace.startsWith('/')) {
+                  <a
+                    class="btn btn-success btn-lg tramites-cta"
+                    [routerLink]="tramite.enlace"
+                    [attr.aria-label]="tramite.textoEnlace">
+                    {{ tramite.textoEnlace }}
+                    <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i>
+                  </a>
+                } @else {
+                  <a
+                    class="btn btn-success btn-lg tramites-cta"
+                    [href]="tramite.enlace"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    [attr.aria-label]="tramite.textoEnlace + ' (abre en una nueva pestaña)'">
+                    {{ tramite.textoEnlace }}
+                    <i class="bi bi-box-arrow-up-right ms-2" aria-hidden="true"></i>
+                  </a>
+                }
                 <span class="tramites-official badge rounded-pill">
                   <i class="bi bi-shield-check me-1" aria-hidden="true"></i>
                   Enlaces oficiales
@@ -84,6 +94,19 @@
           </div>
         </div>
       }
+    </div>
+
+    <div class="text-center mt-4 mt-lg-5">
+      <a
+        class="btn btn-outline-success btn-lg tramites-cta"
+        href="https://portalpublico.runt.gov.co/#/consulta-ciudadano-documento/consulta/consulta-ciudadano-documento"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Consulta RUNT (abre en una nueva pestaña)">
+        Consulta RUNT
+        <i class="bi bi-box-arrow-up-right ms-2" aria-hidden="true"></i>
+      </a>
+      <p class="text-secondary small mt-2 mb-0">Verifica tu registro ante el RUNT</p>
     </div>
   </div>
 </main>

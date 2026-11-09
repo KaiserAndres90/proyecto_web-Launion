@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import Usuario from '../models/Usuario.js';
-import Curso from '../models/Curso.js';
+import Usuario from '../models/usuario.js';
+import Curso from '../models/curso.js';
 
 // Configurar dotenv para que busque el .env en la raíz de backend
 const __filename = fileURLToPath(import.meta.url);
@@ -12,12 +12,13 @@ dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 const importarDatos = async () => {
   try {
-    if (!process.env.DATABASE) {
-      throw new Error('La variable DATABASE no está definida en el archivo .env');
+    const mongoUri = process.env.MONGODB || process.env.DATABASE;
+    if (!mongoUri) {
+      throw new Error('La variable MONGODB o DATABASE no está definida en el archivo .env');
     }
 
     console.log('⏳ Conectando a MongoDB...');
-    await mongoose.connect(process.env.DATABASE);
+    await mongoose.connect(mongoUri);
     console.log('✅ Conectado a MongoDB para el Seeder');
 
     console.log('⏳ Eliminando datos antiguos...');

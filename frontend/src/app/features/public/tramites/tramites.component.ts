@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 interface DescuentoMulta {
   readonly etiqueta: string;
@@ -20,7 +21,7 @@ interface Tramite {
 
 @Component({
   selector: 'app-tramites',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './tramites.component.html',
   styleUrl: './tramites.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -66,8 +67,8 @@ export class TramitesComponent {
         'Verifica el resultado desde la plataforma oficial antes de iniciar tu trámite.',
       ],
       descuentos: [],
-      enlace: 'https://www.runt.gov.co/centros-de-reconocimiento',
-      textoEnlace: 'Agendar cita aqui',
+      enlace: '/solicitud',
+      textoEnlace: 'Información aquí',
     },
   ]);
 }
