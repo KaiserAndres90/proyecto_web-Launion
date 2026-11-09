@@ -1,13 +1,7 @@
 <aside class="sidebar d-flex flex-column h-100" [class.sidebar--collapsed]="collapsed" [attr.aria-label]="heading">
   <div class="sidebar__brand-row d-flex align-items-center justify-content-between mb-3">
     <a class="sidebar__brand d-flex align-items-center text-decoration-none" [routerLink]="homeRoute" aria-label="CEA Conductores La Unión, inicio">
-      <span class="sidebar__brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="24" r="24" fill="#8CC63F"/>
-          <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#333333" stroke-width="10" stroke-linecap="round"/>
-          <path d="M22 43C23 35 28 30 27 24C26 18 18 15 20 9C21 6 24 3 27 1" stroke="#F1E600" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/>
-        </svg>
-      </span>
+      <img class="sidebar__brand-mark" src="/logo-cea.jpg" alt="" width="42" height="42">
       <span class="sidebar__brand-text ms-2">CEA <strong>La Unión</strong></span>
     </a>
     @if (collapseEnabled) {
