@@ -15,7 +15,7 @@ export class SedesComponent {
       id: 'ipiales',
       nombre: 'Sede Ipiales',
       direccion: 'Carrera 1 #1A-53, Barrio Centenario',
-      telefono: '315 000 0000',
+      telefono: '300 341 2175 / 323 228 6235 / 300 469 7345',
       descripcion: 'Atención personalizada y formación de calidad para los conductores de la frontera.',
       imagen: 'img/sede-ipiales.jpe',
       alt: 'Sede Ipiales'
