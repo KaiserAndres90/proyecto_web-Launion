@@ -14,9 +14,16 @@
         type="search"
         name="searchRequests"
         [(ngModel)]="searchTerm"
-        placeholder="Buscar por nombre, cédula o curso" />
+        placeholder="Buscar por nombre, correo o curso" />
     </div>
   </div>
+
+  @if (errorMessage) {
+    <div class="alert alert-danger" role="alert">{{ errorMessage }}</div>
+  }
+  @if (successMessage) {
+    <div class="alert alert-success" role="status">{{ successMessage }}</div>
+  }
 
   <div class="card border-0 shadow-sm">
     <div class="table-responsive rounded">
@@ -25,7 +32,7 @@
           <tr>
             <th scope="col">Fecha</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Cédula</th>
+            <th scope="col">Correo</th>
             <th scope="col">Teléfono</th>
             <th scope="col">Curso de interés</th>
             <th scope="col">Estado</th>
@@ -33,37 +40,33 @@
           </tr>
         </thead>
         <tbody>
-          @for (request of filteredRequests; track request.id) {
-            <tr>
-              <td>{{ request.date }}</td>
-              <td class="fw-semibold">{{ request.name }}</td>
-              <td>{{ request.identityNumber }}</td>
-              <td>{{ request.phone }}</td>
-              <td>{{ request.course }}</td>
-              <td><span class="badge rounded-pill" [class]="statusClasses(request.status)">{{ request.status }}</span></td>
-              <td>
-                <div class="d-flex justify-content-end gap-2">
-                  <button
-                    class="btn btn-sm btn-outline-secondary"
-                    type="button"
-                    [attr.aria-label]="'Ver detalle de ' + request.name"
-                    title="Ver detalle"
-                    (click)="showDetails(request)">
-                    <i class="bi bi-eye" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    class="btn btn-sm btn-outline-success"
-                    type="button"
-                    [attr.aria-label]="'Cambiar estado de ' + request.name"
-                    title="Cambiar estado"
-                    (click)="changeStatus(request)">
-                    <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          } @empty {
-            <tr><td class="py-5 text-center text-secondary" colspan="7">No se encontraron solicitudes.</td></tr>
+          @if (isLoading) {
+            <tr><td class="py-5 text-center text-secondary" colspan="7">Cargando solicitudes...</td></tr>
+          } @else {
+            @for (request of filteredRequests; track request._id) {
+              <tr>
+                <td>{{ formatDate(request.createdAt) }}</td>
+                <td class="fw-semibold">{{ request.nombre }}</td>
+                <td>{{ request.correo }}</td>
+                <td>{{ request.telefono }}</td>
+                <td>{{ request.curso || request.mensaje || '—' }}</td>
+                <td><span class="badge rounded-pill" [class]="statusClasses(request.estado)">{{ request.estado }}</span></td>
+                <td>
+                  <div class="d-flex justify-content-end gap-2">
+                    <button
+                      class="btn btn-sm btn-outline-secondary"
+                      type="button"
+                      [attr.aria-label]="'Ver y responder a ' + request.nombre"
+                      title="Ver detalle y responder"
+                      (click)="showDetails(request)">
+                      <i class="bi bi-eye" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr><td class="py-5 text-center text-secondary" colspan="7">No se encontraron solicitudes.</td></tr>
+            }
           }
         </tbody>
       </table>
@@ -71,11 +74,48 @@
   </div>
 
   @if (selectedRequest; as request) {
-    <aside class="alert alert-success d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mt-3 mb-0" aria-live="polite">
-      <p class="mb-0"><strong>{{ request.name }}</strong> · {{ request.course }} · {{ request.phone }} · Estado: {{ request.status }}</p>
-      <button class="btn btn-sm btn-outline-success align-self-start align-self-sm-auto" type="button" (click)="selectedRequest = null">Cerrar detalle</button>
-    </aside>
-  }
+    <div class="modal fade show d-block" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="responderSolicitudTitle">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+          <div class="modal-header text-white" style="background-color:#333333; border-bottom:4px solid #a5c300;">
+            <h2 class="modal-title h5 mb-0" id="responderSolicitudTitle">Responder solicitud</h2>
+            <button type="button" class="btn-close btn-close-white" aria-label="Cerrar" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-2 mb-3">
+              <div class="col-md-4"><strong>Nombre:</strong> {{ request.nombre }}</div>
+              <div class="col-md-4"><strong>Correo:</strong> {{ request.correo }}</div>
+              <div class="col-md-4"><strong>Curso de interés:</strong> {{ request.curso || 'No especificado' }}</div>
+            </div>
 
-  <p class="mt-3 small text-secondary">Datos de ejemplo para la vista; aún no están conectados a la base de datos.</p>
+            <div class="mb-3">
+              <label class="form-label fw-semibold" for="plantillaRespuesta">Plantilla de respuesta rápida</label>
+              <select id="plantillaRespuesta" class="form-select" [(ngModel)]="plantillaSeleccionada" name="plantillaRespuesta" (ngModelChange)="aplicarPlantilla()">
+                <option value="">Selecciona una opción</option>
+                <option value="precios">Información de Precios y Cursos</option>
+                <option value="requisitos">Requisitos de Inscripción</option>
+                <option value="personalizada">Respuesta Personalizada</option>
+              </select>
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label fw-semibold" for="respuestaTexto">Respuesta para el estudiante</label>
+              <textarea id="respuestaTexto" class="form-control" rows="8" [(ngModel)]="respuestaTexto" name="respuestaTexto" placeholder="Escribe aquí la respuesta..."></textarea>
+            </div>
+
+            @if (modalError) {
+              <div class="alert alert-danger py-2 mb-0" role="alert">{{ modalError }}</div>
+            }
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" (click)="closeModal()" [disabled]="isSending">Cancelar</button>
+            <button type="button" class="btn text-dark fw-semibold" style="background-color:#a5c300; border-color:#a5c300;" (click)="enviarRespuesta()" [disabled]="isSending">
+              {{ isSending ? 'Enviando...' : 'Enviar Respuesta por Correo' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+  }
 </section>

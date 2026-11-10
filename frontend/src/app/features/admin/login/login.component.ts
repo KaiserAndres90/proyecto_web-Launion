@@ -48,7 +48,7 @@ export class LoginComponent {
         console.log(response);
 
         const loginFueExitoso = response.success === true || response.resultado === 'bien';
-        const token = response.token ?? response.data;
+        const token = response.data ?? response.token;
 
         if (!loginFueExitoso || typeof token !== 'string' || !token) {
           this.loginError = 'No fue posible iniciar sesión.';
@@ -57,6 +57,7 @@ export class LoginComponent {
           return;
         }
         localStorage.setItem('token', token);
+        console.log('TOKEN GUARDADO EN localStorage (token):', localStorage.getItem('token'));
 
         const decoded = this.loginService.decodeToken(token);
         console.log('Token decodificado:', decoded);

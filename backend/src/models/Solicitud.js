@@ -5,6 +5,7 @@ const ESTADOS_SOLICITUD = [
   'En revisión',
   'Aprobada',
   'Rechazada',
+  'Contactado',
 ];
 
 const solicitudSchema = new mongoose.Schema(
@@ -12,7 +13,7 @@ const solicitudSchema = new mongoose.Schema(
     tipo: {
       type: String,
       enum: ['preinscripcion', 'contacto'],
-      default: 'preinscripcion',
+      default: 'contacto',
       required: [true, 'El tipo de solicitud es obligatorio'],
     },
     nombre: {
@@ -21,7 +22,7 @@ const solicitudSchema = new mongoose.Schema(
       trim: true,
       maxlength: [150, 'El nombre no puede superar 150 caracteres'],
     },
-    email: {
+    correo: {
       type: String,
       required: [true, 'El correo electrónico es obligatorio'],
       lowercase: true,
@@ -34,15 +35,15 @@ const solicitudSchema = new mongoose.Schema(
       trim: true,
       match: [/^[0-9+\-\s()]{7,15}$/, 'El teléfono no es válido'],
     },
+    curso: {
+      type: String,
+      trim: true,
+      maxlength: [150, 'El curso no puede superar 150 caracteres'],
+      default: '',
+    },
     cursoInteres: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Curso',
-      required: [
-        function () {
-          return this.tipo === 'preinscripcion';
-        },
-        'El curso de interés es obligatorio para una preinscripción',
-      ],
     },
     mensaje: {
       type: String,
@@ -66,6 +67,6 @@ const solicitudSchema = new mongoose.Schema(
 );
 
 solicitudSchema.index({ estado: 1, createdAt: -1 });
-solicitudSchema.index({ email: 1, createdAt: -1 });
+solicitudSchema.index({ correo: 1, createdAt: -1 });
 
 export default mongoose.model('Solicitud', solicitudSchema);

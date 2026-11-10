@@ -6,6 +6,7 @@ import {
   ESTADOS_SOLICITUD,
   listarSolicitudes,
   obtenerSolicitud,
+  responderSolicitud,
 } from '../controllers/solicitudController.js';
 import { proteger } from '../middlewares/authMiddleware.js';
 import { checkRole } from '../middlewares/roleMiddleware.js';
@@ -29,10 +30,22 @@ const validarDatosPublicos = [
     .withMessage('El nombre es obligatorio')
     .isLength({ max: 150 })
     .withMessage('El nombre no puede superar 150 caracteres'),
-  body('email')
+  body('correo')
+    .optional({ values: 'falsy' })
     .isEmail()
     .withMessage('El correo electrónico no es válido')
     .normalizeEmail(),
+  body('email')
+    .optional({ values: 'falsy' })
+    .isEmail()
+    .withMessage('El correo electrónico no es válido')
+    .normalizeEmail(),
+  body().custom((_, { req }) => {
+    if (!req.body.correo && !req.body.email) {
+      throw new Error('El correo electrónico es obligatorio');
+    }
+    return true;
+  }),
   body('telefono')
     .isString()
     .trim()
@@ -42,22 +55,16 @@ const validarDatosPublicos = [
     .optional()
     .isIn(['preinscripcion', 'contacto'])
     .withMessage('El tipo de solicitud no es válido'),
-  body('cursoInteres')
+  body('curso')
     .optional()
+    .isString()
+    .trim()
+    .isLength({ max: 150 })
+    .withMessage('El curso no puede superar 150 caracteres'),
+  body('cursoInteres')
+    .optional({ values: 'falsy' })
     .isMongoId()
     .withMessage('El curso de interés no es válido'),
-  body('cursoInteres').custom((cursoInteres, { req }) => {
-    if (
-      (req.body.tipo === undefined ||
-        req.body.tipo === 'preinscripcion') &&
-      !cursoInteres
-    ) {
-      throw new Error(
-        'El curso de interés es obligatorio para una preinscripción'
-      );
-    }
-    return true;
-  }),
   body('mensaje')
     .optional()
     .isString()
@@ -108,6 +115,22 @@ router.put(
     .withMessage('Las observaciones no pueden superar 3000 caracteres'),
   validateRequest,
   actualizarEstado
+);
+
+router.post(
+  '/:id/responder',
+  leerSolicitudes,
+  param('id').isMongoId().withMessage('El ID de la solicitud no es válido'),
+  body('respuesta')
+    .isString()
+    .withMessage('La respuesta debe ser texto')
+    .trim()
+    .notEmpty()
+    .withMessage('El texto de la respuesta es obligatorio')
+    .isLength({ max: 5000 })
+    .withMessage('La respuesta no puede superar 5000 caracteres'),
+  validateRequest,
+  responderSolicitud
 );
 
 export default router;

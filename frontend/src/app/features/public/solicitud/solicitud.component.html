@@ -10,42 +10,43 @@
               <p class="text-secondary mb-0">Déjanos tus datos y te contactaremos pronto.</p>
             </div>
 
-            <form #solicitudForm="ngForm" novalidate (ngSubmit)="enviarSolicitud(solicitudForm)">
+            <form [formGroup]="solicitudForm" novalidate (ngSubmit)="onSubmit()">
               <div class="row g-3">
                 <div class="col-12">
                   <label class="form-label" for="solicitud-nombre">Nombre</label>
-                  <input #nombre="ngModel" id="solicitud-nombre" name="nombre" type="text" autocomplete="name"
-                    class="form-control" minlength="3" required [(ngModel)]="formData.nombre"
-                    [class.is-invalid]="submitted && nombre.invalid" placeholder="Tu nombre completo">
-                  @if (submitted && nombre.invalid) {
-                    <div class="invalid-feedback">Escribe tu nombre completo.</div>
+                  <input id="solicitud-nombre" type="text" autocomplete="name" class="form-control"
+                    formControlName="nombre" [class.is-invalid]="(submitted || f.nombre.touched) && f.nombre.invalid"
+                    placeholder="Tu nombre completo">
+                  @if ((submitted || f.nombre.touched) && f.nombre.invalid) {
+                    <div class="invalid-feedback">Escribe tu nombre completo (mínimo 3 caracteres).</div>
                   }
                 </div>
 
                 <div class="col-12 col-md-6">
                   <label class="form-label" for="solicitud-telefono">Teléfono</label>
-                  <input #telefono="ngModel" id="solicitud-telefono" name="telefono" type="tel" inputmode="tel"
-                    autocomplete="tel" class="form-control" required pattern="[0-9]{10}" [(ngModel)]="formData.telefono"
-                    [class.is-invalid]="submitted && telefono.invalid" placeholder="Número de contacto">
-                  @if (submitted && telefono.invalid) {
-                    <div class="invalid-feedback">Ingresa un teléfono de 10 dígitos.</div>
+                  <input id="solicitud-telefono" type="tel" inputmode="tel" autocomplete="tel" class="form-control"
+                    formControlName="telefono"
+                    [class.is-invalid]="(submitted || f.telefono.touched) && f.telefono.invalid"
+                    placeholder="Número de contacto">
+                  @if ((submitted || f.telefono.touched) && f.telefono.invalid) {
+                    <div class="invalid-feedback">Ingresa un teléfono válido (7 a 15 dígitos/caracteres).</div>
                   }
                 </div>
 
                 <div class="col-12 col-md-6">
                   <label class="form-label" for="solicitud-correo">Correo</label>
-                  <input #email="ngModel" id="solicitud-correo" name="email" type="email" autocomplete="email"
-                    class="form-control" required email [(ngModel)]="formData.email"
-                    [class.is-invalid]="submitted && email.invalid" placeholder="nombre@correo.com">
-                  @if (submitted && email.invalid) {
+                  <input id="solicitud-correo" type="email" autocomplete="email" class="form-control"
+                    formControlName="correo" [class.is-invalid]="(submitted || f.correo.touched) && f.correo.invalid"
+                    placeholder="nombre@correo.com">
+                  @if ((submitted || f.correo.touched) && f.correo.invalid) {
                     <div class="invalid-feedback">Ingresa un correo válido.</div>
                   }
                 </div>
 
                 <div class="col-12">
                   <label class="form-label" for="solicitud-curso">Curso de interés</label>
-                  <select #curso="ngModel" id="solicitud-curso" name="curso" class="form-select" required
-                    [(ngModel)]="formData.curso" [class.is-invalid]="submitted && curso.invalid">
+                  <select id="solicitud-curso" class="form-select" formControlName="curso"
+                    [class.is-invalid]="(submitted || f.curso.touched) && f.curso.invalid">
                     <option value="" disabled>Selecciona un curso</option>
                     <option value="A2 - Motos">Curso A2 - Motos</option>
                     <option value="B1 - Automóviles">Curso B1 - Automóviles</option>
@@ -55,7 +56,7 @@
                     <option value="C3 - Transporte de Carga Pesada">Curso C3 - Transporte de Carga Pesada</option>
                     <option value="Formación de Instructor">Formación de Instructor</option>
                   </select>
-                  @if (submitted && curso.invalid) {
+                  @if ((submitted || f.curso.touched) && f.curso.invalid) {
                     <div class="invalid-feedback">Selecciona el curso que te interesa.</div>
                   }
                 </div>
@@ -68,8 +69,8 @@
                 }
 
                 <div class="col-12 mt-4">
-                  <button class="btn btn-success btn-lg w-100 solicitud-card__button" type="submit" [disabled]="isSubmitting">
-                    {{ isSubmitting ? 'Enviando...' : 'Enviar Solicitud' }}
+                  <button class="btn btn-success btn-lg w-100 solicitud-card__button" type="submit" [disabled]="isLoading">
+                    {{ isLoading ? 'Enviando...' : 'Enviar Solicitud' }}
                   </button>
                 </div>
               </div>

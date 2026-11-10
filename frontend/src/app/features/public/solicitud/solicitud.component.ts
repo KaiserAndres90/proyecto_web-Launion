@@ -1,63 +1,69 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { SolicitudService } from '../../../services/solicitud-service';
 
 @Component({
   selector: 'app-solicitud',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './solicitud.component.html',
   styleUrl: './solicitud.component.css',
 })
 export class SolicitudComponent {
+  private readonly fb = inject(FormBuilder);
   private readonly solicitudService = inject(SolicitudService);
-  private readonly router = inject(Router);
 
   protected submitted = false;
-  protected isSubmitting = false;
+  protected isLoading = false;
   protected successMessage = '';
   protected errorMessage = '';
-  protected formData = {
-    nombre: '',
-    telefono: '',
-    email: '',
-    curso: '',
-  };
 
-  protected enviarSolicitud(form: NgForm): void {
+  protected readonly solicitudForm = this.fb.nonNullable.group({
+    nombre: ['', [Validators.required, Validators.minLength(3)]],
+    telefono: ['', [Validators.required, Validators.pattern(/^[0-9+\-\s()]{7,15}$/)]],
+    correo: ['', [Validators.required, Validators.email]],
+    curso: ['', [Validators.required]],
+  });
+
+  protected get f() {
+    return this.solicitudForm.controls;
+  }
+
+  protected onSubmit(): void {
     this.submitted = true;
     this.successMessage = '';
     this.errorMessage = '';
 
-    if (form.invalid) {
-      form.control.markAllAsTouched();
+    if (this.solicitudForm.invalid) {
+      this.solicitudForm.markAllAsTouched();
       return;
     }
 
-    this.isSubmitting = true;
+    this.isLoading = true;
+    const { nombre, telefono, correo, curso } = this.solicitudForm.getRawValue();
+
     this.solicitudService
       .crearSolicitud({
-        nombre: this.formData.nombre.trim(),
-        telefono: this.formData.telefono.trim(),
-        email: this.formData.email.trim().toLowerCase(),
+        nombre: nombre.trim(),
+        telefono: telefono.trim(),
+        correo: correo.trim().toLowerCase(),
+        curso,
         tipo: 'contacto',
-        mensaje: `Curso de interés: ${this.formData.curso}`,
+        mensaje: `Curso de interés: ${curso}`,
       })
       .subscribe({
-        next: () => {
-          this.isSubmitting = false;
-          this.successMessage = 'Tu solicitud fue enviada correctamente. Nuestro equipo se pondrá en contacto contigo.';
-          form.resetForm();
+        next: (response) => {
+          this.isLoading = false;
+          this.successMessage =
+            response?.message || 'Tu solicitud fue enviada correctamente. Nuestro equipo se pondrá en contacto contigo.';
+          this.solicitudForm.reset();
           this.submitted = false;
-
-          window.setTimeout(() => {
-            void this.router.navigate(['/inicio']);
-          }, 2500);
         },
-        error: () => {
-          this.isSubmitting = false;
-          this.errorMessage = 'No fue posible enviar la solicitud. Inténtalo nuevamente.';
+        error: (err) => {
+          this.isLoading = false;
+          this.errorMessage =
+            err?.error?.message || 'No fue posible enviar la solicitud. Inténtalo nuevamente.';
         },
       });
   }
